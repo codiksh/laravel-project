@@ -2,8 +2,8 @@
 
 ## Steps
 1. Clone this repository 
-2. Run `composer install`
-3. Create Database
+2. Run `composer install`.
+3. Create Database.
 4. Update following in `.env`
     1. Name
     2. URL

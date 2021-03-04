@@ -1,0 +1,37 @@
+@extends('admin.layouts.master')
+
+@section('title')
+    Edit $MODEL_NAME_HUMAN${{ $$MODEL_NAME_CAMEL$->name ? (': '.$$MODEL_NAME_CAMEL$->name) : '' }} - {{ config('app.name') }}
+@endsection
+
+@section('breadcrumbs')
+    <li class="breadcrumb-item"><a href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index') }}">$MODEL_NAME_PLURAL_HUMAN$</a></li>
+    <li class="breadcrumb-item active">Edit</li>
+@endsection
+
+@section('content')
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-header bg-secondary">
+                            <h3>Edit $MODEL_NAME_HUMAN$ {{ $$MODEL_NAME_CAMEL$->name ? (' - '.$$MODEL_NAME_CAMEL$->name) : '' }}</h3>
+                        </div>
+
+                        <div class="card-body">
+                            @include('adminlte-templates::common.errors')
+                            {!! Form::model($$MODEL_NAME_CAMEL$, ['route' => ['$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.update', $$MODEL_NAME_CAMEL$->uuid], 'method' => 'patch'$FILES$,  'files' => true, 'class' => 'submitsByAjax']) !!}
+                            <div class="row">
+                                @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.fields', ['type' => 'edit'])
+                            </div>
+                            {!! Form::close() !!}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

@@ -1,0 +1,31 @@
+<?php
+
+namespace $NAMESPACE_REQUEST$;
+
+use App\Http\Requests\BaseRequest;
+use $NAMESPACE_MODEL$\$MODEL_NAME$;
+use $NAMESPACE_REPOSITORY$\$MODEL_NAME$Repository;
+
+class Update$MODEL_NAME$Request extends BaseRequest
+{
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        $rules = $MODEL_NAME$::$rules;
+        $UNIQUE_RULES$
+        return $rules;
+    }
+
+    /**
+     * Handle an incoming request.
+     */
+    public function prepareForValidation()
+    {
+        $this->merge($MODEL_NAME$Repository::requestHandler($this));
+    }
+}
