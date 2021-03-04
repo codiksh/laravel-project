@@ -15,29 +15,27 @@ return [
 
         'model'             => app_path('Models/'),
 
-        'datatables'        => app_path('DataTables/'),
+        'datatables'        => app_path('DataTables/Admin/'),
 
-        'repository'        => app_path('Repositories/'),
+        'repository'        => app_path('Repositories/Admin/'),
 
         'routes'            => base_path('routes/web.php'),
 
         'api_routes'        => base_path('routes/api.php'),
 
-        'request'           => app_path('Http/Requests/'),
+        'request'           => app_path('Http/Requests/Admin/'),
 
-        'api_request'       => app_path('Http/Requests/API/'),
+        'api_request'       => app_path('Http/Requests/Admin/API/'),
 
-        'controller'        => app_path('Http/Controllers/'),
+        'controller'        => app_path('Http/Controllers/Admin/'),
 
-        'api_controller'    => app_path('Http/Controllers/API/'),
+        'api_controller'    => app_path('Http/Controllers/Admin/API/'),
 
-        'api_resource'      => app_path('Http/Resources/'),
+        'repository_test'   => base_path('tests/Repositories/Admin/'),
 
-        'repository_test'   => base_path('tests/Repositories/'),
+        'api_test'          => base_path('tests/Admin/APIs/'),
 
-        'api_test'          => base_path('tests/APIs/'),
-
-        'tests'             => base_path('tests/'),
+        'tests'             => base_path('tests/Admin/'),
 
         'views'             => resource_path('views/'),
 
@@ -45,9 +43,11 @@ return [
 
         'templates_dir'     => resource_path('infyom/infyom-generator-templates/'),
 
-        'seeder'            => database_path('seeders/'),
+        'seeder'            => database_path('seeds/'),
 
-        'database_seeder'   => database_path('seeders/DatabaseSeeder.php'),
+        'database_seeder'   => database_path('seeds/DatabaseSeeder.php'),
+
+        'modelJs'           => resource_path('assets/js/models/'),
 
         'factory'           => database_path('factories/'),
 
@@ -65,29 +65,23 @@ return [
 
         'model'             => 'App\Models',
 
-        'datatables'        => 'App\DataTables',
+        'datatables'        => 'App\DataTables\Admin',
 
-        'repository'        => 'App\Repositories',
+        'repository'        => 'App\Repositories\Admin',
 
-        'controller'        => 'App\Http\Controllers',
+        'controller'        => 'App\Http\Controllers\Admin',
 
-        'api_controller'    => 'App\Http\Controllers\API',
+        'api_controller'    => 'App\Http\Controllers\Admin\API',
 
-        'api_resource'      => 'App\Http\Resources',
+        'request'           => 'App\Http\Requests\Admin',
 
-        'request'           => 'App\Http\Requests',
+        'api_request'       => 'App\Http\Requests\Admin\API',
 
-        'api_request'       => 'App\Http\Requests\API',
+        'repository_test'   => 'Tests\Repositories\Admin',
 
-        'seeder'            => 'Database\Seeders',
+        'api_test'          => 'Tests\Admin\APIs',
 
-        'factory'           => 'Database\Factories',
-
-        'repository_test'   => 'Tests\Repositories',
-
-        'api_test'          => 'Tests\APIs',
-
-        'tests'             => 'Tests',
+        'tests'             => 'Tests\Admin',
     ],
 
     /*
@@ -138,8 +132,6 @@ return [
 
         'repository_pattern' => true,
 
-        'resources' => false,
-
         'excluded_fields' => ['id'], // Array of columns that doesn't required while creating module
     ],
 
@@ -152,11 +144,11 @@ return [
 
     'prefixes' => [
 
-        'route' => '',  // using admin will create route('admin.?.index') type routes
+        'route' => 'admin',  // using admin will create route('admin.?.index') type routes
 
         'path' => '',
 
-        'view' => '',  // using backend will create return view('backend.?.index') type the backend views directory
+        'view' => 'admin',  // using backend will create return view('backend.?.index') type the backend views directory
 
         'public' => '',
     ],
@@ -174,13 +166,13 @@ return [
 
         'tests'         => true,
 
-        'datatables'    => false,
+        'datatables'    => true,
 
         'menu'          => [
 
             'enabled'       => true,
 
-            'menu_file'     => 'layouts/menu.blade.php',
+            'menu_file'     => 'admin/layouts/menu.blade.php',
         ],
     ],
 
