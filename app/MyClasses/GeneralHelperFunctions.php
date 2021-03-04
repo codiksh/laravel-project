@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class GeneralHelperFunctions {
 
@@ -29,13 +30,10 @@ class GeneralHelperFunctions {
      * @param string $inputFileName
      * @param string $collection
      * @param string $defaultMediaPath
-     * @return bool|\Spatie\MediaLibrary\Models\Media
-     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
-     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\DiskDoesNotExist
-     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileDoesNotExist
-     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileIsTooBig
+     * @param bool $isDefaultMediaPathUrl
+     * @return Media | bool
      */
-    public static function updateOrCreate_singleMedia(Model $modelRecord, Request $request, $inputFileName = 'avatar', $collection = 'avatar', $defaultMediaPath = null){
+    public static function updateOrCreate_singleMedia(Model $modelRecord, Request $request, $inputFileName = 'avatar', $collection = 'avatar', $defaultMediaPath = null, $isDefaultMediaPathUrl = false){
         if($request->hasFile($inputFileName)) {
             $hashedName = $request->file($inputFileName)->hashName();
             return $modelRecord->addMedia($request->{$inputFileName})
@@ -50,9 +48,9 @@ class GeneralHelperFunctions {
                 $modelRecord->clearMediaCollection($collection);
             }
         }else{
-            if(($request->has($inputFileName . 'Deleted') && (int)$request->input($inputFileName . 'Deleted'))
-                || ($request->has('provideDefault' . Str::ucfirst($inputFileName)) && (int)$request->input('provideDefault' . Str::ucfirst($inputFileName)))){
-                return self::updateOrCreate_defaultMedia($modelRecord, $defaultMediaPath, $collection);
+            if(($request->has($inputFileName . 'Deleted') && $request->boolean($inputFileName . 'Deleted'))
+                || ($request->has('provideDefault' . Str::ucfirst($inputFileName)) && $request->boolean('provideDefault' . Str::ucfirst($inputFileName)))){
+                return self::updateOrCreate_defaultMedia($modelRecord, $defaultMediaPath, $collection, $isDefaultMediaPathUrl);
             }
         }
 
@@ -66,19 +64,22 @@ class GeneralHelperFunctions {
      * @param Model $modelRecord
      * @param string $defaultMediaPath
      * @param string $collection
-     * @return \Spatie\MediaLibrary\Models\Media
-     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
-     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\DiskDoesNotExist
-     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileDoesNotExist
-     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileIsTooBig
+     * @param bool $isMediaUrl
+     * @return Media
      */
-    public static function updateOrCreate_defaultMedia(Model $modelRecord, $defaultMediaPath, $collection) {
-        $file = $defaultMediaPath;
-        $pathInfo = pathinfo($file);
-        $hashedName = md5($pathInfo['filename']) . '.' . $pathInfo['extension'];
-        return $modelRecord->copyMedia($file)
-            ->setName($hashedName)
-            ->setFileName($hashedName)
+    public static function updateOrCreate_defaultMedia(Model $modelRecord, $defaultMediaPath, $collection, $isMediaUrl = false) {
+        if(!$isMediaUrl) {
+            $file = $defaultMediaPath;
+            $pathInfo = pathinfo($file);
+            $hashedName = md5($pathInfo['filename']) . '.' . $pathInfo['extension'];
+            return $modelRecord->copyMedia($file)
+                ->setName($hashedName)
+                ->setFileName($hashedName)
+                ->withResponsiveImages()
+                ->toMediaCollection($collection);
+        }
+
+        return $modelRecord->addMediaFromUrl($defaultMediaPath)
             ->withResponsiveImages()
             ->toMediaCollection($collection);
     }
