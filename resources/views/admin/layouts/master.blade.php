@@ -88,7 +88,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 @yield('headerText')
                             </div>
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fas fa-home"></i>&nbsp;Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i>&nbsp;Home</a></li>
                                 @yield('breadcrumbs')
                             </ol>
                         </div>

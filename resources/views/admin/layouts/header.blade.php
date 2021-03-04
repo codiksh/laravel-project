@@ -16,11 +16,11 @@
 {{--                <a href="{{ route('profile') }}" class="dropdown-item">--}}
 {{--                    <i class="fas fa-user-edit"></i> Manage Profile--}}
 {{--                </a>--}}
-                <div class="dropdown-divider"></div>
-                <a href="{{ route('password.change') }}" class="dropdown-item">
-                    <i class="fas fa-lock mr-2"></i> Change Password
-                </a>
-                <div class="dropdown-divider"></div>
+{{--                <div class="dropdown-divider"></div>--}}
+{{--                <a href="{{ route('password.change') }}" class="dropdown-item">--}}
+{{--                    <i class="fas fa-lock mr-2"></i> Change Password--}}
+{{--                </a>--}}
+{{--                <div class="dropdown-divider"></div>--}}
                 <a href="{{ route('get.logout') }}" class="dropdown-item">
                     <i class="fas fa-sign-out-alt mr-2"></i> Log out
                 </a>
