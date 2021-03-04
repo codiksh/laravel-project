@@ -15,6 +15,13 @@
 7. Run `php artisan codiksh:deploy`.
 8. Run `php artisan ide-helper:meta`.
 9. Run `php artisan ide-helper:generate`.
+10. Run `php artisan db:seed --class=RolesSeeder`
+11. Run `php artisan db:seed --class=AdminSeeder`
+
+
+##Breaking changes as compare to L7
+1. Routes action now supports direct callable classes, and hence, we as well are now using that in here.
+2. Change in namespace of seeder classes. Earlier, there was no namespace. 
 
     
 
