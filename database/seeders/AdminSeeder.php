@@ -1,6 +1,9 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class AdminSeeder extends Seeder
 {
@@ -11,15 +14,17 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
+        DB::beginTransaction();
         $name = $this->command->ask('Administrator name', 'Admin');
         $email = $this->command->ask('Administrator email', 'admin@admin.com');
 
         $password = $this->command->secret("Enter {$name}'s password", 'admin123');
-        \App\User::updateOrCreate(['email' => $email,], [
+        \App\Models\User::updateOrCreate(['email' => $email,], [
             'name' => $name,
             'email' => $email,
             'password' => bcrypt($password),
             'email_verified_at' => now()
         ])->assignRole('Super Admin');
+        DB::commit();
     }
 }

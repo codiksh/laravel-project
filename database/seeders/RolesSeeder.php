@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -8,19 +10,6 @@ class RolesSeeder extends Seeder
 
     protected $roles = [
         'Super Admin',
-        'Community Member',
-        'BD-Surat',
-        'BD-Pune',
-        'IT Admin',
-        'Publisher',
-        'Admin Head',
-        'Team Member',
-        'IT Intern',
-        'HR',
-        'Team Leader',
-        'Designer',
-        'Content Writer',
-        'Poster'
     ];
 
     /**
