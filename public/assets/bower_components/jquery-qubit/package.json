@@ -1,0 +1,54 @@
+{
+  "_from": "jquery-qubit@^2.0.8",
+  "_id": "jquery-qubit@2.0.9",
+  "_inBundle": false,
+  "_integrity": "sha1-pmfEeE3ldakaCdwnvLL4YaKZ5is=",
+  "_location": "/jquery-qubit",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "jquery-qubit@^2.0.8",
+    "name": "jquery-qubit",
+    "escapedName": "jquery-qubit",
+    "rawSpec": "^2.0.8",
+    "saveSpec": null,
+    "fetchSpec": "^2.0.8"
+  },
+  "_requiredBy": [
+    "/jquery-bonsai"
+  ],
+  "_resolved": "https://registry.npmjs.org/jquery-qubit/-/jquery-qubit-2.0.9.tgz",
+  "_shasum": "a667c4784de575a91a09dc27bcb2f861a299e62b",
+  "_spec": "jquery-qubit@^2.0.8",
+  "_where": "E:\\wamp64\\www\\G-Work\\HiTechCRM\\HiTechCRMSecondary\\node_modules\\jquery-bonsai",
+  "authors": [
+    "aexmachina"
+  ],
+  "bugs": {
+    "url": "https://github.com/aexmachina/jquery-qubit/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "jquery": "*"
+  },
+  "deprecated": false,
+  "description": "Provides the semantics for a nested list of tri-state checkboxes, using the HTML5 \"indeterminate\" property",
+  "homepage": "https://github.com/aexmachina/jquery-qubit#readme",
+  "keywords": [
+    "jquery",
+    "checkbox",
+    "indeterminate"
+  ],
+  "license": "MIT",
+  "main": "jquery.qubit.js",
+  "name": "jquery-qubit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aexmachina/jquery-qubit.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "2.0.9"
+}
