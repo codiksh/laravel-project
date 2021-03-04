@@ -1,0 +1,286 @@
+/*
+=====================================================
+    HELPERS                                 BELOW
+=====================================================
+ */
+.p-0{
+    padding: 0 !important;
+}
+.p-2{
+    padding: 2px !important;
+}
+.p-5{
+    padding: 5px !important;
+}
+.m-0{
+    margin: 0 !important;
+}
+.p-t-15{
+    padding-top: 15px !important;
+}
+.fa-chain:before,.fa-link:before {
+    content: "\f0c1"
+}
+.fa-handshake-o:before {
+    content: "\f2b5";
+}
+
+/*
+Admin LTE-3 css
+ */
+ul.nav-treeview {
+    background-color: currentColor !important;
+}
+.breadcrumb-item {
+    font-weight: 600;
+}
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    margin-bottom: 0 !important;
+}
+input[type="file" i] {
+    padding: 3px !important;
+}
+.alert-quick-add {
+    color: #000;
+    background: #d3ffdd;
+    border-color: #d1f9d6;
+}
+.alert-quick-add a{
+    text-decoration: unset;
+}
+.main-sidebar a .logo-mini {
+    display: none;
+}
+@media (min-width: 768px) {
+    .sidebar-mini.sidebar-collapse .main-sidebar a > .logo-mini {
+        display: block;
+    }
+}
+.modal-backdrop{
+    width: 100%!important;
+    height: 100%!important;
+}
+a.rspSuccessBtns{
+    text-decoration: none;
+}
+
+
+.user-panel img {
+    height: 2.1rem;
+    width: 2.1rem;
+}
+
+/*
+=====================================================
+    IMAGE PREVIEWER                         BELOW
+=====================================================
+ */
+div.sImageContainer{
+    width: 100%;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+    position: relative; /* If you want text inside of it */
+}
+div.sImagePlaceholderDiv{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 1px dashed;
+    cursor: pointer;
+    background-color: #dedede;
+}
+div.sImagePlaceholderText{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    /*padding: 39px;*/
+}
+.sImageOuterContainer{
+    max-width: 250px;
+    margin: auto;
+    min-height: 29vh;
+    display: flex;
+    align-items: center;
+}
+div.sImagePreview{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+div.sImagePreview img.sImagePreviewImg{
+    max-height: 100%;
+    max-width: 100%;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+}
+div.sImagePreview div.sImage_Overlay{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .3s ease;
+    background-color: #ff2323;
+}
+div.sImagePreview:hover div.sImage_Overlay{
+    opacity: 0.5;
+}
+div.sImagePreview div.sImage_Overlay a.icon{
+    color: white;
+    font-size: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+div.sImagePreview div.sImage_Overlay a.icon i.fa-trash{
+    color: #eee;
+}
+.mayContainError label.error{
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+    font-weight: normal;
+    color: #f44336;
+}
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+.sVidUploadInfo{
+    padding-left: 15px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+
+/*
+=====================================================
+    PRODUCTS IMAGES CAROUSEL - TEMPLATE     BELOW
+=====================================================
+ */
+/* equal card height */
+.row-equal > div[class*='col-'] {
+    display: flex;
+    flex: 1 0 auto;
+}
+.row-equal .card {
+    width: 100%;
+}
+/* ensure equal card height inside carousel */
+.carousel-inner>.row-equal.active,
+.carousel-inner>.row-equal.next,
+.carousel-inner>.row-equal.prev {
+    display: flex;
+}
+/* prevent flicker during transition */
+.carousel-inner>.row-equal.active.left,
+.carousel-inner>.row-equal.active.right {
+    opacity: 0.5;
+    display: flex;
+}
+/* control image height */
+.card-img-top-250 {
+    max-height: 250px;
+    overflow:hidden;
+}
+
+
+/*
+=====================================================
+    PRODUCTS IMAGES CAROUSEL - NTB          BELOW
+=====================================================
+ */
+.mImagesContainer{
+    background: #dedede;
+    border: 1px dashed;
+    margin-bottom: 16px;
+    min-height: 200px;
+}
+div.mImagesPlaceholderDiv{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+div.mImagesPlaceholderText{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    /*padding: 39px;*/
+}
+.img-fluid{
+    width: 100%;
+}
+
+
+/*
+=====================================================
+    HEADER SIDEBAR TOGGLE ICON FIX          BELOW
+=====================================================
+ */
+.main-header .sidebar-toggle {
+    float: left;
+    background-color: transparent;
+    background-image: none;
+    padding: 15px 15px;
+    /* font-family: fontAwesome; */
+    font-family: "Font Awesome\ 5 Free"; /* cjr */
+}
+.main-header .sidebar-toggle:before {
+    content: "\f0c9";
+    font-weight: 900; /* cjr */
+}
+
+
+/**
+    Force underline
+ */
+.underline{
+    text-decoration: underline;
+}
+.pointer{
+    cursor: pointer;
+}
+
+.custom-control-label{
+    font-weight: unset !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__clear{
+    margin-top: -2px;
+}
+
+
+.form-separator-left{
+    border-left: 1px solid #e2e2e2;
+}
+@media (max-width: 575px) {
+    .form-separator-left{
+        border-left: none;
+        padding: 0;
+    }
+}
+
+.progress-description{
+    padding-bottom: .25rem;
+}
+.info-box .info-box-content{
+    line-height: 1.8;
+}
