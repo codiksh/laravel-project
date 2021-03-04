@@ -10,7 +10,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="_token" content="{!! csrf_token() !!}"/>
 
+    @if(isset($si))
     <link rel="shortcut icon" href="{{ $si['favicon']->favicon }}" type="image/x-icon">
+    @endif
 
     <!-- Bootstrap 4.0.0 -->
 {{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">--}}
@@ -53,9 +55,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 <body class="sidebar-mini hold-transition accent-primary" >
 <div class="wrapper">
-
-    <!-- Floating Icon -->
-    @include('admin.layouts.floatingIcon')
     <!-- Main Header -->
     @include('admin.layouts.header')
     <!-- Left side column. contains the logo and sidebar -->
