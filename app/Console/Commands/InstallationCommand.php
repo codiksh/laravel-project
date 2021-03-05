@@ -38,7 +38,6 @@ class InstallationCommand extends Command
     public function handle()
     {
         $this->call('key:generate');
-        system('npm install');
         $this->call('migrate');
         $this->call('codiksh:deploy');
         $this->call('ide-helper:meta');

@@ -10,8 +10,7 @@
     3. DB credentials
     4. Email Credentials
     5. Update `MY_SQL_VERSION`, if it is below `8`. **this is mandatory, otherwise, it would result in error while migrating.**
-5. Make sure, that at least `v12` of `Node.JS` is installed on your system.
-6. Copy `version.yml` file from `\resources\assets` directory to `\config\` directory.
+5. Copy `version.yml` file from `\resources\assets` directory to `\config\` directory.
 6. Run `php artisan codiksh:install-template`.
 7. Configure `medialibrary` config for `LocalStore`.
 
@@ -20,5 +19,7 @@
 1. Routes action now supports direct callable classes, and hence, we as well are now using that in here.
 2. Change in namespace of seeder classes. Earlier, there was no namespace. 
 
+## Side note
+1. To work with tailwind, you may need to run `npm install`.
     
 
