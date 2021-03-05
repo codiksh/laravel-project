@@ -36,6 +36,12 @@
             placeholder: $(this).data("data-placeholder"),
             allowClear: true
         });
+        //Multiple select2 With Placeholder - Tags Supportive
+        $('.select2-multiple-tags' + selector).select2({
+            selectOnClose: false,
+            placeholder: $(this).data("data-placeholder"),
+            allowClear: true
+        });
     }
     function reinitiateSelect2ById(elementId){
         $('#'+elementId).select2("destroy").select2();
@@ -46,69 +52,5 @@
             selectRef.select2("destroy").select2();
     }
     //==============================================Select 2 Scripts FINISH=================================================
-    $.fn.setSelect2Placeholder = function (placeholder) {
-        var $select2Container = $(this).data('select2').$container;
-        if($(this).hasClass('select2-multiple') || $(this).hasClass('select2-multiple_default')){
-            return $select2Container.find('.select2-search__field').attr('placeholder',placeholder);
-        }else {
-            return $select2Container.find('.select2-selection__placeholder').text(placeholder);
-        }
-    };
 
-    /**
-     * Initiates the Ajax based Select2
-     * @param eleRef
-     * @param url
-     * @param data
-     * @param placeholder
-     * @param templateResult
-     * @param templateSelection
-     * @param requestType
-     * @param isMultiple
-     * @param dropdownParent
-     */
-    function initAjaxSelect2(eleRef, url, data, placeholder, templateResult = undefined, templateSelection = undefined,
-                             requestType = 'GET', isMultiple = false, dropdownParent =  $(document.body)){
-        eleRef.select2({
-            dropdownParent: dropdownParent,
-            selectOnClose: false,
-            ajax: {
-                type: requestType,
-                url: url,
-                data: data,
-                cache: true
-            },
-            placeholder: placeholder,
-            minimumInputLength: 0,
-            templateResult: templateResult,
-            templateSelection: templateSelection,
-            closeOnSelect: !isMultiple,
-            scrollAfterSelect: false,
-            allowClear: true,
-        }).on('select2:select', function (e) {
-            $('.select2-search input').val('').trigger('change');
-        });
-        createSelect2Placeholder(eleRef, placeholder);
-    }
-
-    function createSelect2Placeholder(eleRef, placeholder){
-        let placeholderSpan = $('span#select2-' + eleRef.attr('id') + '-container span.select2-selection__placeholder');
-        if(placeholderSpan.length < 1){
-            $('span#select2-' + eleRef.attr('id') + '-container').append('<span class="select2-selection__placeholder"></span>');
-        }
-        placeholderSpan = $('span#select2-' + eleRef.attr('id') + '-container span.select2-selection__placeholder');
-        placeholderSpan.html(placeholder);
-    }
-
-    function fillSelect2(Ref, dataObject){
-        Ref.select2('data', dataObject);
-        Ref.empty();
-        if($.isArray(dataObject)){
-            $.each(dataObject, function(key, itemObject){
-                Ref.select2("trigger", "select", {data: itemObject});
-            })
-        }else {
-            Ref.select2("trigger", "select", {data: dataObject});
-        }
-    }
 </script>

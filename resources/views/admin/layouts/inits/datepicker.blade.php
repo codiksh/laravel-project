@@ -18,8 +18,6 @@
         timePicker: true,
         singleDatePicker: true,
         showDropdowns: true,
-        timePicker24Hour: true,
-        timePickerIncrement: 5,
         autoApply: true,
         locale: {
             "format": "DD/MM/YYYY HH:mm",

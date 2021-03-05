@@ -1,4 +1,7 @@
 <script>
+    $('.filter').change(function(){
+        $('.buttons-reload').click();
+    });
     $('.buttons-reset').click(function () {
         $('.filter').each(function (i, e) {
             e.value = null;

@@ -7,7 +7,7 @@
     })(jQuery);
 </script>
 
-<script id="carouselCardTemplate" type="text/template">
+<script class="carouselCardTemplate" type="text/template">
     <div class="col-md-4">
         <div class="box box-solid">
             <div class="box-body p-0">
@@ -24,7 +24,7 @@
         </div>
     </div>
 </script>
-<script id="carouselCardTemplate_forExisting" type="text/template">
+<script class="carouselCardTemplate_forExisting" type="text/template">
     <div class="col-md-4">
         <div class="box box-solid">
             <div class="box-body p-0">
@@ -48,9 +48,9 @@
 <script>
     //Variables
     let mImagesPlaceholderDivRef = $('.mImagesPlaceholderDiv');
-    let mImagesInputRef = $('#mImages_id');
-    let templateRef = $('#carouselCardTemplate');
-    let carouselInnerRef = $('#carouselInner');
+    let mImagesInputRef = $('.mImagesUploadFile');
+    let templateRef = $('.carouselCardTemplate');
+    let carouselInnerRef = $('.carousel-inner');
     let mImagesPreviewDivRef = $('.mImagesPreview');
 
     mImagesPlaceholderDivRef.click(changeMImages);
@@ -101,7 +101,7 @@
         $.each(_.chunk(carouselCards,noOfCards_perCarousel),function(key, setOfCards){
             carouselSets.push(
                 '' +
-                '<div class="item ' + (key === 0 ? 'active' : '') + '">' +
+                '<div class="carousel-item ' + (key === 0 ? 'active' : '') + '">' +
                 '<div class="row">' +
                 setOfCards.join('') +
                 '</div>'+
@@ -152,7 +152,7 @@
 
 
     function setExistingImages(details){
-        let existingImagesCardTemplate = $('#carouselCardTemplate_forExisting');
+        let existingImagesCardTemplate = $('.carouselCardTemplate_forExisting');
 
         let carouselCards = [];
         $.each(details['images'], function(){

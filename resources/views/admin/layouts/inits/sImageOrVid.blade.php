@@ -1,35 +1,37 @@
 <script>
-    //single image handling script
-    let sImageInputRef = $('#sImage_id');
-    let sImagePlaceholderDivRef = $('div.sImagePlaceholderDiv');
-    let sImagePreviewDivRef = $('div.sImagePreview');
-    let sImage_ImgRef = $('img#sImagePreview_id');
-    let removeSImageRef = $('a#removeSImageBtn_id');
+    /**
+     * single image handling script
+     */
 
-    sImagePlaceholderDivRef.click(function(){
+    $('div.sImagePlaceholderDiv').click(function(){
         //Picture Container Click event :  Picture File Input should be triggered.
+        let sImageInputRef = $(this).parents('div.sImageOuterContainer').children('input.uploadFile');
         sImageInputRef.prop("value","");
         sImageInputRef.click();
     });
 
     function previewImg(input) {
+        let sImageOuterContainer = $(input).parents('div.sImageOuterContainer');
         if(!validateFileInput_maxSize(".box-body")){
             focusOn_firstFileInput_withMaxSizeCondition(".box-body");
         }
         if (input.files && input.files[0]) {
-            sImage_ImgRef.attr('src', '{{ route('images_default',['resolution' => '250x250']) }}');
-            previewImgOrVidThumbnail(input.files[0])
+            sImageOuterContainer.find('img.sImagePreviewImg').attr('src', '{{ route('images_default',['resolution' => '250x250']) }}');
+            previewImgOrVidThumbnail(input.files[0], sImageOuterContainer)
         }
-        sImagePlaceholderDivRef.addClass("d-none");
-        sImagePreviewDivRef.animateCss('{{ $loadImageAnimation ?? 'pulse' }}').removeClass("d-none").on("webkitAnimationEnd oAnimationEnd msAnimationEnd animationend", function (e) {
+        sImageOuterContainer.find('div.sImagePlaceholderDiv').addClass("d-none");
+        sImageOuterContainer.find('div.sImagePreview')
+            .animateCss('{{ $loadImageAnimation ?? 'pulse' }}')
+            .removeClass("d-none")
+            .on("webkitAnimationEnd oAnimationEnd msAnimationEnd animationend", function (e) {
             $(this).removeClass("d-none");
         });
     }
-    function previewImgOrVidThumbnail(file){
+    function previewImgOrVidThumbnail(file, sImageOuterContainer){
         var fileReader = new FileReader();
         if (file.type.match('image')) {
             fileReader.onload = function(e) {
-                sImage_ImgRef.attr('src', e.target.result);
+                sImageOuterContainer.find('img.sImagePreviewImg').attr('src', e.target.result);
             };
             fileReader.readAsDataURL(file);
         } else {
@@ -56,7 +58,7 @@
                     var image = canvas.toDataURL();
                     var success = image.length > 100000;
                     if (success) {
-                        sImage_ImgRef.attr('src', image);
+                        sImageOuterContainer.find('img.sImagePreviewImg').attr('src', image);
                         URL.revokeObjectURL(url);
                     }
                     return success;
@@ -70,22 +72,30 @@
                 video.play();
             };
             fileReader.readAsArrayBuffer(file);
-            // sImageInputRef.parent('div.sImageOuterContainer').after('<span class="sVidUploadInfo">Video file uploaded</span>');
+            // sImageInputRef.parents('div.sImageOuterContainer').after('<span class="sVidUploadInfo">Video file uploaded</span>');
         }
     }
 
-    removeSImageRef.click(removeSImage);
-    function removeSImage(){
-        sImagePreviewDivRef.animateCss('bounceOut').on("webkitAnimationEnd oAnimationEnd msAnimationEnd animationend", function (e) {
+    $('a.removeSImageBtn').click(function(e) {
+        removeSImage($(this));
+        e.preventDefault();
+    });
+    function removeSImage(removeRef){
+        let sImageOuterContainer = removeRef.parents('div.sImageOuterContainer');
+        let sImageInputRef = sImageOuterContainer.find('input.uploadFile');
+        sImageOuterContainer.find('div.sImagePreview')
+            .animateCss('bounceOut').on("webkitAnimationEnd oAnimationEnd msAnimationEnd animationend", function (e) {
             $(this).addClass("d-none");
             $('.sVidUploadInfo').remove();
         });
-        sImagePlaceholderDivRef.animateCss('fadeIn').removeClass("d-none").on("webkitAnimationEnd oAnimationEnd msAnimationEnd animationend", function (e) {
+        sImageOuterContainer.find('div.sImagePlaceholderDiv')
+            .animateCss('fadeIn')
+            .removeClass("d-none")
+            .on("webkitAnimationEnd oAnimationEnd msAnimationEnd animationend", function (e) {
             $(this).removeClass("d-none");
         });
         $('input[name=' + sImageInputRef.data('simagedeletedinputname') + ']').val(1);
         sImageInputRef.prop("value","");
-        sImage_ImgRef.attr('src', '{{ route('images_default',['resolution' => '250x250']) }}');
-
+        sImageOuterContainer.find('img.sImagePreviewImg').attr('src', '{{ route('images_default',['resolution' => '250x250']) }}');
     }
 </script>
