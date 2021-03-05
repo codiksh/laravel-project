@@ -8,7 +8,7 @@ return [
         'children'  => [],
     ],
 //    [
-//        'name'      => '<i class="nav-icon fa fa-gear"></i><p>Test</p>',
+//        'name'      => '<i class="nav-icon fa fa-cogs"></i><p>Test</p>',
 //        'isHeader'  => false,
 //        'route'     => 'admin.tests.index',
 //        'children'  => [],
