@@ -1,0 +1,28 @@
+{
+  "name": "tinymce-placeholder-attribute",
+  "homepage": "https://github.com/mohan/tinymce-placeholder",
+  "authors": [
+    "Mohan <mohansandesh@gmail.com>"
+  ],
+  "description": "TinyMCE plugin for placeholder attribute support",
+  "main": "placeholder/plugin.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "0.1.7",
+  "_release": "0.1.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.7",
+    "commit": "0ea5152c2b33e276fa35dfdbdf4034ca02cf11ed"
+  },
+  "_source": "https://github.com/mohan999/tinymce-placeholder.git",
+  "_target": "^0.1.7",
+  "_originalSource": "tinymce-placeholder-attribute",
+  "_direct": true
+}
