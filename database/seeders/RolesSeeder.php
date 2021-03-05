@@ -24,5 +24,6 @@ class RolesSeeder extends Seeder
                 Role::create(['name' => $role]);
             }
         }
+        $this->command->info('Roles Seeded successfully!');
     }
 }

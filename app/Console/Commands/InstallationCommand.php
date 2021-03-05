@@ -42,8 +42,8 @@ class InstallationCommand extends Command
         $this->call('codiksh:deploy');
         $this->call('ide-helper:meta');
         $this->call('ide-helper:generate');
-        $this->call('db:seed --class=RolesSeeder');
-        $this->call('db:seed --class=AdminSeeder');
+        $this->call('db:seed', ['--class' => 'RolesSeeder']);
+        $this->call('db:seed', ['--class' => 'AdminSeeder']);
         return 1;
     }
 }
