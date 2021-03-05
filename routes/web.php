@@ -23,3 +23,9 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 require __DIR__.'/media.php';
+
+Route::group(['prefix' => 'admin',
+    'middleware' => ['auth',
+        'role:Super Admin'],], function(){
+    
+});
