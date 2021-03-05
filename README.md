@@ -16,7 +16,7 @@
 7. Configure `medialibrary` config for `LocalStore`.
 
 
-##Breaking changes as compare to L7
+## Breaking changes as compare to L7
 1. Routes action now supports direct callable classes, and hence, we as well are now using that in here.
 2. Change in namespace of seeder classes. Earlier, there was no namespace. 
 
