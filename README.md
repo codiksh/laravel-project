@@ -10,14 +10,10 @@
     3. DB credentials
     4. Email Credentials
     5. Update `MY_SQL_VERSION`, if it is below `8`. **this is mandatory, otherwise, it would result in error while migrating.**
-5. Run `npm install` & `npm dev`, if wanted to use scaffolded Tailwind CSS. (Make sure you have Node v12 at least installed)
-6. Run `php artisan migrate`.
-7. Run `php artisan codiksh:deploy`.
-8. Run `php artisan ide-helper:meta`.
-9. Run `php artisan ide-helper:generate`.
-10. Run `php artisan db:seed --class=RolesSeeder`
-11. Run `php artisan db:seed --class=AdminSeeder`
-12. Configure `medialibrary` config for `LocalStore`.
+5. Make sure, that at least `v12` of `Node.JS` is installed on your system.
+6. Copy `version.yml` file from `\resources\` directory to `\config\` directory.
+6. Run `php artisan codiksh:install-template`.
+7. Configure `medialibrary` config for `LocalStore`.
 
 
 ##Breaking changes as compare to L7
