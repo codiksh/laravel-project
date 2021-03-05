@@ -4,7 +4,7 @@
 1. Clone this repository 
 2. Run `composer install`.
 3. Create Database.
-4. Update following in `.env`
+4. Copy `.env.example` as `.env` and Update following in `.env`
     1. Name
     2. URL
     3. DB credentials
