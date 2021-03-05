@@ -17,6 +17,7 @@
 9. Run `php artisan ide-helper:generate`.
 10. Run `php artisan db:seed --class=RolesSeeder`
 11. Run `php artisan db:seed --class=AdminSeeder`
+12. Configure `medialibrary` config for `LocalStore`.
 
 
 ##Breaking changes as compare to L7
