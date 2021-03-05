@@ -7,10 +7,10 @@ return [
         'route'     => null,
         'children'  => [],
     ],
-//    [
-//        'name'      => '<i class="nav-icon fa fa-cogs"></i><p>Test</p>',
-//        'isHeader'  => false,
-//        'route'     => 'admin.tests.index',
-//        'children'  => [],
-//    ],
+    [
+        'name'      => '<i class="nav-icon fa fa-users"></i><p>Users</p>',
+        'isHeader'  => false,
+        'route'     => 'admin.users.index',
+        'children'  => [],
+    ],
 ];

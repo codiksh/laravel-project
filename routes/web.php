@@ -27,5 +27,5 @@ require __DIR__.'/media.php';
 Route::group(['prefix' => 'admin',
     'middleware' => ['auth',
         'role:Super Admin'],], function(){
-    
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class, ["as" => 'admin']);
 });

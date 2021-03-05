@@ -5,6 +5,7 @@ namespace App\Models;
 use App\MyClasses\GeneralHelperFunctions;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -54,7 +55,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable implements HasMedia
 {
-    use HasFactory, Notifiable, HasRoles, InteractsWithMedia;
+    use HasFactory, Notifiable, HasRoles, InteractsWithMedia, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -65,7 +66,7 @@ class User extends Authenticatable implements HasMedia
         'name',
         'email',
         'password',
-        'uuid'
+        'mobile',
     ];
 
     /**
@@ -87,13 +88,38 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Validation Rules
+     * @var array
+     */
+    public static $rules = [
+        'avatar' => 'nullable|image|max:2048',
+        'name' => 'required|string',
+        'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
+        'mobile' => 'nullable|integer|digits:10',
+        'password' => 'required',
+        'role' => 'required|array',
+        'role.*' => 'required|string|exists:roles,name',
+    ];
+
+    /**
+     * Changing route key name
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
+    /**
+     * Things require during the boot
+     */
     protected static function booted() {
         parent::booted();
 
 
-        static::created(function(User $user){
+        static::creating(function(User $user){
             $user->uuid = Str::uuid()->toString();
-            $user->save();
 
             $defaultMedia = 'https://ui-avatars.com/api/?' . http_build_query(['name' => $user->name, 'size' => '350']);
             GeneralHelperFunctions::updateOrCreate_defaultMedia($user, $defaultMedia, 'avatar', true);
