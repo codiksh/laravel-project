@@ -39,11 +39,11 @@ class InstallationCommand extends Command
     {
         $this->call('key:generate');
         $this->call('migrate');
-        $this->call('codiksh:deploy');
         $this->call('ide-helper:meta');
         $this->call('ide-helper:generate');
         $this->call('db:seed', ['--class' => 'RolesSeeder']);
         $this->call('db:seed', ['--class' => 'AdminSeeder']);
+        $this->info('Installation completed! Serve the application to see it in action!');
         return 1;
     }
 }
