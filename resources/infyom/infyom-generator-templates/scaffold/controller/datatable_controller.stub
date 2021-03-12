@@ -9,9 +9,10 @@ use $NAMESPACE_REQUEST$\Create$MODEL_NAME$Request;
 use $NAMESPACE_REQUEST$\Update$MODEL_NAME$Request;
 use App\MyClasses\GeneralHelperFunctions;
 use $NAMESPACE_REPOSITORY$\$MODEL_NAME$Repository;
-use Laracasts\Flash\Flash;
+use Flash;
 use $NAMESPACE_APP$\Http\Controllers\AppBaseController;
-use Illuminate\Support\Facades\Response;
+use Response;
+use Illuminate\Support\Facades\DB;
 
 class $MODEL_NAME$Controller extends AppBaseController
 {
@@ -55,7 +56,9 @@ class $MODEL_NAME$Controller extends AppBaseController
     {
         $input = $request->all();
 
+        DB::beginTransaction();
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->create($input);
+        DB::commit();
 
         return Response::json(['message' => '$MODEL_NAME$ has been created successfully.'
                     . GeneralHelperFunctions::getSuccessResponseBtn($$MODEL_NAME_CAMEL$, route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.edit', $$MODEL_NAME_CAMEL$))]);
@@ -113,7 +116,9 @@ class $MODEL_NAME$Controller extends AppBaseController
             return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
         }
 
+        DB::beginTransaction();
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->update($request->all(), $$MODEL_NAME_CAMEL$->id);
+        DB::commit();
 
         return Response::json(['message' => '$MODEL_NAME$ updated successfully.']);
     }

@@ -7,9 +7,10 @@ use $NAMESPACE_REQUEST$;
 use $NAMESPACE_REQUEST$\Create$MODEL_NAME$Request;
 use $NAMESPACE_REQUEST$\Update$MODEL_NAME$Request;
 use $NAMESPACE_MODEL$\$MODEL_NAME$;
-use Laracasts\Flash\Flash;
+use Flash;
 use $NAMESPACE_APP$\Http\Controllers\AppBaseController;
-use Illuminate\Support\Facades\Response;
+use Response;
+use Illuminate\Support\Facades\DB;
 
 class $MODEL_NAME$Controller extends AppBaseController
 {
@@ -45,8 +46,9 @@ class $MODEL_NAME$Controller extends AppBaseController
     {
         $input = $request->all();
 
-        /** @var $MODEL_NAME$ $$MODEL_NAME_CAMEL$ */
+        DB::beginTransaction();
         $$MODEL_NAME_CAMEL$ = $MODEL_NAME$::create($input);
+        DB::commit();
 
         Flash::success('$MODEL_NAME_HUMAN$ saved successfully.');
 
@@ -105,8 +107,10 @@ class $MODEL_NAME$Controller extends AppBaseController
             return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
         }
 
+        DB::beginTransaction();
         $$MODEL_NAME_CAMEL$->fill($request->all());
         $$MODEL_NAME_CAMEL$->save();
+        DB::commit();
 
         Flash::success('$MODEL_NAME_HUMAN$ updated successfully.');
 

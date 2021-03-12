@@ -3,6 +3,7 @@
 namespace $NAMESPACE_DATATABLES$;
 
 use $NAMESPACE_MODEL$\$MODEL_NAME$;
+use App\MyClasses\GeneralHelperFunctions;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -18,7 +19,15 @@ class $MODEL_NAME$DataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', '$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.datatables_actions');
+        return $dataTable
+            ->editColumn('created_at', function ($MODEL_NAME$ $model){
+                return GeneralHelperFunctions::prepareHtmlDate($model->created_at);
+            })
+            ->editColumn('updated_at', function ($MODEL_NAME$ $model){
+                return GeneralHelperFunctions::prepareHtmlDate($model->updated_at);
+            })
+            ->rawColumns(['created_at', 'updated_at', 'action'])
+            ->addColumn('action', '$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.datatables_actions');
     }
 
     /**
