@@ -14,6 +14,7 @@ use App\Models\Project;
 use App\Models\Task;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Carbon\Carbon;
+use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -354,5 +355,21 @@ class GeneralHelperFunctions {
     public static function calculateChangePercentage($new, $old) {
         if($old == 0)   return $new * 100;
         return round((($new-$old)/$old), 2) * 100;
+    }
+
+    /**
+     * Prepares HTML date, such that, displaying text is shorter text, while title is detailed text.
+     * @param $date
+     * @param string $format
+     * @return string
+     */
+    public static function prepareHtmlDate($date, $format = 'Y-m-d H:i:s') {
+        if(is_null($date))  return '';
+        try {
+            $date = Carbon::parse($date);
+        }catch (InvalidFormatException $e){
+            $date = Carbon::createFromFormat($format, $date);
+        }
+        return '<p title="' . $date->toDayDateTimeString() . '">' . $date->format('F d, Y') . '</p>';
     }
 }

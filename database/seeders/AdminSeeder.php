@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class AdminSeeder extends Seeder
 {
@@ -23,7 +24,8 @@ class AdminSeeder extends Seeder
             'name' => $name,
             'email' => $email,
             'password' => bcrypt($password),
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
+            'uuid' => Str::uuid()->toString()
         ])->assignRole('Super Admin');
         $this->command->info('Admin Seeded successfully!');
         DB::commit();
