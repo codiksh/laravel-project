@@ -11,11 +11,7 @@ use Spatie\MediaLibrary\MediaCollections\Exceptions\InvalidConversion;
 class MediaController extends Controller
 {
 
-    protected $mediaModelsToBeRestrict = [
-        'businessDocumentTransactions',
-        'emailTemplates',
-        'emails'
-    ];
+    protected $mediaModelsToBeRestrict = [];
 
     public function __construct()
     {
