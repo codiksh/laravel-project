@@ -77,8 +77,8 @@
     }
 
     $('a.removeSImageBtn').click(function(e) {
-        removeSImage($(this));
         e.preventDefault();
+        removeSImage($(this));
     });
     function removeSImage(removeRef){
         let sImageOuterContainer = removeRef.parents('div.sImageOuterContainer');
