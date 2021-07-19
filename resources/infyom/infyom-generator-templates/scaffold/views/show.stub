@@ -17,9 +17,15 @@
                     <div class="card">
 
                         <div class="card-header bg-info">
-                            <h3>View $MODEL_NAME_HUMAN${{ $$MODEL_NAME_CAMEL$->name ? (' - '.$$MODEL_NAME_CAMEL$->name) : '' }}</h3>
+                            <div class="row card-head-row">
+                                <div class="col-md-11">
+                                    <h3>View $MODEL_NAME_HUMAN${{ $$MODEL_NAME_CAMEL$->name ? (' - '.$$MODEL_NAME_CAMEL$->name) : '' }}</h3>
+                                </div>
+                                <div class="col-md-1 float-right action_button">
+                                    @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.datatables_actions', ['uuid' => $$MODEL_NAME_CAMEL$->uuid])
+                                </div>
+                            </div>
                         </div>
-
                         <div class="card-body">
                             <div id="show$MODEL_NAME_CAMEL$">
                                 {!! Form::model($$MODEL_NAME_CAMEL$, ['route' => ['$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.update', $$MODEL_NAME_CAMEL$->$PRIMARY_KEY_NAME$], 'method' => 'patch'$FILES$,  'files' => true]) !!}
