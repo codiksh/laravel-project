@@ -5,7 +5,8 @@
 @include('admin.layouts.inits.sImageOrVid')
 @include('admin.layouts.inits.tinymce')
 @include('admin.layouts.inits.jqueryBonsai')
-{{--@include('admin.layouts.inits.mImage')--}}
+@include('admin.layouts.inits.mImage')
 @include('admin.layouts.inits.select2')
 @include('admin.layouts.ajaxCalls')
 @include('admin.layouts.inits.timepicker')
+@include('admin.layouts.inits.datatables_action')

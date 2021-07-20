@@ -17,9 +17,15 @@
                     <div class="card">
 
                         <div class="card-header bg-secondary">
-                            <h3>Edit $MODEL_NAME_HUMAN$ {{ $$MODEL_NAME_CAMEL$->name ? (' - '.$$MODEL_NAME_CAMEL$->name) : '' }}</h3>
+                            <div class="row card-head-row">
+                                <div class="col-md-11">
+                                    <h3>Edit $MODEL_NAME_HUMAN$ {{ $$MODEL_NAME_CAMEL$->name ? (' - '.$$MODEL_NAME_CAMEL$->name) : '' }}</h3>
+                                </div>
+                                <div class="col-md-1 float-right action_button">
+                                    @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.datatables_actions', ['uuid' => $$MODEL_NAME_CAMEL$->uuid])
+                                </div>
+                            </div>
                         </div>
-
                         <div class="card-body">
                             @include('adminlte-templates::common.errors')
                             {!! Form::model($$MODEL_NAME_CAMEL$, ['route' => ['$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.update', $$MODEL_NAME_CAMEL$->uuid], 'method' => 'patch'$FILES$,  'files' => true, 'class' => 'submitsByAjax']) !!}

@@ -372,4 +372,37 @@ class GeneralHelperFunctions {
         }
         return '<p title="' . $date->toDayDateTimeString() . '">' . $date->format('F d, Y') . '</p>';
     }
+
+    /**
+     * Checks if the input is valid uuid.
+     * @param $uuid
+     * @return bool
+     */
+    public static function is_uuid($uuid) {
+        if (!is_string($uuid) || (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $uuid) !== 1)) {
+            return false;
+        }
+        return true;
+    }
+
+    public static function getRulesForArrFilterInputs($rules, $keyName, $required = false, $includeFilterTypes = true) {
+        return [
+            $keyName => ($required ? 'required' : 'nullable') . '|array',
+            "$keyName.*" => ($required ? 'required' : 'nullable') . '|' . $rules,
+            "{$keyName}_type" => 'nullable|in:In,NotIn',
+        ];
+    }
+
+    /**
+     * Gets ordinal of given number. like 1st, 2nd, 3rd
+     * @param $number
+     * @return string
+     */
+    public static function getOrdinal($number) {
+        $ends = array('th','st','nd','rd','th','th','th','th','th','th');
+        if ((($number % 100) >= 11) && (($number%100) <= 13))
+            return $number. 'th';
+        else
+            return $number. $ends[$number % 10];
+    }
 }

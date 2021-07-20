@@ -1,10 +1,10 @@
 <script>
     let appliedFilter = false;
+    let filterRef_underHelperScope = $('.filter');
 
     function updateFilterButton() {
         appliedFilter = false;
-        let filterRef = $('.filter');
-        filterRef.each(function (i, e) {
+        filterRef_underHelperScope.each(function (i, e) {
             let data = $('#' + e.id).val();
             if (data !== null && data !== undefined && data !== "" && data.length !== 0) {
                 if(! ($(this).is('select') && !$(this).attr('multiple'))) {
@@ -23,9 +23,9 @@
     }
 
     let storage_prefix = 'codiksh.{{ isset($filterScope) ? "$filterScope." : '' }}filter.';
-    filterRef.change(function(){
+    filterRef_underHelperScope.change(function(){
         if(! filterStorageExists()){
-            filterRef.each(function(){
+            filterRef_underHelperScope.each(function(){
                 storeFilters($(this));
             })
         }else{
@@ -48,40 +48,43 @@
     }
 
     function setStoredFilters(){
-        filterRef.each(function(){
-            // debugger;
+        filterRef_underHelperScope.each(function(){
             let storageId = storage_prefix + $(this).attr('id');
             let data = localStorage.getItem(storageId);
-            if(data !== undefined && data !== null) {
-                if ($(this).is('select')) {
-                    data = JSON.parse(data);
-                    if(data === null)   return;
-                    if ($(this).hasClass('hasAjaxSelect2')) {
-                        if (Array.isArray(data)) {
-                            fillSelect2($(this), data);
-                        } else {
-                            if (data.hasOwnProperty('id'))
-                                fillSelect2($(this), data);
-                            else
-                                $(this).empty();
-                        }
-                    }else{
-                        $(this).val(data);
-                    }
-                } else if ($(this).hasClass('datepicker')) {
-                    if (data) $(this).setCustomDate(data); else $(this).val('');
-                } else if ($(this).hasClass('datetimepicker')) {
-                    if (data) $(this).setCustomDateTime(data); else $(this).val('');
-                } else {
-                    $(this).val(data);
-                }
-                $(this).trigger('change');
-            }
+            setDataToInputs(data, $(this));
         });
     }
 
+    function setDataToInputs(data, Ref){
+        if(data !== undefined && data !== null) {
+            if (Ref.is('select')) {
+                data = typeof data === 'object' ? data : JSON.parse(data);
+                if(data === null)   return;
+                if (Ref.hasClass('hasAjaxSelect2')) {
+                    if (Array.isArray(data)) {
+                        fillSelect2(Ref, data);
+                    } else {
+                        if (data.hasOwnProperty('id'))
+                            fillSelect2(Ref, data);
+                        else
+                            Ref.empty();
+                    }
+                }else{
+                    Ref.val(data);
+                }
+            } else if (Ref.hasClass('datepicker')) {
+                if (data) Ref.setCustomDate(data); else Ref.val('');
+            } else if (Ref.hasClass('datetimepicker')) {
+                if (data) Ref.setCustomDateTime(data); else Ref.val('');
+            } else {
+                Ref.val(data);
+            }
+            Ref.trigger('change');
+        }
+    }
+
     function removeStoredFilters(){
-        filterRef.each(function(){
+        filterRef_underHelperScope.each(function(){
             let storageId = storage_prefix + $(this).attr('id');
             localStorage.removeItem(storageId)
         });
@@ -89,8 +92,7 @@
 
     function filterStorageExists(){
         let count = 0;
-        filterRef.each(function() {
-            // debugger;
+        filterRef_underHelperScope.each(function() {
             let storageId = storage_prefix + $(this).attr('id');
             if(localStorage.hasOwnProperty(storageId))  count ++;
         });
@@ -98,7 +100,7 @@
     }
 
     function emptyFilters(callback){
-        filterRef.each(function (i, e) {
+        filterRef_underHelperScope.each(function (i, e) {
             e.value = null;
             if (e.classList.contains('select2_with_placeholder'))
                 reinitiateSelect2ByClass('select2_with_placeholder');
@@ -113,4 +115,20 @@
             callback();
         }
     }
+
+    function setFilters_fromSession(){
+        let sessionFilters = @json(session('url-filters'));
+        if(!sessionFilters)     return;
+        emptyFilters(function(){
+            typeof initFilterSelect2 === 'function' && initFilterSelect2();
+        });
+        removeStoredFilters();
+        $.each(sessionFilters, function (key, value) {
+            setDataToInputs(value, $('#'+key));
+        });
+        $('.buttons-reload').click();
+    }
+    $(document).ready(function(){
+        setFilters_fromSession();
+    });
 </script>

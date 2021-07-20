@@ -2,8 +2,8 @@
     (function($) {
         "use strict";
         // manual carousel controls
-        $('.next').click(function(){ $('.carousel').carousel('next');return false; });
-        $('.prev').click(function(){ $('.carousel').carousel('prev');return false; });
+        $('.next').click(function(){ $(this).parents('.mImagesContainer').find('.carousel').carousel('next');return false; });
+        $('.prev').click(function(){ $(this).parents('.mImagesContainer').find('.carousel').carousel('prev');return false; });
     })(jQuery);
 </script>
 
@@ -48,20 +48,23 @@
 <script>
     //Variables
     let mImagesPlaceholderDivRef = $('.mImagesPlaceholderDiv');
-    let mImagesInputRef = $('.mImagesUploadFile');
     let templateRef = $('.carouselCardTemplate');
-    let carouselInnerRef = $('.carousel-inner');
-    let mImagesPreviewDivRef = $('.mImagesPreview');
 
-    mImagesPlaceholderDivRef.click(changeMImages);
+    mImagesPlaceholderDivRef.click(function(){
+        changeMImages($(this));
+    });
 
     function previewMImages(input){
+        let carouselInnerRef = input.parents('.mImagesContainer').find('.carousel-inner');
+        let mImagesPreviewDivRef = input.parents('.mImagesContainer').find('.mImagesPreview');
+        let mImagesPlaceholderDivRef = input.parents('.mImagesContainer').find('.mImagesPlaceholderDiv');
+
         if(!validateFileInput_maxSize('.box-body')){
             focusOn_firstFileInput_withMaxSizeCondition('.box-body');
         }
 
         let carouselCards = [];
-        $.each(input.files, function(){
+        $.each(input[0].files, function(){
             carouselCards.push(templateRef.html());     //Pushing cards for the number of times the files.
         });
 
@@ -70,23 +73,23 @@
         carouselInnerRef.html(carouselSets.join(''));
 
         //Setting the images
-        $('.mImagesPreviewHolder').each(function(key, ele){
+        input.parents('.mImagesContainer').find('.mImagesPreviewHolder').each(function(key, ele){
             ele = $(ele);
             ele.attr('src', '{{ route('images_default',['resolution' => '250x250']) }}');
             let reader = new FileReader();
             reader.onload = function (e) {
                 ele.attr('src', e.target.result);
             };
-            reader.readAsDataURL(input.files[key]);
+            reader.readAsDataURL(input[0].files[key]);
 
             //Obtaining box ref
             let cardRef = ele.closest('.box');
 
             //Setting file name to display
-            cardRef.find('strong.mImageFileName').html(input.files[key].name);
+            cardRef.find('strong.mImageFileName').html(input[0].files[key].name);
 
             //Setting file name to makePrimary btn
-            cardRef.find('button.makePrimary').data('filename',input.files[key].name);
+            cardRef.find('button.makePrimary').data('filename',input[0].files[key].name);
         });
 
         mImagesPlaceholderDivRef.addClass("d-none");
@@ -111,7 +114,10 @@
         return carouselSets;
     }
 
-    function changeMImages(){
+    function changeMImages(Ref){
+        let mImagesInputRef = Ref.parents('.mImagesContainer').find('input[type=file].mImagesUploadFile');
+        let mImagesPreviewDivRef = Ref.parents('.mImagesContainer').find('.mImagesPreview');
+        let mImagesPlaceholderDivRef = Ref.parents('.mImagesContainer').find('.mImagesPlaceholderDiv');
         mImagesInputRef.prop("value","");
         mImagesInputRef.click();
         mImagesPreviewDivRef.addClass("d-none");
@@ -122,12 +128,11 @@
 
 
     //Set Primary Image
-    let primaryImgInputRef = $('#primaryImage_id');
-    let bodyRef = $('body');
-    bodyRef.on('click','button.makePrimary',function(){
+    let mImagesBodyRef = $('body');
+    mImagesBodyRef.on('click','button.makePrimary',function(){
         let dataFileName = $(this).data('filename');
         if(dataFileName !== undefined) {
-            primaryImgInputRef.val(dataFileName);
+            $(this).parents('div.mImagesMainDiv').find('input.primaryImage').val(dataFileName);
             toastr.success("Primary Image set to \'" + dataFileName + "\'!",'Success!');
 
             updatePrimaryBtnUi_forBtn($(this))
@@ -138,12 +143,12 @@
 
     function updatePrimaryBtnUi_forBtn(btnRef) {
         //Removing primary class from existing primary btn
-        $('button.primary').removeClass('primary');
+        btnRef.parents('.mImagesContainer').find('button.primary').removeClass('primary');
 
         //Updating button classes & text
         btnRef.addClass('btn-success primary').removeClass('btn-primary')
             .html('<i class="ionicons ion-android-star"></i> PRIMARY');
-        $('button.makePrimary:not(.primary)').each(function(key, ele){
+        btnRef.parents('.mImagesContainer').find('button.makePrimary:not(.primary)').each(function(key, ele){
             ele = $(ele);
             ele.addClass('btn-primary').removeClass('btn-success primary')
                 .html('<i class="ionicons ion-android-star-outline"></i> MAKE PRIMARY');
@@ -151,7 +156,10 @@
     }
 
 
-    function setExistingImages(details){
+    function setExistingImages(details, input = $('input[type=file].mImagesUploadFile')){
+        let carouselInnerRef = input.parents('.mImagesContainer').find('.carousel-inner');
+        let mImagesPreviewDivRef = input.parents('.mImagesContainer').find('div.mImagesPreview');
+        let mImagesPlaceholderDivRef = input.parents('.mImagesContainer').find('div.mImagesPlaceholderDiv');
         let existingImagesCardTemplate = $('.carouselCardTemplate_forExisting');
 
         let carouselCards = [];
@@ -167,7 +175,7 @@
 
         //Setting primary image
         if(details.hasOwnProperty('primaryImage')) {
-            let firstCardImageRef = $('.mImagesPreviewHolder:first');
+            let firstCardImageRef = input.parents('.mImagesContainer').find('.mImagesPreviewHolder:first');
             firstCardImageRef.attr('src', details['primaryImage']['url']);
             firstCardImageRef.addClass('primary')
             firstCardImageRef.closest('.box').find('button.makePrimary').addClass('btn-success primary').removeClass('btn-primary')
@@ -180,7 +188,7 @@
         }
 
         //Setting the images
-        $('.mImagesPreviewHolder:not(.primary)').each(function(key, ele){
+        input.parents('.mImagesContainer').find('.mImagesPreviewHolder:not(.primary)').each(function(key, ele){
             ele = $(ele);
             ele.attr('src', '{{ route('images_default','500x500') }}');
             ele.attr('src', details['images'][key]['url']);

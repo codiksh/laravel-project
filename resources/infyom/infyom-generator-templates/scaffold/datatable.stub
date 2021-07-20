@@ -76,7 +76,9 @@ class $MODEL_NAME$DataTable extends DataTable
     protected function getColumns()
     {
         return [
-            $DATATABLE_COLUMNS$
+            $DATATABLE_COLUMNS$,
+            'created_at' => ['title' => 'Added on'],
+            'updated_at' => ['title' => 'Updated on'],
         ];
     }
 

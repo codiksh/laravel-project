@@ -1,23 +1,28 @@
 <script>
-    $('.datepicker').daterangepicker({
-        timePicker: false,
-        singleDatePicker: true,
-        showDropdowns: true,
-        autoApply: true,
-        locale: {
-            "format": "DD/MM/YYYY",
-        },
-        autoUpdateInput: false,
-    }).on('apply.daterangepicker', function (ev, picker) {
-        $(this).val(picker.startDate.format('DD/MM/YYYY'));
-        if($(this).hasClass('filter'))
-            $(this).trigger('change');
-    });
+    function initDatepicker() {
+        $('.datepicker').daterangepicker({
+            timePicker: false,
+            singleDatePicker: true,
+            showDropdowns: true,
+            autoApply: true,
+            locale: {
+                "format": "DD/MM/YYYY",
+            },
+            autoUpdateInput: false,
+        }).on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('DD/MM/YYYY'));
+            if ($(this).hasClass('filter'))
+                $(this).trigger('change');
+        });
+    }
 
+    initDatepicker();
     $('.datetimepicker').daterangepicker({
         timePicker: true,
         singleDatePicker: true,
         showDropdowns: true,
+        timePicker24Hour: true,
+        timePickerIncrement: 5,
         autoApply: true,
         locale: {
             "format": "DD/MM/YYYY HH:mm",
@@ -25,6 +30,17 @@
         autoUpdateInput: false,
     }).on('apply.daterangepicker', function (ev, picker) {
         $(this).val(picker.startDate.format('DD/MM/YYYY HH:mm'));
+    });
+
+    $('.dateRangePicker').daterangepicker({
+        timePicker: false,
+        autoApply: true,
+        locale: {
+            "format": "DD/MM/YYYY",
+        },
+    }).on('apply.daterangepicker', function (ev, picker) {
+        if ($(this).hasClass('filter'))
+            $(this).trigger('change');
     });
 
     /**
