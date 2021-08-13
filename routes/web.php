@@ -28,4 +28,9 @@ Route::group(['prefix' => 'admin',
     'middleware' => ['auth',
         'role:Super Admin'],], function(){
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class, ["as" => 'admin']);
+
+    Route::group(['prefix'=>'user-tokens/{user}', 'as'=>'admin.userTokens.'], function() {
+        Route::get('index', [\App\Http\Controllers\Admin\UserTokenController::class, 'index'])->name('index');
+        Route::post('generate', [\App\Http\Controllers\Admin\UserTokenController::class, 'generate'])->name('generate');
+    });
 });
