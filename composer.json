@@ -19,6 +19,7 @@
         "infyomlabs/adminlte-templates": "^2.0",
         "infyomlabs/laravel-generator": "8.0.x-dev",
         "laravel/framework": "^8.12",
+        "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.2",
         "pragmarx/version": "^1.2",
