@@ -32,5 +32,6 @@ Route::group(['prefix' => 'admin',
     Route::group(['prefix'=>'user-tokens/{user}', 'as'=>'admin.userTokens.'], function() {
         Route::get('index', [\App\Http\Controllers\Admin\UserTokenController::class, 'index'])->name('index');
         Route::post('generate', [\App\Http\Controllers\Admin\UserTokenController::class, 'generate'])->name('generate');
+        Route::delete('destroy/{token}', [\App\Http\Controllers\Admin\UserTokenController::class, 'destroy'])->name('destroy');
     });
 });

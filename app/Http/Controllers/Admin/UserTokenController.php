@@ -6,6 +6,7 @@ use App\DataTables\Admin\TokenDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\PersonalAccessToken;
 use Response;
 
 class UserTokenController extends Controller
@@ -22,10 +23,25 @@ class UserTokenController extends Controller
         return $tokenDataTable->render('admin.tokens.index');
     }
 
+    /**
+     * Generate user token
+     *
+     * @param User $user
+     * @param Request $request
+     * @return mixed
+     */
     public function generate(User $user, Request $request) {
 
         $token = $user->createToken('Auth-token')->plainTextToken;
 
         return Response::json(['message' => 'Token generated successfully','token'=>$token]);
+    }
+
+    public function destroy($userid, $tokenid, Request $request, PersonalAccessToken $personalAccessToken)
+    {
+        $model = PersonalAccessToken::findOrFail($tokenid);
+        $model->delete();
+
+        return Response::json(['message' => 'User deleted successfully']);
     }
 }

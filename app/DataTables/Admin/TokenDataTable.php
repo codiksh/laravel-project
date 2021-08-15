@@ -30,7 +30,9 @@ class TokenDataTable extends DataTable
                 return Carbon::createFromFormat('Y-m-d H:i:s',$personalAccessToken->updated_at)->toDayDateTimeString();
             })
 
-            ->addColumn('action', 'admin.tokens.datatables_actions')
+            ->addColumn('action', function (PersonalAccessToken $personalAccessToken) {
+                return View('admin.tokens.datatables_actions', ['PersonalAccessToken' => $personalAccessToken])->render();
+            })
             ->rawColumns(['action']);
 
     }
