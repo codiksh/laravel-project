@@ -37,6 +37,15 @@ class UserTokenController extends Controller
         return Response::json(['message' => 'Token generated successfully','token'=>$token]);
     }
 
+    /**
+     * Delete User token
+     *
+     * @param $userid
+     * @param $tokenid
+     * @param Request $request
+     * @param PersonalAccessToken $personalAccessToken
+     * @return mixed
+     */
     public function destroy($userid, $tokenid, Request $request, PersonalAccessToken $personalAccessToken)
     {
         $model = PersonalAccessToken::findOrFail($tokenid);
