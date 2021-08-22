@@ -7,6 +7,10 @@
         "laravel"
     ],
     "license": "MIT",
+    "author": {
+        "name": "Team Codiksh",
+        "email": "email@codiksh.in"
+    },
     "require": {
         "php": "^7.3|^8.0",
         "ext-intl": "*",
