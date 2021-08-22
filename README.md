@@ -23,7 +23,7 @@ Ready to use users manager
 
 
 ## Steps to setup
-1. Run `composer require codiksh/laravel-project`.
+1. Run `composer create-project --prefer-dist codiksh/laravel-project {project-name}`.
 2. Create Database.
 3. Copy `.env.example` as `.env` and Update following in `.env`
     1. Name
