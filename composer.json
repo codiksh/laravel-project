@@ -1,10 +1,11 @@
 {
-    "name": "laravel/laravel",
+    "name": "codiksh/laravel-project",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Ready to use Laravel admin panel.",
     "keywords": [
         "framework",
-        "laravel"
+        "laravel",
+        "admin panel"
     ],
     "license": "MIT",
     "author": {
