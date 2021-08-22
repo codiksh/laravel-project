@@ -23,17 +23,16 @@ Ready to use users manager
 
 
 ## Steps to setup
-1. Clone this repository 
-2. Run `composer install`.
-3. Create Database.
-4. Copy `.env.example` as `.env` and Update following in `.env`
+1. Run `composer require codiksh/laravel-project`.
+2. Create Database.
+3. Copy `.env.example` as `.env` and Update following in `.env`
     1. Name
     2. URL
     3. DB credentials
     4. Email Credentials
     5. Update `MY_SQL_VERSION`, if it is below `8`. **this is mandatory, otherwise, it would result in error while migrating.**
-5. Run `php artisan codiksh:install-template`.
-6. Configure `medialibrary` config for `LocalStore`.
+4. Run `php artisan codiksh:install-template`.
+5. Configure `medialibrary` config for `LocalStore`.
 
 
 ## Breaking changes as compare to L7
