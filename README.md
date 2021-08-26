@@ -9,6 +9,7 @@ A ready to use Laravel 8 based Admin panel, using various in-house helpers and w
 6. [Arcanedev's Log viewer](https://github.com/ARCANEDEV/LogViewer)
 7. [Barryvdh's Debugbar](https://github.com/barryvdh/laravel-debugbar)
 8. [Barryvdh's IDE Helper](https://github.com/barryvdh/laravel-ide-helper)
+9. [Laravel Sanctum, for ready-to-use API authentications](https://laravel.com/docs/8.x/sanctum)
 
 ## Glimpses
 Login Page as default in Laravel 8
