@@ -14,6 +14,7 @@ use App\Models\Project;
 use App\Models\Task;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Carbon\Carbon;
+use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -354,5 +355,54 @@ class GeneralHelperFunctions {
     public static function calculateChangePercentage($new, $old) {
         if($old == 0)   return $new * 100;
         return round((($new-$old)/$old), 2) * 100;
+    }
+
+    /**
+     * Prepares HTML date, such that, displaying text is shorter text, while title is detailed text.
+     * @param $date
+     * @param string $format
+     * @return string
+     */
+    public static function prepareHtmlDate($date, $format = 'Y-m-d H:i:s') {
+        if(is_null($date))  return '';
+        try {
+            $date = Carbon::parse($date);
+        }catch (InvalidFormatException $e){
+            $date = Carbon::createFromFormat($format, $date);
+        }
+        return '<p title="' . $date->toDayDateTimeString() . '">' . $date->format('F d, Y') . '</p>';
+    }
+
+    /**
+     * Checks if the input is valid uuid.
+     * @param $uuid
+     * @return bool
+     */
+    public static function is_uuid($uuid) {
+        if (!is_string($uuid) || (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $uuid) !== 1)) {
+            return false;
+        }
+        return true;
+    }
+
+    public static function getRulesForArrFilterInputs($rules, $keyName, $required = false, $includeFilterTypes = true) {
+        return [
+            $keyName => ($required ? 'required' : 'nullable') . '|array',
+            "$keyName.*" => ($required ? 'required' : 'nullable') . '|' . $rules,
+            "{$keyName}_type" => 'nullable|in:In,NotIn',
+        ];
+    }
+
+    /**
+     * Gets ordinal of given number. like 1st, 2nd, 3rd
+     * @param $number
+     * @return string
+     */
+    public static function getOrdinal($number) {
+        $ends = array('th','st','nd','rd','th','th','th','th','th','th');
+        if ((($number % 100) >= 11) && (($number%100) <= 13))
+            return $number. 'th';
+        else
+            return $number. $ends[$number % 10];
     }
 }

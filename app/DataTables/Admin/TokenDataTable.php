@@ -1,13 +1,13 @@
 <?php
 
-namespace $NAMESPACE_DATATABLES$;
+namespace App\DataTables\Admin;
 
-use $NAMESPACE_MODEL$\$MODEL_NAME$;
-use App\MyClasses\GeneralHelperFunctions;
+use Carbon\Carbon;
+use Laravel\Sanctum\PersonalAccessToken;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
-class $MODEL_NAME$DataTable extends DataTable
+class TokenDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -20,23 +20,30 @@ class $MODEL_NAME$DataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
 
         return $dataTable
-            ->editColumn('created_at', function ($MODEL_NAME$ $model){
-                return GeneralHelperFunctions::prepareHtmlDate($model->created_at);
+            ->editColumn('last_used_at', function (PersonalAccessToken $personalAccessToken){
+                return Carbon::createFromFormat('Y-m-d H:i:s',$personalAccessToken->created_at)->toDayDateTimeString();
             })
-            ->editColumn('updated_at', function ($MODEL_NAME$ $model){
-                return GeneralHelperFunctions::prepareHtmlDate($model->updated_at);
+            ->editColumn('created_at', function (PersonalAccessToken $personalAccessToken){
+                return Carbon::createFromFormat('Y-m-d H:i:s',$personalAccessToken->created_at)->toDayDateTimeString();
             })
-            ->rawColumns(['created_at', 'updated_at', 'action'])
-            ->addColumn('action', '$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.datatables_actions');
+            ->editColumn('updated_at', function (PersonalAccessToken $personalAccessToken){
+                return Carbon::createFromFormat('Y-m-d H:i:s',$personalAccessToken->updated_at)->toDayDateTimeString();
+            })
+
+            ->addColumn('action', function (PersonalAccessToken $personalAccessToken) {
+                return View('admin.tokens.datatables_actions', ['PersonalAccessToken' => $personalAccessToken])->render();
+            })
+            ->rawColumns(['action']);
+
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\$MODEL_NAME$ $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param PersonalAccessToken $model
+     * @return mixed
      */
-    public function query($MODEL_NAME$ $model)
+    public function query(PersonalAccessToken $model)
     {
         return $model->newQuery();
     }
@@ -54,7 +61,7 @@ class $MODEL_NAME$DataTable extends DataTable
             ->addAction(['width' => '120px', 'printable' => false])
             ->parameters([
                 'responsive'=> true,
-                'dom'       => 'B<\'row p-t-15\' <\'col-sm-6\'l><\'col-sm-6\'f>>rt<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>',
+                'dom'       => 'B<\'row pt-15\' <\'col-sm-6\'l><\'col-sm-6\'f>>rt<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>',
                 'stateSave' => true,
                 'order'     => [[0, 'desc']],
                 'buttons'   => [
@@ -76,7 +83,8 @@ class $MODEL_NAME$DataTable extends DataTable
     protected function getColumns()
     {
         return [
-            $DATATABLE_COLUMNS$,
+            'name',
+            'last_used_at' => ['title' => 'last used on'],
             'created_at' => ['title' => 'Added on'],
             'updated_at' => ['title' => 'Updated on'],
         ];
@@ -89,6 +97,6 @@ class $MODEL_NAME$DataTable extends DataTable
      */
     protected function filename()
     {
-        return '$MODEL_NAME_PLURAL_SNAKE$datatable_' . time();
+        return 'tokendatatable_' . time();
     }
 }

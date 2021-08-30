@@ -78,8 +78,11 @@
                 success: function (res) {
                     result = res;
                     hideWaitMeLoading('', $('.content-wrapper'));
-                    LaravelDataTables[tableId].ajax.reload(null, false);
                     toastr["success"](result.message);
+                    setTimeout(function (){
+                        $('.breadcrumb-item a:first').attr('href') !== $('.breadcrumb-item a:last').attr('href') ? window.location.replace($('.breadcrumb-item a:last').attr('href')) : "" ;
+                    }, 4000)
+                    LaravelDataTables[tableId].ajax.reload(null, false);
                 },
                 error: function (jqXHR) {
                     result = {status: jqXHR.status, message: JSON.parse(jqXHR.responseText).message};
@@ -88,6 +91,34 @@
                 }
             });
         }
+    }
+
+    function ajaxCallTokenGenerate(url) {
+        $.ajax({
+            url:url,
+            method:"POST",
+            beforeSend: function () {
+                $('#ajax_alert_div').html('');
+                showWaitMeLoading('Fetching details...', '', $('.content-wrapper'));
+            },
+            success: function (res) {
+                result = res;
+                hideWaitMeLoading('', $('.content-wrapper'));
+                $('.token_alert').html('<div class="alert alert-success alert-dismissible pt-4 pb-4" role="alert">'+
+                    '  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span>\n' +
+                    '  </button>'+
+                    '<h3>Success!</h3>'+
+                    '<div class="pt-4">Token is generated successfully.</div>'+
+                    '<div class="text-white">6|UWe97VW6lUWskY1p5nKORFrPzC5uNk6Bnio2rnhM</div>'+
+                    '</div>');
+                LaravelDataTables[tableId].ajax.reload(null, false);
+            },
+            error: function (jqXHR) {
+                result = {status: jqXHR.status, message: JSON.parse(jqXHR.responseText).message};
+                hideWaitMeLoading('', $('.content-wrapper'));
+                toastr["error"](result.message);
+            }
+        });
     }
 
     function showWaitMeLoading(text, containerId, selector = undefined) {
@@ -123,7 +154,11 @@
 
         if (ajax_Response.status === 422) {
             ajax_alert_div.append('<h4 id="ajax_alert_header">Error!</h4>');
-            ajax_alert_div.append($('<span>Some invalid inputs were found, please look for the following list of invalid inputs.</span>'));
+            let titleMsg = 'Some invalid inputs were found, please look for the following list of invalid inputs.';
+            if(ajax_Response.message !== undefined && ajax_Response.message !== 'The given data was invalid.'){
+                titleMsg = ajax_Response.message;
+            }
+            ajax_alert_div.append($(`<span>${titleMsg}</span>`));
             let ul_el = '<ul style="margin: 0 !important;padding-left: 22px;">';
             $.each(ajax_Response.errorData, function (i, e) {
                 ul_el += '<li>' + e[0] + '</li>';
@@ -141,7 +176,9 @@
     function ajax_loadToastMsg(ajax_Response) {
         if (ajax_Response.status === 422) {
             $.each(ajax_Response.errorData, function (i, e) {
-                toastr['error'](e[0]);
+                $.each(e, function(key, error){
+                    toastr['error'](error);
+                });
             });
         } else
             toastr[ajax_Response.status === 200 ? 'success' : 'error'](ajax_Response.message);
