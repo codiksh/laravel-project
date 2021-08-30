@@ -112,16 +112,29 @@ class User extends Authenticatable implements HasMedia
         return 'uuid';
     }
 
+
     /**
      * Things require during the boot
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        //Auto-adding uuid to newly created instances
+        self::creating(function ($model) {
+            $model->uuid = Str::uuid()->toString();
+        });
+    }
+
+
+    /**
+     * Things require after the boot
      */
     protected static function booted() {
         parent::booted();
 
 
         static::creating(function(User $user){
-            $user->uuid = Str::uuid()->toString();
-
             $defaultMedia = 'https://ui-avatars.com/api/?' . http_build_query(['name' => $user->name, 'size' => '350']);
             GeneralHelperFunctions::updateOrCreate_defaultMedia($user, $defaultMedia, 'avatar', true);
         });
