@@ -47,7 +47,24 @@ class DeployingCommand extends Command
         $this->call('cache:clear');
         $this->call('config:cache');
         $this->call('config:clear');
+        $this->call('migrate');
+        $this->call('queue:restart');
+        system('systemctl reload supervisor');
         $this->call('version:absorb');
+        if(!empty(config('codiksh.repo_path')) && file_exists(config('codiksh.repo_path'))){
+            if($this->confirm('Would you like to run the permission command at ' . config('codiksh.repo_path'))) {
+                $mainDirectoryPath = config('codiksh.repo_path') . '../';
+                system('chown -R www-data:www-data ' . $mainDirectoryPath);
+                system('find ' . $mainDirectoryPath . ' -type f -exec chmod 644 {} \;');
+                system('find ' . $mainDirectoryPath . ' -type d -exec chmod 755 {} \;');
+                system('chgrp -R www-data ' . config('codiksh.repo_path') . 'storage/ '
+                    . config('codiksh.repo_path') . 'bootstrap/cache/ '
+                    . (config('filesystems.disks.localStore.root') ?? ''));
+                system('chmod -R ug+rwx ' . config('codiksh.repo_path') . 'storage/ '
+                    . config('codiksh.repo_path') . 'bootstrap/cache/ '
+                    . (config('filesystems.disks.localStore.root') ?? ''));
+            }
+        }
 //        $this->call('optimize'); TODO - Removed optimize in the end, since, with this, we can not use env() directly within code, ot has to be through config only. And since, we do not know well about this, temporarily commenting the same.
         return 0;
     }

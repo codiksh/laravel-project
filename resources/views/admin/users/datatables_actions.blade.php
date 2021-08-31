@@ -14,7 +14,7 @@
                 <i class="fa fa-cog"></i>&nbsp;&nbsp;Manage Token
             </a>
             <a class='dropdown-item py-2 bg-danger' href="javascript:void(0);" style="color: white; padding-bottom: 10px" onclick="ajaxCallDelete('{{ route('admin.users.destroy', $uuid) }}',
-                'Are you sure?', 'sound-index')">
+                'Are you sure?', 'User-index')">
                 <i class="fas fa-trash-alt mr-1"></i>&nbsp;&nbsp;Delete
             </a>
         </div>
