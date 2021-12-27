@@ -135,8 +135,6 @@ class User extends Authenticatable implements HasMedia
 
 
         static::creating(function(User $user){
-            $defaultMedia = 'https://ui-avatars.com/api/?' . http_build_query(['name' => $user->name, 'size' => '350']);
-            GeneralHelperFunctions::updateOrCreate_defaultMedia($user, $defaultMedia, 'avatar', true);
         });
     }
 
