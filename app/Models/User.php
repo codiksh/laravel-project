@@ -94,7 +94,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     public static $rules = [
-        'avatar' => 'nullable|image|max:2048',
+        'avatar' => 'nullable',
         'name' => 'required|string',
         'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
         'mobile' => 'nullable|integer|digits:10',

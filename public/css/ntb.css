@@ -71,49 +71,63 @@ a.rspSuccessBtns{
     width: 2.1rem;
 }
 
-/*
-=====================================================
-    IMAGE PREVIEWER                         BELOW
-=====================================================
- */
-div.sImageContainer{
-    width: 100%;
-    padding-top: 100%; /* 1:1 Aspect Ratio */
-    position: relative; /* If you want text inside of it */
-}
-div.sImagePlaceholderDiv{
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    border: 1px dashed;
-    cursor: pointer;
-    background-color: #dedede;
-}
-div.sImagePlaceholderText{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    /*padding: 39px;*/
-}
-.sImageOuterContainer{
+/*******************************************************
+DROPZONE CSS
+********************************************************/
+
+div.dz-sImageOuterContainer{
     max-width: 250px;
     margin: auto;
     min-height: 29vh;
     display: flex;
     align-items: center;
 }
-div.sImagePreview{
+
+div.dz-sImageContainer{
+    width: 100%;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+    position: relative; /* If you want text inside of it */
+}
+
+div.single-image-upload {
+    cursor: pointer !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 1px dashed;
+    background-color: #dedede;
+}
+
+div.avatar-upload div.dz-message{
+    display: none;
+}
+div.dz-sImagePlaceholderText{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    cursor: pointer !important;
+}
+
+.avatar-upload.dropzone{
+    /*padding: 0 !important;*/
+    /*min-height: 235px !important;*/
+    /*border: none !important;*/
+}
+
+/* Image Previewer */
+
+div.dz-sImagePreview{
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
 }
-div.sImagePreview img.sImagePreviewImg{
+div.dz-sImagePreview img.dz-sImagePreviewImg{
     max-height: 100%;
     max-width: 100%;
     position:absolute;
@@ -123,7 +137,7 @@ div.sImagePreview img.sImagePreviewImg{
     bottom:0;
     margin:auto;
 }
-div.sImagePreview div.sImage_Overlay{
+div.dz-sImagePreview div.dz_sImage_Overlay{
     position: absolute;
     top: 0;
     bottom: 0;
@@ -135,10 +149,10 @@ div.sImagePreview div.sImage_Overlay{
     transition: .3s ease;
     background-color: #ff2323;
 }
-div.sImagePreview:hover div.sImage_Overlay{
+div.dz-sImagePreview:hover div.dz_sImage_Overlay{
     opacity: 0.5;
 }
-div.sImagePreview div.sImage_Overlay a.icon{
+div.dz-sImagePreview div.dz_sImage_Overlay a.icon{
     color: white;
     font-size: 50px;
     position: absolute;
@@ -148,8 +162,93 @@ div.sImagePreview div.sImage_Overlay a.icon{
     -ms-transform: translate(-50%, -50%);
     text-align: center;
 }
-div.sImagePreview div.sImage_Overlay a.icon i.fa-trash{
+div.dz-sImagePreview div.dz_sImage_Overlay a.icon i.fa-trash{
     color: #eee;
+}
+
+.avatar-upload.dropzone .dz-preview.dz-image-preview {
+    background: transparent !important;
+    width: 100%;
+}
+
+.avatar-upload.dropzone .dz-preview {
+    margin: 0 !important;
+}
+
+.avatar-upload.dropzone .dz-preview .dz-image {
+    border-radius: 0px !important;
+    height: auto !important;
+    width: 100%;
+}
+
+.avatar-upload.dropzone .dz-preview .dz-image img {
+    width:100%;
+}
+
+.avatar-upload.dropzone .dz-filename, .avatar-upload.dropzone .dz-size {
+    display:none;
+}
+
+.avatar-upload.dropzone .dz-preview .dz-progress {
+    /*left: 25% !important;*/
+    /*width: 200px;*/
+}
+
+.avatar-upload.dropzone a.dz-remove{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+    font-size: 50px;
+    transform: translate(-50%,-50%);
+}
+
+.avatar-upload.dropzone a.dz-remove i {
+    cursor: pointer;
+    color: white !important;
+}
+
+div.preview-container:hover a.dz-remove{
+    opacity: 0.5;
+}
+a.dz-remove{
+    opacity: 0;
+}
+
+div.preview-container:hover div.dz-sImagePreview{
+    display: block;
+}
+
+div.imageOverlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0.5;
+    transition: .3s ease;
+    background-color: #ff2323;
+    display: none;
+    cursor: pointer;
+}
+
+div.preview-container:hover div.imageOverlay{
+    display: block;
+}
+
+div.dz-sImagePreview div.dz_sImage_Overlay a.icon i{
+    cursor: pointer !important;
+}
+
+div.preview-container .dz-preview {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    margin: auto !important;
 }
 .mayContainError label.error{
     font-size: 12px;
