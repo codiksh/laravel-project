@@ -46,10 +46,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="https://assets.codiksh.in/storage/media/assets/12/daterangepicker.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="https://assets.codiksh.in/storage/media/assets/39/adminlte.min.css">
-
+    <!-- DROPZONE CSS -->
+    <link  href="{{ asset('vendor/dropzone/dropzone.css') }}"  rel="stylesheet">
     <!-- NTB CSS -->
     <link rel="stylesheet" href="{{ asset('css/ntb.css') }}">
-    <link  href="{{ asset('vendor/dropzone/dropzone.css') }}"  rel="stylesheet">
+
 
     @yield('css')
     @stack('stackedCss')
