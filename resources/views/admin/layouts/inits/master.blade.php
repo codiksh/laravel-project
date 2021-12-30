@@ -10,3 +10,4 @@
 @include('admin.layouts.ajaxCalls')
 @include('admin.layouts.inits.timepicker')
 @include('admin.layouts.inits.datatables_action')
+@include('admin.layouts.inits.dropzoneSImage')

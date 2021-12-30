@@ -34,4 +34,9 @@ Route::group(['prefix' => 'admin',
         Route::post('generate', [\App\Http\Controllers\Admin\UserTokenController::class, 'generate'])->name('generate');
         Route::delete('destroy/{token}', [\App\Http\Controllers\Admin\UserTokenController::class, 'destroy'])->name('destroy');
     });
+
+    Route::group(['prefix' => 'file', 'as' => 'file.'], function() {
+        Route::post('upload-media', [\App\Http\Controllers\Admin\UploadMediaController::class , 'uploadMedia'])->name('upload');
+        Route::post('remove-media', [\App\Http\Controllers\Admin\UploadMediaController::class , 'removeMedia'])->name('remove');
+    });
 });

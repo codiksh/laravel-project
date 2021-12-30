@@ -27,32 +27,15 @@
         </div>
     </div>
 </div>
-<div class="sImageOuterContainer col-sm-3">
-    <div id="sImageContainer_id" class='sImageContainer mayContainError fastAnimation' tabindex='1'>
-        <div class='sImagePlaceholderDiv {{ isset($user) ? 'd-none' : '' }}'>
-            <div class='sImagePlaceholderText text-center'>
-                Select User Avatar<br/>(Max: 1 MB)
-            </div>
-        </div>
-        <div class='sImagePreview {{ isset($user) ? '' : 'd-none' }}'>
-            <img id='sImagePreview_id' class='sImagePreviewImg' alt='Avatar'
-                 src='{{ isset($user) ? $user->avatarUrl['250'] : route('images_default',['resolution' => '250x250']) }}'
-            />
-            <div class='sImage_Overlay'>
-                <a href='#' class='icon removeSImageBtn' title='Avatar'>
-                    <i class='fa fa-trash'></i>
-                </a>
-            </div>
-        </div>
-    </div>
-    <input type="file" name="avatar" id="sImage_id"
-           class="uploadFile img" value="Upload Photo"
-           style="width: 0px;height: 0px;overflow: hidden;" max-size=1048576 data-sImageDeletedInputName="avatarDeleted"
-           onchange=previewImg(this);
-    >
-    <input type="hidden" name="avatarDeleted" value="0">
-</div>
 
+@include('admin.layouts.scripts.dzSingleImageField', [
+    'record' => isset($user) ? $user : '',
+    'previewUrl' => isset($user) ? $user->avatarUrl['250'] : route('images_default',['resolution' => '250x250']),
+    'mediaUuid' => isset($user) ? $user->getFirstMedia('avatar')->uuid ?? '' : '',
+    'fieldName' => 'avatar',
+    'elementId' => 'user_avatar',
+    'placeHolderText' => "Select User Avatar<br/>(Max: 1 MB)"
+])
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
@@ -60,4 +43,9 @@
     <a href="{{ route('admin.users.index') }}" class="btn btn-default">Cancel</a>
 </div>
 
-
+@push('stackedScripts')
+    <script>
+        Dropzone.autoDiscover = false;
+        uploadImageByDropzone('#user_avatar');
+    </script>
+@endpush

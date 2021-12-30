@@ -46,9 +46,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="https://assets.codiksh.in/storage/media/assets/12/daterangepicker.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="https://assets.codiksh.in/storage/media/assets/39/adminlte.min.css">
-
+    <!-- DROPZONE CSS -->
+    <link  href="{{ asset('vendor/dropzone/dropzone.css') }}"  rel="stylesheet">
     <!-- NTB CSS -->
     <link rel="stylesheet" href="{{ asset('css/ntb.css') }}">
+
 
     @yield('css')
     @stack('stackedCss')
@@ -146,6 +148,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- AdminLTE App -->
 <script src="https://assets.codiksh.in/storage/media/assets/38/adminlte.min.js"></script>
+<script  src="{{ asset('vendor/dropzone/dropzone.js') }}"></script>
 <script defer>
     $.ajaxSetup({headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }});
     if($(window).width() >= 992 && $(window).width() < 1450) {

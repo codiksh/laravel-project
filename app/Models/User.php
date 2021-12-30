@@ -94,7 +94,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     public static $rules = [
-        'avatar' => 'nullable|image|max:2048',
+        'avatar' => 'nullable',
         'name' => 'required|string',
         'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
         'mobile' => 'nullable|integer|digits:10',
@@ -135,8 +135,6 @@ class User extends Authenticatable implements HasMedia
 
 
         static::creating(function(User $user){
-            $defaultMedia = 'https://ui-avatars.com/api/?' . http_build_query(['name' => $user->name, 'size' => '350']);
-            GeneralHelperFunctions::updateOrCreate_defaultMedia($user, $defaultMedia, 'avatar', true);
         });
     }
 
