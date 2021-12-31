@@ -52,7 +52,7 @@ class UserRepository extends BaseRepository
      * @return bool
      */
     public function setAvatar(User $user, Request $request) {
-        if($request->has('avatar')) {
+        if($request->has('avatar') && !empty($request->input('avatar'))) {
             $uploadedMedia = Media::findByUuid($request->input('avatar'));
             if(!empty($uploadedMedia)) {
                 return $uploadedMedia->move($user, 'avatar');
