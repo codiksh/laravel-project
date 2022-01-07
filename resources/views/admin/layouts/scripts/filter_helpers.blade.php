@@ -37,7 +37,7 @@
         let dataToStore = eleRef.val();
         let storageId = storage_prefix + eleRef.attr('id');
         if(eleRef.is('select')){
-            dataToStore = JSON.stringify(dataToStore);
+            dataToStore = Array.isArray(dataToStore) ? JSON.stringify(dataToStore) : dataToStore;
             if (eleRef.hasClass('hasAjaxSelect2') && eleRef.select2('data') !== undefined) {
                 dataToStore = JSON.stringify(eleRef.select2('data') ?? {});
             }
@@ -58,7 +58,9 @@
     function setDataToInputs(data, Ref){
         if(data !== undefined && data !== null) {
             if (Ref.is('select')) {
-                data = typeof data === 'object' ? data : JSON.parse(data);
+                if(Ref.prop('multiple') || Ref.hasClass('hasAjaxSelect2')) {
+                    data = JSON.parse(data);
+                }
                 if(data === null)   return;
                 if (Ref.hasClass('hasAjaxSelect2')) {
                     if (Array.isArray(data)) {
