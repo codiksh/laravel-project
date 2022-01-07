@@ -4,7 +4,6 @@
 namespace App\MyClasses;
 
 
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -34,21 +33,61 @@ class QueryFilters {
      * Applies Generic Relation Filter
      * @param Request $request
      * @param Builder $QUERY
-     * @param string $relationName
+     * @param string | array $relationName
      * @param string $inputName
      * @param string $filterCol
-     * @param string $filterType
      * @return Builder
      */
     public static function applyRelationFilter(Request $request, Builder $QUERY, $relationName, $inputName, $filterCol) {
-        if($request->has($inputName) && sizeof($request->input($inputName)) > 0) {
-            $filteredArr = $request->input($inputName) ?? [];
+        if($request->has($inputName)) {
+            $relations = is_array($relationName) ? $relationName : [$relationName];
+            $filteredArr = self::getFilteredArr($request, $inputName);
+            if(is_bool($filteredArr) && !$filteredArr)  return $QUERY;
             $filterType = self::getFilterType($request, $inputName);
-            $QUERY = $QUERY->whereHas($relationName,function(Builder $builder) use ($filteredArr, $filterCol, $filterType){
-                $builder->{"where$filterType"}($filterCol, $filteredArr);
+            $QUERY = $QUERY->where(function(Builder $builder) use ($relations, $filteredArr, $filterCol, $filterType){
+                foreach ($relations as $key => $relation) {
+                    $builder->{($key == 0 ? 'w' : 'orW') . "hereHas"}($relation,function(Builder $builder) use ($filteredArr, $filterCol, $filterType){
+                        $builder->{"where$filterType"}($filterCol, $filteredArr);
+                    });
+                }
             });
         }
         return $QUERY;
+    }
+
+    /**
+     * Applies Generic Column Filter
+     * @param Request $request
+     * @param Builder $QUERY
+     * @param string $columnName
+     * @param string $inputName
+     * @return Builder
+     */
+    public static function applyColumnFilter(Request $request, Builder $QUERY, $columnName, $inputName) {
+        if($request->has($inputName)) {
+            $filteredArr = self::getFilteredArr($request, $inputName);
+            if(is_bool($filteredArr) && !$filteredArr)  return $QUERY;
+            $filterType = self::getFilterType($request, $inputName);
+            $QUERY = $QUERY->{"where$filterType"}($columnName, $filteredArr);
+        }
+        return $QUERY;
+    }
+
+    /**
+     * Returns prepared filtered arr from request. Also, tells, if the input is valid or not. If not, then it will return false.
+     * @param Request $request
+     * @param $inputName
+     * @return array|bool|mixed
+     */
+    public static function getFilteredArr(Request $request, $inputName) {
+        if(is_countable($request->input($inputName))){
+            if(count($request->input($inputName)) <= 0)     return false;
+            $filteredArr = ($request->input($inputName) ?? []);
+        } else {
+            if(is_null($request->input($inputName)))    return false;
+            $filteredArr = is_null($request->input($inputName)) ? [] : [$request->input($inputName)];
+        }
+        return $filteredArr;
     }
 
     /**
