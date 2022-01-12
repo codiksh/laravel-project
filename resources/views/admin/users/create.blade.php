@@ -22,7 +22,7 @@
 
                         <div class="card-body">
                             @include('adminlte-templates::common.errors')
-                            {!! Form::open(['route' => 'admin.users.store',  'files' => true]) !!}
+                            {!! Form::open(['route' => 'admin.users.store',  'files' => true, 'class' => 'submitsByAjax']) !!}
                             <div class="row">
                                 @include('admin.users.fields')
                             </div>

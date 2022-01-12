@@ -39,13 +39,31 @@
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+    {!! Form::submit('Save', ['class' => 'btn btn-success rspSuccessBtns']) !!}
     <a href="{{ route('admin.users.index') }}" class="btn btn-default">Cancel</a>
 </div>
 
 @push('stackedScripts')
+    @include('admin.layouts.scripts.regAnotherScript')
+    @include('admin.layouts.scripts.swalAjax')
+
     <script>
         Dropzone.autoDiscover = false;
         uploadImageByDropzone('#user_avatar');
     </script>
+
+    <script>
+        $('.submitsByAjax').submit(function (e) {
+            e.preventDefault();
+            let type = '{{ $type ?? '' }}'
+            let dataToPass = new FormData($(this)[0]);
+            ajaxCallFormSubmit($(this), false, 'Loading! Please wait...', dataToPass,
+                type === 'create' ? postCreate : undefined);
+        });
+
+        function postCreate(){
+            switch_between_register_to_registerAnother_btn($('.submitsByAjax'), false)
+        }
+    </script>
+
 @endpush
