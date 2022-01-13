@@ -57,7 +57,7 @@ class UserController extends AppBaseController
 
         $user->markEmailAsVerified();
 
-        $this->userRepository->setAvatar($user,$request);
+        $this->userRepository->updateOrCreate_avatar($user,$request);
 
         Flash::success('User saved successfully.');
 
@@ -114,7 +114,7 @@ class UserController extends AppBaseController
 
         $user->syncRoles($request->input('role'));
 
-        $this->userRepository->setAvatar($user,$request);
+        $this->userRepository->updateOrCreate_avatar($user,$request);
 
         Flash::success('User updated successfully.');
 
