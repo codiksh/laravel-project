@@ -19,7 +19,7 @@
                 </div>
             </div>
         @endif
-        <input type="hidden" name="{{ $fieldName }}" id="sImage_id" class="uploaded-media" value="{{ !empty($mediaUuid) ? $mediaUuid : '' }}">
+        <input type="hidden" name="{{ $fieldName }}" id="sImage_id" class="uploaded-media">
         <input type="hidden" name="{{ $fieldName }}Deleted" value="0" class="deleted-media">
     </div>
 </div>
