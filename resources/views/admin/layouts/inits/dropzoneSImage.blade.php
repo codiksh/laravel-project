@@ -1,7 +1,9 @@
 <script>
+    let uploadedFilePath = undefined;
+    let dropzoneInitObject;
     function uploadImageByDropzone(selectedElementId) {
-        let dropzoneElement = $(selectedElementId);
-        $(selectedElementId).dropzone({
+        var dropzoneElement = $(selectedElementId);
+        dropzoneInitObject = new Dropzone(selectedElementId, {
             url: '{{ route('file.upload') }}',
             acceptedFiles: ".jpeg, .jpg, .png, .gif, .mp4,.mov",
             addRemoveLinks: true,
@@ -32,6 +34,10 @@
 
                 this.on("processing", function (file) {
                     dropzoneElement.find('div.single-image-upload').addClass('d-none')
+                });
+
+                this.on("sending", function (file, xhr, formData) {
+                    uploadedFilePath = file;
                 });
             },
             removedfile: function(file)
@@ -82,5 +88,10 @@
                 $(this).removeClass("d-none");
             });
         sImageOuterContainer.find('img.dz-sImagePreviewImg').attr('src', '{{ route('images_default',['resolution' => '250x250']) }}');
+    }
+
+    function reUploadDzFile(){
+        uploadedFilePath.status = Dropzone.ADDED
+        dropzoneInitObject.enqueueFile(uploadedFilePath)
     }
 </script>

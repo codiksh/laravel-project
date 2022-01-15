@@ -28,6 +28,7 @@
             nameFieldRef.focus();
             $('.helper-links').removeClass('d-none');
             $('button.rspMsgDismissible').click();
+            if(typeof reUploadDzFile === 'function')    reUploadDzFile();
         }
     }
 </script>
