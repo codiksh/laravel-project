@@ -38,6 +38,7 @@
 
                 this.on("sending", function (file, xhr, formData) {
                     uploadedFilePath = file;
+                    formData.append('validationCase', '{{ $validationCase ?? null }}');
                 });
             },
             removedfile: function(file)
@@ -49,6 +50,11 @@
                 dropzoneElement.find('.uploaded-media').val(response.uploaded_media_id);
                 dropzoneElement.find('.deleted-media').val(0);
             },
+            error: function (file, response) {
+                var res = response.errors;
+                toastr["error"](res['file']);
+                return false;
+            }
         });
     }
 

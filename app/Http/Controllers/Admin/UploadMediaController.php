@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UploadMediaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ class UploadMediaController extends Controller
      * @param Request $request
      * @return bool|\Illuminate\Http\JsonResponse
      */
-    public function uploadMedia(Request $request)
+    public function uploadMedia(UploadMediaRequest $request)
     {
         $user = Auth::User();
         if($request->hasFile('file')) {
