@@ -79,9 +79,9 @@
 
     $('a.dz-removeSImageBtn').click(function(e) {
         e.preventDefault();
-        removeSImage($(this));
+        removeExistingSImage($(this));
     });
-    function removeSImage(removeRef){
+    function removeExistingSImage(removeRef){
         let sImageOuterContainer = removeRef.parents('div.dz-sImageOuterContainer');
         sImageOuterContainer.find('div.dz-sImagePreview')
             .animateCss('bounceOut').on("webkitAnimationEnd oAnimationEnd msAnimationEnd animationend", function (e) {
