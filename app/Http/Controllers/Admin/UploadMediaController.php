@@ -21,13 +21,15 @@ class UploadMediaController extends Controller
     {
         $user = Auth::User();
         if($request->hasFile('file')) {
-
+            $fileName = $request->file('file')->getClientOriginalName();
             $media = $user->addMedia($request->file('file'))
                 ->toMediaCollection('temp-uploads');
 
             return Response::json([
                 'message' => 'File has been successfully uploaded!',
                 'uploaded_media_id' => $media->uuid,
+                'fileName' => $fileName,
+                'media_id' => $media->id
             ]);
         }
         return true;

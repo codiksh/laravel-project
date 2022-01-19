@@ -13,7 +13,7 @@
                 />
                 <div class='dz_sImage_Overlay'>
                     <a href='' class='icon dz-removeSImageBtn' title='Avatar'
-                       onclick='removeUploadedImage("{{$mediaUuid}}", "Are you sure?", $("#{{$elementId}}"))'>
+                       onclick='removeUploadedSImage("{{$mediaUuid}}", "Are you sure?", $("#{{$elementId}}"))'>
                         <i class='fa fa-trash'></i>
                     </a>
                 </div>

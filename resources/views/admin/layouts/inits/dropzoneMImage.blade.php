@@ -2,7 +2,7 @@
     let uploadedFilePath = undefined;
     let dropzoneInitObject;
     function uploadImageByDropzone(selectedElementId) {
-        var dropzoneElement = $(selectedElementId);
+        let dropzoneElement = $(selectedElementId);
         dropzoneInitObject = new Dropzone(selectedElementId, {
             url: '{{ route('file.upload') }}',
             acceptedFiles: ".jpeg, .jpg, .png, .gif, .mp4,.mov",
@@ -14,8 +14,8 @@
             dictCancelUpload: "",
             dictCancelUploadConfirmation : false,
             maxFiles: 1,
-            thumbnailWidth: 250,
-            thumbnailHeight: 250,
+            thumbnailWidth: 230,
+            thumbnailHeight: 230,
             thumbnailMethod: "contain",
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"

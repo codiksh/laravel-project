@@ -35,16 +35,6 @@ class UploadMediaRequest extends FormRequest
                     'file' => 'required|image|max:2048',
                 ];
                 break;
-            case 'multiple_image_1MB' :
-                $rules = [
-                    'file' => 'required|max:1024|image',
-                ];
-                break;
-            default:
-                $rules = [
-                    'file' => 'required|image',
-                ];
-                break;
         }
         return $rules;
     }
@@ -53,7 +43,6 @@ class UploadMediaRequest extends FormRequest
     {
         switch($uuid){
             case "b0a489a5-bb3c-4e02-9217-d70c57845768": return 'single_image_2MB';
-            case "b0a48955-bb3c-4e02-9217-d70c57845768": return 'multiple_image_1MB';
 
             default: return 'single_image_1MB';
         }

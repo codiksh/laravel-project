@@ -71,6 +71,105 @@ a.rspSuccessBtns{
     width: 2.1rem;
 }
 
+
+/*
+=====================================================
+    IMAGE PREVIEWER                         BELOW
+=====================================================
+ */
+div.sImageContainer{
+    width: 100%;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+    position: relative; /* If you want text inside of it */
+}
+div.sImagePlaceholderDiv{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 1px dashed;
+    cursor: pointer;
+    background-color: #dedede;
+}
+div.sImagePlaceholderText{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    /*padding: 39px;*/
+}
+.sImageOuterContainer{
+    max-width: 250px;
+    margin: auto;
+    min-height: 29vh;
+    display: flex;
+    align-items: center;
+}
+div.sImagePreview{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+div.sImagePreview img.sImagePreviewImg{
+    max-height: 100%;
+    max-width: 100%;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+}
+div.sImagePreview div.sImage_Overlay{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .3s ease;
+    background-color: #ff2323;
+}
+div.sImagePreview:hover div.sImage_Overlay{
+    opacity: 0.5;
+}
+div.sImagePreview div.sImage_Overlay a.icon{
+    color: white;
+    font-size: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+div.sImagePreview div.sImage_Overlay a.icon i.fa-trash{
+    color: #eee;
+}
+
+.mayContainError label.error{
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+    font-weight: normal;
+    color: #f44336;
+}
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+.sVidUploadInfo{
+    padding-left: 15px;
+    font-style: italic;
+    font-weight: bold;
+}
+
 /*******************************************************
 DROPZONE CSS
 ********************************************************/
@@ -259,103 +358,71 @@ div.dz-sImagePreview div.dz_sImage_Overlay a.icon i{
 }
 
 /*
-=====================================================
-    IMAGE PREVIEWER                         BELOW
-=====================================================
+===================================================
+DROPZONE MULTIPLE IMAGES
+===================================================
  */
-div.sImageContainer{
-    width: 100%;
-    padding-top: 100%; /* 1:1 Aspect Ratio */
-    position: relative; /* If you want text inside of it */
+.dz-mImage-upload {
+    position: relative;
 }
-div.sImagePlaceholderDiv{
+.multipleImage {
+    cursor: pointer !important;
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
+    background: #dedede;
     border: 1px dashed;
-    cursor: pointer;
-    background-color: #dedede;
 }
-div.sImagePlaceholderText{
+.dz-mImagesPlaceholderText {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
-    /*padding: 39px;*/
 }
-.sImageOuterContainer{
+.upload-images-title {
+    font-weight: 700;
+}
+.dz-mImagesContainer{
+    margin-bottom: 16px;
+    min-height: 200px;
+}
+.dz-mImagesContainer .dropzone{
+    background: transparent;
+    border: none !important;
+}
+.dz-mImageThumbnail{
     max-width: 250px;
-    margin: auto;
-    min-height: 29vh;
-    display: flex;
-    align-items: center;
+    /*margin: 0 auto;*/
 }
-div.sImagePreview{
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+.dz-mImageThumbnail img{
+    width: 100% !important;
+    height: 250px;
+    object-fit: contain;
 }
-div.sImagePreview img.sImagePreviewImg{
-    max-height: 100%;
-    max-width: 100%;
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    margin:auto;
+.dz-mImagesContainer .dropzone .dz-preview{
+    text-align:center;
 }
-div.sImagePreview div.sImage_Overlay{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
+.dz-mImagesContainer .dropzone .dz-preview.dz-image-preview{
+    background: #dedede !important;
+}
+.dz-mImagesContainer .dz-preview .makePrimary{
+    font-size: 14px;
+}
+.dz-mImagesContainer .dz-preview .dz-remove {
+    margin-top: 0.5rem !important;
+    display: inherit !important;
+}
+.dz-mImagesContainer .dz-preview .dz-image{
+    border-radius: 0 !important;
+}
+.dz-mImagesContainer .dz-preview .dz-image img{
     width: 100%;
-    opacity: 0;
-    transition: .3s ease;
-    background-color: #ff2323;
+    height:100%;
+    object-fit: contain;
 }
-div.sImagePreview:hover div.sImage_Overlay{
-    opacity: 0.5;
-}
-div.sImagePreview div.sImage_Overlay a.icon{
-    color: white;
-    font-size: 50px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-}
-div.sImagePreview div.sImage_Overlay a.icon i.fa-trash{
-    color: #eee;
-}
-
-.mayContainError label.error{
-    font-size: 12px;
-    display: block;
-    margin-top: 5px;
-    font-weight: normal;
-    color: #f44336;
-}
-a.disabled {
-    pointer-events: none;
-    cursor: default;
-}
-.sVidUploadInfo{
-    padding-left: 15px;
-    font-style: italic;
-    font-weight: bold;
-}
-
 
 /*
 =====================================================
