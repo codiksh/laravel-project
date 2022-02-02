@@ -425,6 +425,98 @@ DROPZONE MULTIPLE IMAGES
 }
 
 /*
+=======================================================
+FILE ATTACHMENT DROPZONE CSS
+=======================================================
+ */
+
+.dz-file-attachment{
+    padding: 0.375rem 1.75rem;
+    min-height: 30px;
+    /*max-height:100px;*/
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+.dz-file-attachment .dz-message{
+    margin: 0;
+    display: none;
+}
+
+.dz-file-attachment div.dz-fileAttachmentPlaceHolder{
+    cursor: pointer;
+}
+
+.dz-file-attachment .preview-container .dz-image{
+    position: relative;
+}
+
+.dz-file-attachment .preview-container .dz-image div{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 35px;
+    color: gray;
+}
+#comment-quick-add.dropzone{
+    border:0;
+    background: transparent;
+}
+#comment-quick-add .dz-message{
+    display:none;
+}
+
+.dz-file-attachment .preview-container{
+    visibility: hidden;
+}
+.dz-file-attachment .preview-container #previews{
+    max-height: 400px;
+}
+
+.dz-file-attachment .preview-container #previews.collection{
+    margin: 0;
+    box-shadow: none;
+}
+
+.dz-file-attachment .preview-container #previews .file-preview{
+    border: solid 1px lightgray;
+    border-radius: 5px;
+}
+
+.dz-file-attachment .preview-container #previews.collection .actions a{
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1;
+}
+.dz-file-attachment .preview-container #previews.collection .actions a i{
+    font-size: 1em;
+    line-height: 1.6;
+}
+.dz-file-attachment .preview-container #previews.collection .dz-error-message{
+    font-size: 0.8em;
+    margin-top: -12px;
+    color: #F44336;
+}
+
+.dz-file-attachment .progress{
+    background: transparent;
+}
+.dz-file-attachment .progress .determinate {
+    background: #e2e1e1;
+    transition: width .3s linear;
+    border-radius: 8px;
+    height: 10px;
+}
+.dz-file-attachment .dz-remove{
+    display:none;
+}
+
+/*
 =====================================================
     PRODUCTS IMAGES CAROUSEL - TEMPLATE     BELOW
 =====================================================
