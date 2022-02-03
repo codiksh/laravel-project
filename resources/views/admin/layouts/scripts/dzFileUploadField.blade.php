@@ -18,10 +18,8 @@
                         </div>
                         <div class="dz-error-message"><span data-dz-errormessage></span></div>
                     </div>
-                    <div class="col-md-1 text-left">
-                        <span class="deleteFileBtn" ondragstart="return false;" style="cursor: pointer;" data-dz-remove>
-                            <img class="deleteFileIconImg" src="{{ asset('/images/close.png') }}" width="20" ondragstart="return false;" >
-                        </span>
+                    <div class="col-md-1 text-left deleteFileBtn" style="cursor: pointer;" data-dz-remove>
+                        <img class="deleteFileIconImg" src="{{ asset('/images/close.png') }}" width="20" ondragstart="return false;" style="margin-top:9px;">
                     </div>
                 </div>
             </div>

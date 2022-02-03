@@ -1,7 +1,7 @@
 <script>
-    let uploadedFileAttachmentPath = [];
-    let dropzoneFileInitObject = [];
-    var fileDropzoneElement = [];
+    let uploadedFileAttachmentPath = {};
+    let dropzoneFileInitObject = {};
+    var fileDropzoneElement = {};
     var dropzoneContainer = $('.uploadFileContainer');
 
     function uploadAttachmentByDropzone(selectedElement, inputFieldName = 'attachments[]', maxFiles = 500, validationCase = '') {
@@ -12,7 +12,7 @@
 
         Dropzone.autoDiscover = false;
         fileDropzoneElement[selectedElement] = $('#'+selectedElement);
-        dropzoneFileInitObject = new Dropzone('#'+selectedElement, {
+        dropzoneFileInitObject[selectedElement] = new Dropzone('#'+selectedElement, {
             url: '{{ route('file.upload') }}',
             maxFiles: maxFiles,
             addRemoveLinks: true,
@@ -68,7 +68,7 @@
                     var res = response.errors;
                     toastr["error"](res['file']);
                     file.previewElement.remove();
-                    chnageDropzoneBoxDesign(fileDropzoneElement[selectedElement]);
+                    changeDropzoneBoxDesign(fileDropzoneElement[selectedElement]);
                     return false;
 
                 });
@@ -95,21 +95,19 @@
                     if (file !== '') {
                         file.previewElement.remove();
                     }
-                    chnageDropzoneBoxDesign(selectedDropzoneElement);
+                    changeDropzoneBoxDesign(selectedDropzoneElement);
                 }
             });
         }
     }
 
-    function chnageDropzoneBoxDesign(element){
+    function changeDropzoneBoxDesign(element){
         if (element !== '' && element.find('div.file-preview').length === 0) {
             element.find('div.dz-fileAttachmentPlaceHolder').removeClass('pt-5 pb-5');
         }
     }
 
     function reUploadDzAttachmentFile(){
-        dropzoneContainer.find('.file-preview').remove();
-        dropzoneContainer.find('div.dz-fileAttachmentPlaceHolder').removeClass('pt-5 pb-5')
         $.each(dropzoneFileInitObject, function (key, dzObject) {
             $.each(uploadedFileAttachmentPath[key], function(fileIndex, file){
                 file.status = Dropzone.ADDED;

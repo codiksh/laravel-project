@@ -474,9 +474,6 @@ FILE ATTACHMENT DROPZONE CSS
 .dz-file-attachment .preview-container{
     visibility: hidden;
 }
-.dz-file-attachment .preview-container #previews{
-    max-height: 400px;
-}
 
 .dz-file-attachment .preview-container #previews.collection{
     margin: 0;

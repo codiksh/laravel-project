@@ -42,7 +42,7 @@ class UploadMediaRequest extends FormRequest
     public static function getCaseFromUuid($uuid)
     {
         switch($uuid){
-            case "b0a489a5-bb3c-4e02-9217-d70c57845768": return 'single_image_2MB';
+            case "99fa9350-84ce-11ec-abb0-9fd35704c94b": return 'single_image_2MB';
 
             default: return 'single_image_1MB';
         }
