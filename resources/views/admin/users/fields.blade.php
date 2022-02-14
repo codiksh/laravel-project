@@ -34,7 +34,7 @@
     'mediaUuid' => isset($user) ? $user->getFirstMedia('avatar')->uuid ?? '' : '',
     'fieldName' => 'avatar',
     'elementId' => 'user_avatar',
-    'placeHolderText' => "Select User Avatar<br/>(Max: 1 MB)"
+    'placeHolderText' => "Drop/Select User Avatar<br/>(Max: 1 MB)"
 ])
 
 <!-- Submit Field -->
