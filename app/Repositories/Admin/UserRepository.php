@@ -100,7 +100,7 @@ class UserRepository extends BaseRepository
      * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileIsTooBig
      */
     public function updateOrCreate_avatar(User $user, Request $request) {
-        $defaultMedia = 'https://ui-avatars.com/api/?' . http_build_query(['name' => $user->name, 'size' => '350']);
-        return GeneralHelperFunctions::updateOrCreate_singleMedia($user, $request, 'avatar', 'avatar', $defaultMedia, true);
+        $defaultMedia = 'https://ui-avatars.com/api/?' . http_build_query(['name' => $user->name, 'size' => '500']);
+        return GeneralHelperFunctions::updateOrCreate_singleMedia_viaDropZone($user, $request->input('avatar'),  $defaultMedia);
     }
 }

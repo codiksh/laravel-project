@@ -13,13 +13,13 @@
                 />
                 <div class='dz_sImage_Overlay'>
                     <a href='' class='icon dz-removeSImageBtn' title='Avatar'
-                       onclick='removeUploadedImage("{{$mediaUuid}}", "Are you sure?", $("#{{$elementId}}"))'>
+                       onclick='removeUploadedSImage("{{$mediaUuid}}", "Are you sure?", $("#{{$elementId}}"))'>
                         <i class='fa fa-trash'></i>
                     </a>
                 </div>
             </div>
         @endif
-        <input type="hidden" name="{{ $fieldName }}" id="sImage_id" class="uploaded-media" value="{{ !empty($mediaUuid) ? $mediaUuid : '' }}">
-        <input type="hidden" name="avatarDeleted" value="0" class="deleted-media">
+        <input type="hidden" name="{{ $fieldName }}" id="sImage_id" class="uploaded-media">
+        <input type="hidden" name="{{ $fieldName }}Deleted" value="0" class="deleted-media">
     </div>
 </div>

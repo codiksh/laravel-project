@@ -58,7 +58,7 @@ class UserController extends AppBaseController
 
         $user->markEmailAsVerified();
 
-        $this->userRepository->setAvatar($user,$request);
+        $this->userRepository->updateOrCreate_avatar($user,$request);
 
         return Response::json(['message' => 'Account has been created successfully.'
             . GeneralHelperFunctions::getSuccessResponseBtn($user, route('admin.users.index', $user))]);
@@ -115,7 +115,7 @@ class UserController extends AppBaseController
 
         $user->syncRoles($request->input('role'));
 
-        $this->userRepository->setAvatar($user,$request);
+        $this->userRepository->updateOrCreate_avatar($user,$request);
 
         return Response::json(['message' => 'User updated successfully.']);
     }
