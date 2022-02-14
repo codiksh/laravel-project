@@ -50,9 +50,7 @@
     <script>
         Dropzone.autoDiscover = false;
         uploadImageByDropzone('#user_avatar');
-    </script>
 
-    <script>
         $('.submitsByAjax').submit(function (e) {
             e.preventDefault();
             let type = '{{ $type ?? '' }}'
