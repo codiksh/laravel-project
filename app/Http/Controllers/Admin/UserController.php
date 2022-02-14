@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
+use App\MyClasses\GeneralHelperFunctions;
 use App\Repositories\Admin\UserRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
@@ -59,9 +60,9 @@ class UserController extends AppBaseController
 
         $this->userRepository->updateOrCreate_avatar($user,$request);
 
-        Flash::success('User saved successfully.');
+        return Response::json(['message' => 'Account has been created successfully.'
+            . GeneralHelperFunctions::getSuccessResponseBtn($user, route('admin.users.index', $user))]);
 
-        return redirect(route('admin.users.index'));
     }
 
     /**
@@ -116,9 +117,7 @@ class UserController extends AppBaseController
 
         $this->userRepository->updateOrCreate_avatar($user,$request);
 
-        Flash::success('User updated successfully.');
-
-        return redirect(route('admin.users.index'));
+        return Response::json(['message' => 'User updated successfully.']);
     }
 
     /**

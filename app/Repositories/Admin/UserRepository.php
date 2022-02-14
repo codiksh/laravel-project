@@ -46,6 +46,24 @@ class UserRepository extends BaseRepository
     }
 
     /**
+     * Sets avatar from either previously uploaded media or sets default.
+     * @param User $user
+     * @param Request $request
+     * @return bool
+     */
+    public function setAvatar(User $user, Request $request) {
+        if(!empty($request->input('avatar')) && $request->has('avatar')) {
+            $uploadedMedia = Media::findByUuid($request->input('avatar'));
+            if(!empty($uploadedMedia)) {
+                return $uploadedMedia->move($user, 'avatar');
+            }
+        }else{
+            //Since uploaded media doesnt exists, setting default avatar
+            return $this->updateOrCreate_avatar($user, $request);
+        }
+    }
+
+    /**
      * request handler for store and update
      * @param ParameterBag $request
      * @return array
