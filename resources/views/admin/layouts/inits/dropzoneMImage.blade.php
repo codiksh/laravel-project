@@ -14,7 +14,7 @@
     var multipleDropzoneElement = {};
     var multipleImageContainer = $('.dz-mImagesContainer');
 
-    function uploadMultipleImageByDropzone(selectedElement, inputFieldName = 'images[]') {
+    function uploadMultipleImageByDropzone(selectedElement, inputFieldName = 'images[]', validationCase = '') {
         Dropzone.autoDiscover = false;
         multipleDropzoneElement[selectedElement] = $('#'+selectedElement);
         multipleDropzoneElement[selectedElement].find('div.dz-mImagesPlaceholderText').removeClass('d-none')
@@ -49,7 +49,7 @@
                         uploadedMultipleFilePath[selectedElement] = [];
                     }
                     uploadedMultipleFilePath[selectedElement].push(file);
-                    formData.append('validationCase', 'b0a48955-bb3c-4e02-9217-d70c57845768');
+                    formData.append('validationCase', validationCase);
                 });
                 this.on("complete", function (file) {
                     multipleDropzoneElement[selectedElement].find('.dz-preview .dz-remove').html('<i class="fa fa-trash"></i>');
