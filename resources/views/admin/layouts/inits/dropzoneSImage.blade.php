@@ -1,8 +1,9 @@
 <script>
     let uploadedFilePath = undefined;
     let dropzoneInitObject;
-    function uploadImageByDropzone(selectedElementId) {
-        var dropzoneElement = $(selectedElementId);
+    function uploadImageByDropzone(selectedElementId, validationCase = '') {
+        Dropzone.autoDiscover = false;
+        let dropzoneElement = $(selectedElementId);
         dropzoneInitObject = new Dropzone(selectedElementId, {
             url: '{{ route('file.upload') }}',
             acceptedFiles: ".jpeg, .jpg, .png, .gif, .mp4,.mov",
@@ -14,8 +15,8 @@
             dictCancelUpload: "",
             dictCancelUploadConfirmation : false,
             maxFiles: 1,
-            thumbnailWidth: 250,
-            thumbnailHeight: 250,
+            thumbnailWidth: 230,
+            thumbnailHeight: 230,
             thumbnailMethod: "contain",
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -38,8 +39,9 @@
 
                 this.on("sending", function (file, xhr, formData) {
                     uploadedFilePath = file;
-                    formData.append('validationCase', '{{ $validationCase ?? null }}');
+                    formData.append('validationCase', validationCase);
                 });
+
             },
             removedfile: function(file)
             {
@@ -53,6 +55,8 @@
             error: function (file, response) {
                 var res = response.errors;
                 toastr["error"](res['file']);
+                file.previewElement.remove();
+                dropzoneElement.find('div.single-image-upload').removeClass('d-none')
                 return false;
             }
         });
@@ -95,7 +99,6 @@
             });
         sImageOuterContainer.find('img.dz-sImagePreviewImg').attr('src', '{{ route('images_default',['resolution' => '250x250']) }}');
     }
-
     function reUploadDzFile(){
         uploadedFilePath.status = Dropzone.ADDED
         dropzoneInitObject.enqueueFile(uploadedFilePath)

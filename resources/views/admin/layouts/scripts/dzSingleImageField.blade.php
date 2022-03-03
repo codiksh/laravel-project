@@ -8,7 +8,7 @@
         <div class="preview-container"></div>
         @if(!empty($record))
             <div class='dz-sImagePreview'>
-                <img id='dz_sImagePreview_id' class='dz-sImagePreviewImg' alt='Avatar'
+                <img class='dz-sImagePreviewImg' alt='Avatar'
                      src='{{ $previewUrl }}'
                 />
                 <div class='dz_sImage_Overlay'>
@@ -19,7 +19,7 @@
                 </div>
             </div>
         @endif
-        <input type="hidden" name="{{ $fieldName }}" id="sImage_id" class="uploaded-media">
+        <input type="hidden" name="{{ $fieldName }}" class="uploaded-media">
         <input type="hidden" name="{{ $fieldName }}Deleted" value="0" class="deleted-media">
     </div>
 </div>

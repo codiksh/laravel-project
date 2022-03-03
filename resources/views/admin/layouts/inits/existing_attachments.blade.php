@@ -13,31 +13,31 @@
 </script>
 <script type="text/javascript">
 
-    var rowCounter = 1;
-    let globalRowCounter = 1;
+    var RowCounterByDropzone = 1;
+    let globalRowCounterByDropzone = 1;
 
     function fillAttachmentRow(inOutData, dropzoneElement) {
         let tableRef = dropzoneElement.parent().find('.existingFilesList');
         for (let i = 0; i < inOutData.length; i++) {
             makeAttachmentInRow(tableRef);
             if(inOutData[i].name)
-                tableRef.find('#attachment_' + globalRowCounter).html(inOutData[i].name);
+                tableRef.find('#attachment_' + globalRowCounterByDropzone).html(inOutData[i].name);
             if(inOutData[i].url)
-                tableRef.find('#attachment_' + globalRowCounter).attr('href', inOutData[i].url);
+                tableRef.find('#attachment_' + globalRowCounterByDropzone).attr('href', inOutData[i].url);
             if(inOutData[i].uuid)
-                tableRef.find('#attachment_' + globalRowCounter).parents('tr').attr('data-attachment-uuid', inOutData[i].uuid)
+                tableRef.find('#attachment_' + globalRowCounterByDropzone).parents('tr').attr('data-attachment-uuid', inOutData[i].uuid)
                     .attr('data-attachment-name', inOutData[i].name);
-            rowCounter++;
-            globalRowCounter++;
+            RowCounterByDropzone++;
+            globalRowCounterByDropzone++;
         }
     }
 
     function makeAttachmentInRow(tableRef) {
         // $('.dz-file-attachment').removeClass('d-none');
         let rowHtml = $('.existingFileTemplate').html()
-            .replace(/%%ATTACHED_FILE%%/g, 'attachment_' + globalRowCounter)
-            .replace(/%%GLOBAL-ROW%%/g, globalRowCounter)
-            .replace(/%%ROW-COUNTER%%/g, rowCounter);
+            .replace(/%%ATTACHED_FILE%%/g, 'attachment_' + globalRowCounterByDropzone)
+            .replace(/%%GLOBAL-ROW%%/g, globalRowCounterByDropzone)
+            .replace(/%%ROW-COUNTER%%/g, RowCounterByDropzone);
         $(rowHtml).appendTo(tableRef.find('tbody')).animateCss('zoomIn');
     }
 
@@ -52,11 +52,11 @@
             rowRef.animateCss('zoomOutRight', function (e) {
                 //Things to perform after animation
                 rowRef.remove();    //Deleting Current TR.
-                rowCounter -= rowRefLength;       // Updating Row
+                RowCounterByDropzone -= rowRefLength;       // Updating Row
             });
         }else{
             rowRef.remove();    //Deleting Current TR.
-            rowCounter -= rowRefLength;       // Updating Row
+            RowCounterByDropzone -= rowRefLength;       // Updating Row
         }
     }
 
