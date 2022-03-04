@@ -2,8 +2,8 @@
     <div class="col-md-3 dz-mImageThumbnail" style="margin-bottom:16px;" align="center">
         <img src="{{ route('images_default',['resolution' => '250x250']) }}" class="" />
         <div class="mt-2">
-            <a class="btn btn btn-danger remove_image">Remove</a>
-            <a class="btn btn btn-primary make_primary">Make Primary</a>
+            <a class="btn btn btn-danger removeImage" onclick="deleteImage($(this))">Remove</a>
+            <a class="btn btn btn-primary make_primary" onclick="makePrimaryImage($(this));">Make Primary</a>
         </div>
 
     </div>
@@ -63,7 +63,7 @@
                     let uploadedImagePreviewElement = $("#document-" + file.serverId);
                     var mediaUuid = response.uploaded_media_id;
                     uploadedImagePreviewElement.append('<input type="hidden" name="'+inputFieldName+'" value="'+mediaUuid+'" class="dz-mImagesUploadFile" >');
-                    uploadedImagePreviewElement.find('.dz-remove').after('<a class="btn btn-primary makePrimary mt-2 ml-2" data-fileName="'+response.fileName+'" title="make primary"><i class="far fa-image"></i></a>')
+                    uploadedImagePreviewElement.find('.dz-remove').after('<a class="btn btn-primary makePrimary mt-2 ml-2" data-fileName="'+response.fileName+'" title="make primary" onclick="makePrimaryImage($(this),\''+selectedElement+'\')"><i class="far fa-image"></i></a>')
                 });
 
             },
@@ -157,11 +157,13 @@
             firstCardImageRef.addClass('primary')
             firstCardImageRef.find('a.make_primary').addClass('btn-success primary').removeClass('btn-primary')
                 .html('PRIMARY')
-                .data('media_id', details['primaryImage']['media_id'])
-                .data('media_name', details['primaryImage']['media_name']);
-            firstCardImageRef.find('a.remove_image')
-                .data('media_id', details['primaryImage']['media_id'])
-                .data('media_name', details['primaryImage']['media_name']);
+                .attr('data-media_id', details['primaryImage']['media_id'])
+                .attr('data-media_name', details['primaryImage']['media_name'])
+                .attr('data-imageType', details['primaryImage']['media_type']);;
+            firstCardImageRef.find('a.removeImage')
+                .attr('data-media_id', details['primaryImage']['media_id'])
+                .attr('data-media_name', details['primaryImage']['media_name']);
+
         }
 
         //Setting the images
@@ -169,17 +171,13 @@
             ele = $(ele);
             ele.find('img').attr('src', '{{ route('images_default','500x500') }}');
             ele.find('img').attr('src', details['images'][key]['url']);
-            ele.find('.remove_image').attr('data-uuid', details['images'][key]['media_uuid']);
+            ele.find('.removeImage').attr('data-uuid', details['images'][key]['media_uuid']);
             ele.find('a.make_primary').attr('data-media_id', details['images'][key]['media_id'])
                 .attr('data-media_name', details['images'][key]['media_name'])
                 .attr('data-imageType', details['images'][key]['media_type']);
 
-
-            //Obtaining card ref
-            // let cardRef = ele.closest('.box');
-
             //Setting media id to delete btn
-            ele.find('.remove_image')
+            ele.find('.removeImage')
                 .data('media_id',details['images'][key]['media_id'])
                 .data('media_name',details['images'][key]['media_name']);
 
@@ -210,35 +208,26 @@
         return carouselSets;
     }
 
-    $(document).on('click','a.makePrimary',function(){
-        makePrimaryImage($(this));
-    });
-
-    $(document).on('click','a.make_primary',function(){
-        makePrimaryImage($(this));
-    });
-
-    function makePrimaryImage(element){
+    function makePrimaryImage(element, dzElement = ''){
         let dataFileName = element.data('filename');
         if(dataFileName !== undefined) {
-            makePrimaryImageToastr(element);
+            makePrimaryImageToastr(element, dzElement);
             updatePrimaryBtnUi_forBtn(element)
         }else{
             makePrimary(element);       //shall be used only during update index
         }
     }
 
-    function makePrimaryImageToastr(element){
+    function makePrimaryImageToastr(element, dzElement){
         let dataFileName = element.data('filename');
-        multipleImageContainer.find('input.primaryImage').val(dataFileName);
+        let selectedDropzone = $('#'+ dzElement);
+        selectedDropzone.find('input.primaryImage').val(dataFileName);
         toastr.success("Primary Image set to \'" + dataFileName + "\'!",'Success!');
     }
 
     function reUploadDzMultipleFile(){
         $.each(dropzoneMultipleInitObject, function (key, dzObject) {
-            debugger;
             $.each(uploadedMultipleFilePath[key], function(fileIndex, file){
-                debugger;
                 file.status = Dropzone.ADDED;
                 dzObject.enqueueFile(file);
             })
