@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Create User - {{ env('APP_NAME') }}
+    Create User - {{ config('app.name') }}
 @endsection
 
 @section('breadcrumbs')
@@ -22,7 +22,7 @@
 
                         <div class="card-body">
                             @include('adminlte-templates::common.errors')
-                            {!! Form::open(['route' => 'admin.users.store',  'files' => true]) !!}
+                            {!! Form::open(['route' => 'admin.users.store',  'files' => true, 'class' => 'submitsByAjax']) !!}
                             <div class="row">
                                 @include('admin.users.fields')
                             </div>

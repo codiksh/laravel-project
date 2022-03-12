@@ -47,5 +47,17 @@
     <script>
         Dropzone.autoDiscover = false;
         uploadImageByDropzone('#user_avatar');
+
+        $('.submitsByAjax').submit(function (e) {
+            e.preventDefault();
+            let type = '{{ $type ?? '' }}'
+            let dataToPass = new FormData($(this)[0]);
+            ajaxCallFormSubmit($(this), false, 'Loading! Please wait...', dataToPass,
+                type === 'create' ? postCreate : undefined);
+        });
+
+        function postCreate(){
+            switch_between_register_to_registerAnother_btn($('.submitsByAjax'), false)
+        }
     </script>
 @endpush

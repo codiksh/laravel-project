@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Edit User - {{ env('APP_NAME') }}
+    Edit User - {{ config('app.name') }}
 @endsection
 
 @section('breadcrumbs')
@@ -22,7 +22,7 @@
 
                         <div class="card-body">
                             @include('adminlte-templates::common.errors')
-                            {!! Form::model($user, ['route' => ['admin.users.update', $user->uuid], 'method' => 'patch',  'files' => true]) !!}
+                            {!! Form::model($user, ['route' => ['admin.users.update', $user->uuid], 'method' => 'patch',  'files' => true, 'class' => 'submitsByAjax']) !!}
                             <div class="row">
                                 @include('admin.users.fields')
                             </div>
