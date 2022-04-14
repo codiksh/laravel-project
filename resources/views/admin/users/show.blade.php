@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Show User - {{ env('APP_NAME') }}
+    Show User - {{ config('app.name') }}
 @endsection
 
 @section('breadcrumbs')
