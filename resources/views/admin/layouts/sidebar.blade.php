@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="{{ route('dashboard') }}" class="brand-link navbar-primary text-center">
         <span class="logo-mini"><strong>{{ config('codiksh.short_name') }}</strong></span>
-        <span class="brand-text font-weight-bold">{{ env('APP_NAME', 'Codiksh') }}</span>
+        <span class="brand-text font-weight-bold">{{ config('app.name') }}</span>
     </a>
     <!-- Sidebar -->
     <div class="sidebar">

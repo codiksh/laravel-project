@@ -58,6 +58,33 @@ class GeneralHelperFunctions {
         return true;
     }
 
+    /**
+     * Updates or Creates Single Media via DropZone.
+     * @param Model $model
+     * @param $uploadedMediaUuid
+     * @param string $collection
+     * @param null $defaultMediaPath
+     * @param bool $isMediaUrl
+     * @return bool|Media
+     */
+    public static function updateOrCreate_singleMedia_viaDropZone(Model $model, $uploadedMediaUuid, $defaultMediaPath = null,
+                                                                  $collection = 'avatar', $isMediaUrl = true) {
+        if(!empty($uploadedMediaUuid)) {
+            $uploadedMedia = Media::findByUuid($uploadedMediaUuid);
+            if(!empty($uploadedMedia)) {
+                return $uploadedMedia->move($model, $collection);
+            }
+        }
+        if(is_null($defaultMediaPath)) {
+            $model->clearMediaCollection($collection);
+        } else {
+            if(!$model->hasMedia($collection)){
+                return self::updateOrCreate_defaultMedia($model, $defaultMediaPath, $collection, $isMediaUrl);
+            }
+        }
+        return true;
+    }
+
 
     /**
      * Sets Default Media to Single Media Collection

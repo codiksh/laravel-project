@@ -34,7 +34,7 @@
     'mediaUuid' => isset($user) ? $user->getFirstMedia('avatar')->uuid ?? '' : '',
     'fieldName' => 'avatar',
     'elementId' => 'user_avatar',
-    'placeHolderText' => "Select User Avatar<br/>(Max: 1 MB)"
+    'placeHolderText' => "Drop/Select User Avatar<br/>(Max: 1 MB)"
 ])
 
 <!-- Submit Field -->
@@ -44,8 +44,24 @@
 </div>
 
 @push('stackedScripts')
+    @include('admin.layouts.scripts.regAnotherScript')
+    @include('admin.layouts.scripts.swalAjax')
+
     <script>
         Dropzone.autoDiscover = false;
         uploadImageByDropzone('#user_avatar');
+
+        $('.submitsByAjax').submit(function (e) {
+            e.preventDefault();
+            let type = '{{ $type ?? '' }}'
+            let dataToPass = new FormData($(this)[0]);
+            ajaxCallFormSubmit($(this), false, 'Loading! Please wait...', dataToPass,
+                type === 'create' ? postCreate : undefined);
+        });
+
+        function postCreate(){
+            switch_between_register_to_registerAnother_btn($('.submitsByAjax'), false)
+        }
     </script>
+
 @endpush

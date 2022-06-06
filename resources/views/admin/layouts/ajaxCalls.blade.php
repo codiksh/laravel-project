@@ -93,34 +93,6 @@
         }
     }
 
-    function ajaxCallTokenGenerate(url) {
-        $.ajax({
-            url:url,
-            method:"POST",
-            beforeSend: function () {
-                $('#ajax_alert_div').html('');
-                showWaitMeLoading('Fetching details...', '', $('.content-wrapper'));
-            },
-            success: function (res) {
-                result = res;
-                hideWaitMeLoading('', $('.content-wrapper'));
-                $('.token_alert').html('<div class="alert alert-success alert-dismissible pt-4 pb-4" role="alert">'+
-                    '  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span>\n' +
-                    '  </button>'+
-                    '<h3>Success!</h3>'+
-                    '<div class="pt-4">Token is generated successfully.</div>'+
-                    '<div class="text-white">6|UWe97VW6lUWskY1p5nKORFrPzC5uNk6Bnio2rnhM</div>'+
-                    '</div>');
-                LaravelDataTables[tableId].ajax.reload(null, false);
-            },
-            error: function (jqXHR) {
-                result = {status: jqXHR.status, message: JSON.parse(jqXHR.responseText).message};
-                hideWaitMeLoading('', $('.content-wrapper'));
-                toastr["error"](result.message);
-            }
-        });
-    }
-
     function showWaitMeLoading(text, containerId, selector = undefined) {
         if (selector === undefined) {
             selector = $('#' + containerId);

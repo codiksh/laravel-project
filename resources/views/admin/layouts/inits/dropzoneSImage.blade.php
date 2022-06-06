@@ -1,7 +1,10 @@
 <script>
-    function uploadImageByDropzone(selectedElementId) {
+    let uploadedFilePath = undefined;
+    let dropzoneInitObject;
+    function uploadImageByDropzone(selectedElementId, validationCase = '') {
+        Dropzone.autoDiscover = false;
         let dropzoneElement = $(selectedElementId);
-        $(selectedElementId).dropzone({
+        dropzoneInitObject = new Dropzone(selectedElementId, {
             url: '{{ route('file.upload') }}',
             acceptedFiles: ".jpeg, .jpg, .png, .gif, .mp4,.mov",
             addRemoveLinks: true,
@@ -12,6 +15,9 @@
             dictCancelUpload: "",
             dictCancelUploadConfirmation : false,
             maxFiles: 1,
+            thumbnailWidth: 230,
+            thumbnailHeight: 230,
+            thumbnailMethod: "contain",
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
             },
@@ -30,66 +36,33 @@
                 this.on("processing", function (file) {
                     dropzoneElement.find('div.single-image-upload').addClass('d-none')
                 });
+
+                this.on("sending", function (file, xhr, formData) {
+                    uploadedFilePath = file;
+                    formData.append('validationCase', validationCase);
+                });
+
             },
             removedfile: function(file)
             {
                 var mediaUuid = $('input[name="uploaded_media_uuid"]').val();
-                removeUploadedImage(mediaUuid, "Are you sure?", dropzoneElement, file);
+                removeUploadedSImage(mediaUuid, "Are you sure?", dropzoneElement, file);
             },
             success: function (file, response) {
-                // changing src of preview element
-                var fileReader = new FileReader();
-                if (file.type.match('image')) {
-                    fileReader.onload = function(e) {
-                        file.previewElement.querySelector("img").src = e.target.result;
-                    };
-                    fileReader.readAsDataURL(file);
-                } else {
-                    fileReader.onload = function() {
-                        var blob = new Blob([fileReader.result], {type: file.type});
-                        var url = URL.createObjectURL(blob);
-                        var video = document.createElement('video');
-                        var timeupdate = function() {
-                            if (snapImage()) {
-                                video.removeEventListener('timeupdate', timeupdate);
-                                video.pause();
-                            }
-                        };
-                        video.addEventListener('loadeddata', function() {
-                            if (snapImage()) {
-                                video.removeEventListener('timeupdate', timeupdate);
-                            }
-                        });
-                        var snapImage = function() {
-                            var canvas = document.createElement('canvas');
-                            canvas.width = video.videoWidth;
-                            canvas.height = video.videoHeight;
-                            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-                            var image = canvas.toDataURL();
-                            var success = image.length > 100000;
-                            if (success) {
-                                file.previewElement.querySelector("img").src = image;
-                                URL.revokeObjectURL(url);
-                            }
-                            return success;
-                        };
-                        video.addEventListener('timeupdate', timeupdate);
-                        video.preload = 'metadata';
-                        video.src = url;
-                        // Load video in Safari / IE11
-                        video.muted = true;
-                        video.playsInline = true;
-                        video.play();
-                    };
-                    fileReader.readAsArrayBuffer(file);
-                }
                 dropzoneElement.find('.uploaded-media').val(response.uploaded_media_id);
                 dropzoneElement.find('.deleted-media').val(0);
             },
+            error: function (file, response) {
+                var res = response.errors;
+                toastr["error"](res['file']);
+                file.previewElement.remove();
+                dropzoneElement.find('div.single-image-upload').removeClass('d-none')
+                return false;
+            }
         });
     }
 
-    function removeUploadedImage(uuid, confirmMsg, dropzoneElement, file = ''){
+    function removeUploadedSImage(uuid, confirmMsg, dropzoneElement, file = ''){
         if (confirm(confirmMsg)) {
             let result;
             $.ajax({
@@ -110,9 +83,9 @@
 
     $('a.dz-removeSImageBtn').click(function(e) {
         e.preventDefault();
-        removeSImage($(this));
+        removeExistingSImage($(this));
     });
-    function removeSImage(removeRef){
+    function removeExistingSImage(removeRef){
         let sImageOuterContainer = removeRef.parents('div.dz-sImageOuterContainer');
         sImageOuterContainer.find('div.dz-sImagePreview')
             .animateCss('bounceOut').on("webkitAnimationEnd oAnimationEnd msAnimationEnd animationend", function (e) {
@@ -125,5 +98,9 @@
                 $(this).removeClass("d-none");
             });
         sImageOuterContainer.find('img.dz-sImagePreviewImg').attr('src', '{{ route('images_default',['resolution' => '250x250']) }}');
+    }
+    function reUploadDzFile(){
+        uploadedFilePath.status = Dropzone.ADDED
+        dropzoneInitObject.enqueueFile(uploadedFilePath)
     }
 </script>

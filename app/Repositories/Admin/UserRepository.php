@@ -46,24 +46,6 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * Sets avatar from either previously uploaded media or sets default.
-     * @param User $user
-     * @param Request $request
-     * @return bool
-     */
-    public function setAvatar(User $user, Request $request) {
-        if($request->has('avatar')) {
-            $uploadedMedia = Media::findByUuid($request->input('avatar'));
-            if(!empty($uploadedMedia)) {
-                return $uploadedMedia->move($user, 'avatar');
-            }
-        }else{
-            //Since uploaded media doesnt exists, setting default avatar
-            return $this->updateOrCreate_avatar($user, $request);
-        }
-    }
-
-    /**
      * request handler for store and update
      * @param ParameterBag $request
      * @return array
@@ -100,7 +82,7 @@ class UserRepository extends BaseRepository
      * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileIsTooBig
      */
     public function updateOrCreate_avatar(User $user, Request $request) {
-        $defaultMedia = 'https://ui-avatars.com/api/?' . http_build_query(['name' => $user->name, 'size' => '350']);
-        return GeneralHelperFunctions::updateOrCreate_singleMedia($user, $request, 'avatar', 'avatar', $defaultMedia, true);
+        $defaultMedia = 'https://ui-avatars.com/api/?' . http_build_query(['name' => $user->name, 'size' => '500']);
+        return GeneralHelperFunctions::updateOrCreate_singleMedia_viaDropZone($user, $request->input('avatar'),  $defaultMedia);
     }
 }
