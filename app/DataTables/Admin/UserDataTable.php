@@ -3,6 +3,7 @@
 namespace App\DataTables\Admin;
 
 use App\Models\User;
+use App\MyClasses\GeneralHelperFunctions;
 use Carbon\Carbon;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
@@ -31,14 +32,14 @@ class UserDataTable extends DataTable
                 return !is_null($user->email_verified_at) ? Carbon::createFromFormat('Y-m-d H:i:s',$user->email_verified_at)->toDayDateTimeString() ?? '' : '';
             })
             ->editColumn('created_at', function (User $user){
-                return Carbon::createFromFormat('Y-m-d H:i:s',$user->created_at)->toDayDateTimeString();
+                return GeneralHelperFunctions::prepareHtmlDate($user->created_at);
             })
             ->editColumn('updated_at', function (User $user){
-                return Carbon::createFromFormat('Y-m-d H:i:s',$user->updated_at)->toDayDateTimeString();
+                return GeneralHelperFunctions::prepareHtmlDate($user->updated_at);
             })
 
             ->addColumn('action', 'admin.users.datatables_actions')
-            ->rawColumns(['avatar','action']);
+            ->rawColumns(['avatar','action', 'created_at', 'updated_at']);
 
     }
 
@@ -68,7 +69,7 @@ class UserDataTable extends DataTable
                 'responsive'=> true,
                 'dom'       => 'B<\'row pt-15\' <\'col-sm-6\'l><\'col-sm-6\'f>>rt<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>',
                 'stateSave' => true,
-                'order'     => [[0, 'desc']],
+                'order'     => [[count($this->getColumns()) -1 , 'desc']],
                 'buttons'   => [
 //                    ['extend' => 'create', 'className' => 'btn btn-default btn-sm no-corner',],
 //                    ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],

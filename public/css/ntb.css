@@ -383,3 +383,31 @@ div.mImagesPlaceholderText{
 .info-box .info-box-content{
     line-height: 1.8;
 }
+
+/*Rotating icons which under the class rotate360*/
+.rotate360 .fa:hover, .rotate360 .fas:hover, .rotate360 .fa-duotone:hover {
+    transform: rotate(360deg);
+}
+.rotate360 .fa, .rotate360 .fas, .rotate360 .fa-duotone {
+    transition: transform 0.5s ease 0s;
+}
+
+/*Rotating icons which are under the datatable actions and are individual*/
+.datatables_action a .fa:hover, .datatables_action a .fas:hover, .datatables_action a .fa-duotone:hover {
+    transform: rotate(360deg);
+}
+.datatables_action a .fa, .datatables_action a .fas, .datatables_action a .fa-duotone {
+    transition: transform 0.5s ease 0s;
+}
+
+table.dataTable thead, table.dataTable thead > a{
+    color: #fff !important;
+}
+
+table.dataTable thead  {
+    background-color: #174060 !important;
+}
+
+.nav-sidebar>.nav-item>.nav-link{
+    color: #fff;
+}

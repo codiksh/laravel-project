@@ -1,0 +1,23 @@
+// Fonts
+//@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+//@import 'variables';
+
+// Bootstrap
+//@import '~bootstrap/scss/bootstrap';
+
+@import "../../public/assets/bootstrap_toggle_2.2.0/css/bootstrap-toggle.min.css";
+@import "../../public/assets/bower_components/animate.css/animate.min.css";
+@import "../../public/assets/bower_components/waitme/waitMe.min.css";
+@import "../../public/assets/jquery_bonsai/css/jquery.bonsai.css";
+@import "../../public/assets/timepicker/css/jquery.timepicker.css";
+@import "../../public/assets/bower_components/toastr/toastr.min.css";
+@import "../../public/assets/daterangepicker_3.0.5/css/daterangepicker.css";
+@import "../../public/assets/dropzone/dropzone.min.css";
+@import "../../public/assets/bootstrap_switch/bootstrap-switch-button.min.css";
+@import "../../public/assets/overlay_scrollbars/OverlayScrollbars.min.css";
+
+
+@import "adminlte/custom_variables";
+@import "adminlte/main";

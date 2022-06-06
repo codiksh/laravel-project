@@ -1,0 +1,48 @@
+
+$tigers_Eye: #e09B3B;
+$indigo : #174060;
+$tea_green: #007E33;
+$pale_blue: #0099CC;
+$mikado_yellow: #FF8800;
+$very_pale_yellow: #FFF9C4;
+$light_red: #ffcdd2;
+$persian_red: #CC0000;
+
+$white:    #fff ;
+$gray-100: #f8f9fa ;
+$gray-200: #e9ecef ;
+$gray-300: #dee2e6 ;
+$gray-400: #ced4da ;
+$gray-500: #adb5bd ;
+$gray-600: #6c757d ;
+$gray-700: #495057 ;
+$gray-800: #343a40 ;
+$gray-900: #212529 ;
+$black:    #000 ;
+
+$primary:       $indigo ;
+$secondary:     $tigers_Eye;
+$success:       $tea_green;
+$info:          $pale_blue;
+$warning:       $very_pale_yellow;
+$danger:        $persian_red;
+$light:         $gray-100;
+$dark:          $tigers_Eye;
+
+$theme-colors: (
+    "primary":    $primary,
+    "secondary":  $secondary,
+    "success":    $success,
+    "info":       $info,
+    "warning":    $warning,
+    "danger":     $danger,
+    "light":      $light,
+    "dark":       $dark
+);
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+$font-family-sans-serif: 'Roboto', sans-serif;
+$body-color: #373b3b;
+//$btn-font-weight: 700;
+$card-shadow: 0 0 10px 3px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+
