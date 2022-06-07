@@ -38,9 +38,9 @@
 ])
 
 <!-- Submit Field -->
-<div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-success rspSuccessBtns']) !!}
-    <a href="{{ route('admin.users.index') }}" class="btn btn-default">Cancel</a>
+<div class="form-group col-md-12 fields_footer_action_buttons">
+    <button class="btn btn-lg btn-success rspSuccessBtns" type="submit" ><i class="fa-duotone fa-floppy-disk"></i> Save</button>
+    <a href="{{ route('admin.users.index') }}" class="btn btn-lg btn-outline-danger"><i class="fa-duotone fa-arrow-left-to-line"></i> Back</a>
 </div>
 
 @push('stackedScripts')
