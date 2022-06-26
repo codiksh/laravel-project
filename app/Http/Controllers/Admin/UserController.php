@@ -116,6 +116,8 @@ class UserController extends AppBaseController
 
         $this->userRepository->updateOrCreate_avatar($user,$request);
 
+        Flash::success('User updated successfully.');
+
         return Response::json(['message' => 'User updated successfully.']);
     }
 
