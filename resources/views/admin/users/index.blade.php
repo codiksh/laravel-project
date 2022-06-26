@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Users - {{ env('APP_NAME') }}
+    Users - {{ config('app.name') }}
 @endsection
 
 @section('page_headers')
