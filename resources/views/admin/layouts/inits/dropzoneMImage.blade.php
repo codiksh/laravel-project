@@ -2,8 +2,8 @@
     <div class="col-md-3 dz-mImageThumbnail" style="margin-bottom:16px;" align="center">
         <img src="{{ route('images_default',['resolution' => '250x250']) }}" class="" />
         <div class="mt-2">
-            <a class="btn btn btn-danger removeImage" onclick="deleteImage($(this))">Remove</a>
-            <a class="btn btn btn-primary make_primary" onclick="makePrimaryImage($(this));">Make Primary</a>
+            <a class="btn btn btn-danger remove_image">✖</a>
+            <a class="btn btn btn-primary make_primary">Make Primary</a>
         </div>
 
     </div>
@@ -14,18 +14,19 @@
     var multipleDropzoneElement = {};
     var multipleImageContainer = $('.dz-mImagesContainer');
 
-    function uploadMultipleImageByDropzone(selectedElement, inputFieldName = 'images[]', validationCase = '') {
+    function uploadMultipleImageByDropzone(selectedElement, inputFieldName = 'images[]', validationCase = '', primaryImageEnabled = true,
+                                           url = "{{ route('file.upload') }}", additionalDataToPass = undefined) {
         Dropzone.autoDiscover = false;
         multipleDropzoneElement[selectedElement] = $('#'+selectedElement);
         multipleDropzoneElement[selectedElement].find('div.dz-mImagesPlaceholderText').removeClass('d-none')
 
         dropzoneMultipleInitObject[selectedElement] = new Dropzone('#'+selectedElement, {
-            url: "{{ route('file.upload') }}",
-            maxFiles: 500,
-            acceptedFiles : ".png,.jpg,.gif,.bmp,.jpeg",
+            url: url,
+            acceptedFiles : ".png,.jpg,.gif,.bmp,.jpeg, .mp4,.mov",
             clickable: '#'+selectedElement+" div.multipleImage",
             previewsContainer: '#'+selectedElement+" div.preview-container",
             addRemoveLinks: true,
+            parallelUploads: 20,
             dictRemoveFile: 'Remove',
             autoProcessQueue: true,
             dictDefaultMessage: "",
@@ -42,6 +43,8 @@
                 this.on("processing", function (file) {
                     multipleDropzoneElement[selectedElement].find('div.dz-mImagesPlaceholderText').addClass('d-none');
                     multipleDropzoneElement[selectedElement].find('.dz-remove').addClass('btn btn-danger text-white');
+                    multipleDropzoneElement[selectedElement].parents('form').find('input[type="submit"]').attr('disabled','disabled')
+                    multipleDropzoneElement[selectedElement].parents('form').find('button[type="submit"]').attr('disabled','disabled')
                 });
 
                 this.on("sending", function (file, xhr, formData) {
@@ -50,6 +53,12 @@
                     }
                     uploadedMultipleFilePath[selectedElement].push(file);
                     formData.append('validationCase', validationCase);
+                    if(additionalDataToPass !== undefined){
+                        let additional_data = additionalDataToPass.serializeArray();
+                        $.each(additionalDataToPass, function(key, value){
+                            formData.append(key, value)
+                        });
+                    }
                 });
                 this.on("complete", function (file) {
                     multipleDropzoneElement[selectedElement].find('.dz-preview .dz-remove').html('<i class="fa fa-trash"></i>');
@@ -63,7 +72,11 @@
                     let uploadedImagePreviewElement = $("#document-" + file.serverId);
                     var mediaUuid = response.uploaded_media_id;
                     uploadedImagePreviewElement.append('<input type="hidden" name="'+inputFieldName+'" value="'+mediaUuid+'" class="dz-mImagesUploadFile" >');
-                    uploadedImagePreviewElement.find('.dz-remove').after('<a class="btn btn-primary makePrimary mt-2 ml-2" data-fileName="'+response.fileName+'" title="make primary" onclick="makePrimaryImage($(this),\''+selectedElement+'\')"><i class="far fa-image"></i></a>')
+                    if(primaryImageEnabled) {
+                        uploadedImagePreviewElement.find('.dz-remove').after('<a class="btn btn-primary makePrimary mt-2 ml-2" data-fileName="' + response.fileName + '" title="make primary"><i class="fas fa-image"></i></a>')
+                    }
+                    multipleDropzoneElement[selectedElement].parents('form').find('input[type="submit"]').removeAttr('disabled');
+                    multipleDropzoneElement[selectedElement].parents('form').find('button[type="submit"]').removeAttr('disabled');
                 });
 
             },
@@ -146,6 +159,7 @@
         if(details.hasOwnProperty('primaryImage')) {
             carouselCards.push(existingImagesCardTemplate.html());      // + 1 pushing for primary image.
         }
+        if(carouselCards.length === 0)      return;
         let carouselSets = getSetOfImages_Item(carouselCards,4);
 
         carouselInnerRef.html(carouselSets.join(''));
@@ -157,13 +171,11 @@
             firstCardImageRef.addClass('primary')
             firstCardImageRef.find('a.make_primary').addClass('btn-success primary').removeClass('btn-primary')
                 .html('PRIMARY')
-                .attr('data-media_id', details['primaryImage']['media_id'])
-                .attr('data-media_name', details['primaryImage']['media_name'])
-                .attr('data-imageType', details['primaryImage']['media_type']);;
-            firstCardImageRef.find('a.removeImage')
-                .attr('data-media_id', details['primaryImage']['media_id'])
-                .attr('data-media_name', details['primaryImage']['media_name']);
-
+                .data('media_id', details['primaryImage']['media_id'])
+                .data('media_name', details['primaryImage']['media_name']);
+            firstCardImageRef.find('a.remove_image')
+                .data('media_id', details['primaryImage']['media_id'])
+                .data('media_name', details['primaryImage']['media_name']);
         }
 
         //Setting the images
@@ -171,13 +183,17 @@
             ele = $(ele);
             ele.find('img').attr('src', '{{ route('images_default','500x500') }}');
             ele.find('img').attr('src', details['images'][key]['url']);
-            ele.find('.removeImage').attr('data-uuid', details['images'][key]['media_uuid']);
+            ele.find('.remove_image').attr('data-uuid', details['images'][key]['media_uuid']);
             ele.find('a.make_primary').attr('data-media_id', details['images'][key]['media_id'])
                 .attr('data-media_name', details['images'][key]['media_name'])
                 .attr('data-imageType', details['images'][key]['media_type']);
 
+
+            //Obtaining card ref
+            // let cardRef = ele.closest('.box');
+
             //Setting media id to delete btn
-            ele.find('.removeImage')
+            ele.find('.remove_image')
                 .data('media_id',details['images'][key]['media_id'])
                 .data('media_name',details['images'][key]['media_name']);
 
@@ -208,20 +224,27 @@
         return carouselSets;
     }
 
-    function makePrimaryImage(element, dzElement = ''){
+    $(document).on('click','a.makePrimary',function(){
+        makePrimaryImage($(this));
+    });
+
+    $(document).on('click','a.make_primary',function(){
+        makePrimaryImage($(this));
+    });
+
+    function makePrimaryImage(element){
         let dataFileName = element.data('filename');
         if(dataFileName !== undefined) {
-            makePrimaryImageToastr(element, dzElement);
+            makePrimaryImageToastr(element);
             updatePrimaryBtnUi_forBtn(element)
         }else{
             makePrimary(element);       //shall be used only during update index
         }
     }
 
-    function makePrimaryImageToastr(element, dzElement){
+    function makePrimaryImageToastr(element){
         let dataFileName = element.data('filename');
-        let selectedDropzone = $('#'+ dzElement);
-        selectedDropzone.find('input.primaryImage').val(dataFileName);
+        multipleImageContainer.find('input.primaryImage').val(dataFileName);
         toastr.success("Primary Image set to \'" + dataFileName + "\'!",'Success!');
     }
 
