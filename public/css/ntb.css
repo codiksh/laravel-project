@@ -649,10 +649,95 @@ table.dataTable thead, table.dataTable thead > a{
     color: #fff !important;
 }
 
-table.dataTable thead  {
-    background-color: #174060 !important;
-}
 
 .nav-sidebar>.nav-item>.nav-link{
     color: #fff;
+}
+
+.image-info{
+    position: absolute;
+    bottom: 0;
+    color: #ffffff;
+    padding: 10px;
+    width: 100%;
+    display: none;
+    background-image: linear-gradient(0deg,#000,transparent);
+    border-radius: 5px;
+}
+.custom-control-label:hover .image-info{
+    display: block;
+}
+
+.daterangepicker {
+    z-index: 99999;
+}
+.switch.btn{
+    min-width: 4.7rem;
+}
+
+
+@media (min-width: 992px) {
+    .sidebar-mini.sidebar-collapse .user-role{
+        display: none;
+    }
+}
+.sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused:not(.hide-nav-header-on-hover) .user-role,
+.sidebar-collapse.sidebar-mini .main-sidebar:hover:not(.hide-nav-header-on-hover) .user-role,
+.sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused:not(.hide-nav-header-on-hover) .user-role,
+.sidebar-collapse.sidebar-mini-md .main-sidebar:hover:not(.hide-nav-header-on-hover) .user-role,
+.sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused:not(.hide-nav-header-on-hover) .user-role,
+.sidebar-collapse.sidebar-mini-xs .main-sidebar:hover:not(.hide-nav-header-on-hover) .user-role{
+    display: inline-block;
+}
+
+h4.brand-text{
+    color: #174060;
+    font-weight: 900;
+}
+.dropzone .dz-preview .dz-progress .dz-upload, .dz-file-attachment .progress .determinate{
+    background: #174060;
+}
+.dropzone .dz-preview .dz-progress{
+    border-radius: 7px;
+}
+
+.sidebar_light_bg{
+    background-color: #fff6de
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+    background-color: #174060;
+    border-color: #174060;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected], .select2-container--default .select2-results__option--highlighted[aria-selected]:hover{
+    background-color: #174060;
+    border-color: #174060;
+}
+input[type=submit], button[type=submit]{
+    font-weight: 700;
+}
+.card-head-row .float-right .datatables_action .action-button .fas {
+    color: white;
+}
+
+.card-head-row .float-right .datatables_action .action-button {
+    padding: 10%;
+    margin-left: 100%;
+}
+
+.dropleft .dropdown-menu {
+    padding: 0;
+    z-index: 1040;
+    top: 47px !important;
+    left: 28px!important;
+}
+
+table.dataTable thead  {
+    background-color: #4e5454 !important;
+}
+table.dataTable thead, table.dataTable thead > a{
+    color: #fff !important;
+}
+
+.dropzone{
+    min-height: inherit;
 }
