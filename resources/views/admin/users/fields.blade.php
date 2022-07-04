@@ -27,16 +27,16 @@
         </div>
     </div>
 </div>
-
+@php $hasAvatar = !empty($user) ? $user->hasMedia('avatar') : false @endphp
 @include('admin.layouts.scripts.dzSingleImageField', [
     'record' => isset($user) ? $user : '',
-    'previewUrl' => isset($user) ? $user->avatarUrl['250'] : route('images_default',['resolution' => '250x250']),
-    'mediaUuid' => isset($user) ? $user->getFirstMedia('avatar')->uuid ?? '' : '',
+    'hasMedia' => $hasAvatar,
+    'previewUrl' => $hasAvatar ? $user->avatarUrl['250'] : route('images_default',['resolution' => '250x250']),
+    'mediaUuid' => $hasAvatar ? $user->getFirstMedia('avatar')->uuid ?? '' : '',
     'fieldName' => 'avatar',
     'elementId' => 'user_avatar',
     'placeHolderText' => "Drop/Select User Avatar<br/>(Max: 1 MB)"
 ])
-
 <!-- Submit Field -->
 <div class="form-group col-md-12 fields_footer_action_buttons">
     <button class="btn btn-lg btn-success rspSuccessBtns" type="submit" ><i class="fa-duotone fa-floppy-disk"></i> Save</button>

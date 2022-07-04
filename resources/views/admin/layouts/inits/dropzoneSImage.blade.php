@@ -34,11 +34,13 @@
                 });
 
                 this.on("processing", function (file) {
-                    dropzoneElement.find('div.single-image-upload').addClass('d-none')
+                    dropzoneElement.find('div.single-image-upload').addClass('d-none');
                 });
 
                 this.on("sending", function (file, xhr, formData) {
                     uploadedFilePath = file;
+                    dropzoneElement.parents('form').find('input[type="submit"]').attr('disabled','disabled')
+                    dropzoneElement.parents('form').find('button[type="submit"]').attr('disabled','disabled')
                     formData.append('validationCase', validationCase);
                 });
 
@@ -51,6 +53,8 @@
             success: function (file, response) {
                 dropzoneElement.find('.uploaded-media').val(response.uploaded_media_id);
                 dropzoneElement.find('.deleted-media').val(0);
+                dropzoneElement.parents('form').find('input[type="submit"]').removeAttr('disabled');
+                dropzoneElement.parents('form').find('button[type="submit"]').removeAttr('disabled');
             },
             error: function (file, response) {
                 var res = response.errors;
@@ -69,22 +73,33 @@
                 type: 'POST',
                 url: '{{ route('file.remove') }}',
                 data: {mediaUuid: uuid},
+                beforeSend: function () {
+                    showWaitMeLoading("Removing the picture! Please wait", '', dropzoneElement);
+                    dropzoneElement.parents('form').find('input[type="submit"]').attr('disabled','disabled')
+                    dropzoneElement.parents('form').find('button[type="submit"]').attr('disabled','disabled')
+                },
                 success: function (data) {
                     dropzoneElement.find('div.single-image-upload').removeClass('d-none')
+                    dropzoneElement.find('.dz-sImagePreview').remove();
                     dropzoneElement.find('.uploaded-media').val('');
                     dropzoneElement.find('.deleted-media').val(1);
-                    if(file != '') {
+                    if(file !== '') {
                         file.previewElement.remove();
                     }
+                    removeExistingSImage($(this));
+                    hideWaitMeLoading('', dropzoneElement);
+                    dropzoneElement.parents('form').find('input[type="submit"]').removeAttr('disabled');
+                    dropzoneElement.parents('form').find('button[type="submit"]').removeAttr('disabled');
+                },
+                error: function (jqXHR) {
+                    hideWaitMeLoading('', dropzoneElement);
+                    dropzoneElement.parents('form').find('input[type="submit"]').removeAttr('disabled')
+                    dropzoneElement.parents('form').find('button[type="submit"]').removeAttr('disabled')
                 }
             });
         }
     }
 
-    $('a.dz-removeSImageBtn').click(function(e) {
-        e.preventDefault();
-        removeExistingSImage($(this));
-    });
     function removeExistingSImage(removeRef){
         let sImageOuterContainer = removeRef.parents('div.dz-sImageOuterContainer');
         sImageOuterContainer.find('div.dz-sImagePreview')
@@ -99,8 +114,13 @@
             });
         sImageOuterContainer.find('img.dz-sImagePreviewImg').attr('src', '{{ route('images_default',['resolution' => '250x250']) }}');
     }
+
     function reUploadDzFile(){
         uploadedFilePath.status = Dropzone.ADDED
         dropzoneInitObject.enqueueFile(uploadedFilePath)
+    }
+
+    function disableFormsSubmitButton(btnRef){
+
     }
 </script>

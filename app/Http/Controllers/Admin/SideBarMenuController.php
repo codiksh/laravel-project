@@ -30,9 +30,9 @@ class SideBarMenuController extends Controller
         global $renderedHtml;
         if(! $this->validateItemPermission($sidebarItem))   return ;
         if(sizeof($sidebarItem['children']) > 0){
-            $renderedHtml .= "<li class=\"nav-item has-treeview\">
-                                    <a class=\"nav-link\" href=\"#\">"
-                . $sidebarItem['name'] . "<i class=\"nav-icon fas fa-angle-left right\"></i></a>
+            $renderedHtml .= "<li class=\"nav-item\">
+                                    <a class=\"nav-link \" href=\"#\">" . $sidebarItem['icon'] .
+                "<p>" . $sidebarItem['name'] . "<i class=\"fas fa-angle-left right\"></i></p></a>
                                 <ul class=\"nav nav-treeview\">";
 
             foreach ($sidebarItem['children'] as $child) {
@@ -48,7 +48,8 @@ class SideBarMenuController extends Controller
                     || request()->is(str_replace(config('app.url') .'/', '', $this->getRouteAction($sidebarItem['route']) . '*'))) $active = "active";
                 $renderedHtml .= "<li class=\"nav-item\"><a class=\"nav-link ". $active ."\" href='"
                     .$this->getRouteAction($sidebarItem['route'])
-                    ."'>".$sidebarItem['name']
+                    ."'>" . $sidebarItem['icon']
+                    ."<p>" . $sidebarItem['name'] . "</p>"
                     ."</a></li>";
             }
         }

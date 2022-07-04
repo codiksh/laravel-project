@@ -45,6 +45,8 @@
 
                 this.on("processing", function (file) {
                     fileDropzoneElement[selectedElement].find('.dz-fileAttachmentPlaceHolder').addClass('pt-5 pb-5');
+                    fileDropzoneElement[selectedElement].parents('form').find('input[type="submit"]').attr('disabled','disabled')
+                    fileDropzoneElement[selectedElement].parents('form').find('button[type="submit"]').attr('disabled','disabled')
                 });
 
                 this.on("sending", function (file, xhr, formData) {
@@ -62,6 +64,8 @@
                     let uploadedFilePreviewElement = $("#document-" + file.serverId);
                     var mediaUuid = response.uploaded_media_id;
                     uploadedFilePreviewElement.append('<input type="hidden" name="'+inputFieldName+'" value="' + mediaUuid + '" class="dz-uploadFile" >');
+                    fileDropzoneElement[selectedElement].parents('form').find('input[type="submit"]').removeAttr('disabled');
+                    fileDropzoneElement[selectedElement].parents('form').find('button[type="submit"]').removeAttr('disabled');
                 });
 
                 this.on("error", function(file, response, xhr){

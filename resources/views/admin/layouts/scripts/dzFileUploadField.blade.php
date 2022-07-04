@@ -25,13 +25,13 @@
             </div>
         </div>
     </div>
+    @if(!empty($record) && $record->hasMedia($collectionName))
     <div class="form-group col-sm-12">
-        @if(!empty($record) && $record->hasMedia($collectionName))
-            <i>Existing Attachments: </i>
-            <table id="{{ $tableId }}" class="table existingFilesList">
-                <tbody>
-                </tbody>
-            </table>
-        @endif
+        <i>Existing Attachments: </i>
+        <table id="{{ $tableId }}" class="table existingFilesList">
+            <tbody>
+            </tbody>
+        </table>
     </div>
+    @endif
 </div>
