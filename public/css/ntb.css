@@ -755,3 +755,8 @@ h4.brand-text {
     background-color: #de942e;
     color: #ffffff;
 }
+
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+    background-color: #e09b3b;
+    color: #ffffff;
+}
