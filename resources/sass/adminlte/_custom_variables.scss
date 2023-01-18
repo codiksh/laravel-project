@@ -1,6 +1,6 @@
 
-$tigers_Eye: #e09B3B;
-$indigo : #174060;
+$indigo: #174060;
+$tiger_eye: #e09B3B;
 $tea_green: #007E33;
 $pale_blue: #0099CC;
 $mikado_yellow: #FF8800;
@@ -20,14 +20,14 @@ $gray-800: #343a40 ;
 $gray-900: #212529 ;
 $black:    #000 ;
 
-$primary:       $indigo ;
-$secondary:     $tigers_Eye;
+$primary:       $tiger_eye;
+$secondary:     $indigo;
 $success:       $tea_green;
 $info:          $pale_blue;
 $warning:       $very_pale_yellow;
 $danger:        $persian_red;
 $light:         $gray-100;
-$dark:          $tigers_Eye;
+$dark:          $indigo;
 
 $theme-colors: (
     "primary":    $primary,

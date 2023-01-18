@@ -1,7 +1,7 @@
 <div class="btn-group d-flex justify-content-center">
     <div class="btn-group dropleft datatables_action" role="group">
         <button type="button" class="btn btn-lg action-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-ellipsis-h"></i>
+            <i class="fas fa-ellipsis-stroke-vertical"></i>
         </button>
         <div class="dropdown-menu">
 

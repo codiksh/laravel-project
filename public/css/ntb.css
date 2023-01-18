@@ -675,7 +675,6 @@ table.dataTable thead, table.dataTable thead > a{
     min-width: 4.7rem;
 }
 
-
 @media (min-width: 992px) {
     .sidebar-mini.sidebar-collapse .user-role{
         display: none;
@@ -690,10 +689,6 @@ table.dataTable thead, table.dataTable thead > a{
     display: inline-block;
 }
 
-h4.brand-text{
-    color: #174060;
-    font-weight: 900;
-}
 .dropzone .dz-preview .dz-progress .dz-upload, .dz-file-attachment .progress .determinate{
     background: #174060;
 }
@@ -704,14 +699,7 @@ h4.brand-text{
 .sidebar_light_bg{
     background-color: #fff6de
 }
-.select2-container--default .select2-selection--multiple .select2-selection__choice{
-    background-color: #174060;
-    border-color: #174060;
-}
-.select2-container--default .select2-results__option--highlighted[aria-selected], .select2-container--default .select2-results__option--highlighted[aria-selected]:hover{
-    background-color: #174060;
-    border-color: #174060;
-}
+
 input[type=submit], button[type=submit]{
     font-weight: 700;
 }
@@ -740,4 +728,30 @@ table.dataTable thead, table.dataTable thead > a{
 
 .dropzone{
     min-height: inherit;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+h4.brand-text {
+    color: #ffffff;
+    font-weight: 900;
+}
+
+[class*=accent-] a.btn-primary {
+    color: #ffffff;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #e09b3b;
+    border-color: #dd9025;
+    color: #ffffff;
+    margin-top: 0.31rem;
+    padding: 0 10px;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected], .select2-container--default .select2-results__option--highlighted[aria-selected]:hover {
+    background-color: #de942e;
+    color: #ffffff;
 }
