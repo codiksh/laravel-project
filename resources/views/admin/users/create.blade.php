@@ -23,7 +23,7 @@
                             @include('adminlte-templates::common.errors')
                             {!! Form::open(['route' => 'admin.users.store',  'files' => true, 'class' => 'submitsByAjax']) !!}
                             <div class="row">
-                                @include('admin.users.fields')
+                                @include('admin.users.fields',['type' => 'create'])
                             </div>
                             {!! Form::close() !!}
                         </div>

@@ -28,6 +28,12 @@ Route::group(['prefix' => 'admin',
     'middleware' => ['auth',
         'role:Super Admin'],], function(){
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class, ["as" => 'admin']);
+    Route::group(['prefix' => 'users', 'as' => 'admin.users.'], function () {
+        Route::group(['prefix' => '{user}/change-password', 'as' => 'changePassword.'], function (){
+            Route::get('/', [\App\Http\Controllers\Admin\UserController::class, 'changePassword'])->name('index');
+            Route::post('process', [\App\Http\Controllers\Admin\UserController::class, 'changePassword_process'])->name('process');
+        });
+    });
 
     Route::group(['prefix'=>'user-tokens/{user}', 'as'=>'admin.userTokens.'], function() {
         Route::get('index', [\App\Http\Controllers\Admin\UserTokenController::class, 'index'])->name('index');
