@@ -11,6 +11,14 @@ use Response;
 
 class UserTokenController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('permission:userTokens.index')->only('index');
+        $this->middleware('permission:userTokens.generate')->only('generate');
+        $this->middleware('permission:userTokens.delete')->only('destroy');
+
+    }
+
     /**
      * Display a listing of the User.
      *

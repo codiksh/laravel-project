@@ -25,8 +25,7 @@ require __DIR__.'/auth.php';
 require __DIR__.'/media.php';
 
 Route::group(['prefix' => 'admin',
-    'middleware' => ['auth',
-        'role:Super Admin'],], function(){
+    'middleware' => ['auth',],], function(){
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class, ["as" => 'admin']);
     Route::group(['prefix' => 'users', 'as' => 'admin.users.'], function () {
         Route::group(['prefix' => '{user}/change-password', 'as' => 'changePassword.'], function (){
@@ -34,6 +33,15 @@ Route::group(['prefix' => 'admin',
             Route::post('process', [\App\Http\Controllers\Admin\UserController::class, 'changePassword_process'])->name('process');
         });
     });
+    Route::group(['prefix' => 'roles', 'as' => 'admin.roles.'], function(){
+        Route::group(['prefix' => '{role}/manage-permissions', 'as' => 'permissions.manage.'], function(){
+            Route::get('/', [\App\Http\Controllers\Admin\PermissionController::class, 'index'])->name('index');
+            Route::post('update', [\App\Http\Controllers\Admin\PermissionController::class, 'update'])->name('update');
+        });
+    });
+    Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class, ["as" => 'admin'])->except([
+        'show', 'edit', 'update'
+    ]);
 
     Route::group(['prefix'=>'user-tokens/{user}', 'as'=>'admin.userTokens.'], function() {
         Route::get('index', [\App\Http\Controllers\Admin\UserTokenController::class, 'index'])->name('index');
