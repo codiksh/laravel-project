@@ -6,6 +6,7 @@ use App\MyClasses\GeneralHelperFunctions;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
@@ -50,26 +51,13 @@ class UserRepository extends BaseRepository
      * @param ParameterBag $request
      * @return array
      */
-    public static function requestHandler(ParameterBag $request)
+    public static function requestHandler(Request $request)
     {
-        if($request->has('password') && !is_null($request->get('password'))){
-            $request->set('password', bcrypt($request->get('password')));
-        }else{
-            $request->remove('password');
-        }
-        if($user = $request->get('user')){
-            //When Edit Request
-            if(! $user->hasMedia('avatar') && ! request()->hasFile('avatar')){
-                $request->set('provideDefaultAvatar', true);
-            }
-        }else{
-            //When create request
-            if(! request()->hasFile('avatar')){
-                $request->set('provideDefaultAvatar', true);
-            }
-        }
+        return
+            [
+                'password' =>  Hash::make($request->input('password')),
+            ];
 
-        return $request->all();
     }
 
     /**

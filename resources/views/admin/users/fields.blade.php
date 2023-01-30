@@ -20,11 +20,14 @@
             {!! Form::label('mobile', 'Mobile:') !!}
                 {!! Form::text('mobile', null, ['class' => 'form-control', 'placeholder' => 'Mobile of the user']) !!}
         </div>
+
+        @if($type ?? '' == 'create')
         <!-- Password Field -->
         <div class="form-group col-sm-12">
             {!! Form::label('password', 'Password:') !!}
             {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password of the user']) !!}
         </div>
+        @endif
     </div>
 </div>
 @php $hasAvatar = !empty($user) ? $user->hasMedia('avatar') : false @endphp

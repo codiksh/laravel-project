@@ -2,22 +2,12 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Http\Requests\BaseRequest;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\User;
 use App\Repositories\Admin\UserRepository;
 
-class UpdateUserRequest extends FormRequest
+class UpdateUserPasswordRequest extends BaseRequest
 {
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -26,9 +16,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = User::$rules;
-        $rules['email'] = 'required|email|unique:users,email,' . $this->route('user')->id . ',id,deleted_at,NULL';
-        $rules['password'] = 'nullable';
+        $rules['password'] = 'required';
         return $rules;
     }
 
@@ -39,4 +27,5 @@ class UpdateUserRequest extends FormRequest
     {
         $this->merge(UserRepository::requestHandler($this));
     }
+
 }

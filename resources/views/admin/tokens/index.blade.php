@@ -4,8 +4,17 @@
     Users - {{ config('app.name') }}
 @endsection
 
+@section('page_headers')
+    <h3><i class="fa-duotone fa-cog mr-2"></i>User Tokens</h3>
+@endsection
+
 @section('breadcrumbs')
+    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Users</a></li>
     <li class="breadcrumb-item active">User Tokens</li>
+@endsection
+
+@section('page_buttons')
+    <a class="btn btn-primary" onclick="ajaxCallTokenGenerate('{{ route('admin.userTokens.generate',request()->route('user')) }} ', 'userToken-index')"><i class="fa-solid fa-plus"></i>Add Token</a>
 @endsection
 
 @section('content')
@@ -14,13 +23,6 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-
-                        <div class="card-header">
-                            <h3 class="float-left mt-1">Users Token</h3>
-                            <h3 class="float-sm-right">
-                                <a class="btn btn-primary btn-sm mb-1" onclick="ajaxCallTokenGenerate('{{ route('admin.userTokens.generate',request()->route('user')) }} ', 'userToken-index')">Add New</a>
-                            </h3>
-                        </div>
 
                         <div class="card-body">
                             @include('flash::message')

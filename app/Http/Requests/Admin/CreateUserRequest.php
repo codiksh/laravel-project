@@ -34,6 +34,6 @@ class CreateUserRequest extends FormRequest
      */
     public function prepareForValidation()
     {
-        $this->request->replace(UserRepository::requestHandler($this->request));
+        $this->merge(UserRepository::requestHandler($this));
     }
 }
