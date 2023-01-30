@@ -25,8 +25,7 @@ require __DIR__.'/auth.php';
 require __DIR__.'/media.php';
 
 Route::group(['prefix' => 'admin',
-    'middleware' => ['auth',
-        'role:Super Admin'],], function(){
+    'middleware' => ['auth',],], function(){
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class, ["as" => 'admin']);
     Route::group(['prefix' => 'users', 'as' => 'admin.users.'], function () {
         Route::group(['prefix' => '{user}/change-password', 'as' => 'changePassword.'], function (){

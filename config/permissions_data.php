@@ -31,7 +31,7 @@ return [
 
     'tokens' => [
         [
-            'name' => 'tokens.index',
+            'name' => 'userTokens.index',
             'label' => 'Can Access List of User Tokens',
         ],
         [
