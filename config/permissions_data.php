@@ -28,4 +28,19 @@ return [
             'label' => 'Can Delete Users',
         ]
     ],
+
+    'tokens' => [
+        [
+            'name' => 'tokens.index',
+            'label' => 'Can Access List of User Tokens',
+        ],
+        [
+            'name' => 'userTokens.generate',
+            'label' => 'Can generate user token',
+        ],
+        [
+            'name' => 'userTokens.delete',
+            'label' => 'Can delete the generated user token',
+        ],
+    ],
 ];

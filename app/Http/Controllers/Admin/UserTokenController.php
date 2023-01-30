@@ -14,8 +14,8 @@ class UserTokenController extends Controller
 
     public function __construct() {
         $this->middleware('permission:tokens.index')->only('index');
-        $this->middleware('permission:tokens.generate')->only('generate');
-        $this->middleware('permission:tokens.delete')->only('destroy');
+        $this->middleware('permission:userTokens.generate')->only('generate');
+        $this->middleware('permission:userTokens.delete')->only('destroy');
 
     }
 
