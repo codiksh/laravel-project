@@ -2,8 +2,10 @@ $FIELDS$
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-success rspSuccessBtns']) !!}
-    <a href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index') }}" class="btn btn-default">Cancel</a>
+    <button class="btn btn-lg btn-success rspSuccessBtns" type="submit"><i class="fa-duotone fa-floppy-disk"></i> Save
+    </button>
+    <a href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index') }}" class="btn btn-lg btn-outline-danger">
+        <i class="fa-duotone fa-arrow-left-to-line"></i> Back</a>
 </div>
 @push('stackedScripts')
     @include('admin.layouts.scripts.regAnotherScript')
