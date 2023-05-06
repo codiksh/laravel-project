@@ -29,7 +29,7 @@ class BaseRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function (Validator $validator) {
-            $this->after($validator);
+            $this->afterValidation($validator);
         });
     }
 
@@ -37,7 +37,7 @@ class BaseRequest extends FormRequest
      * function to manage after-request-has-been-validated.
      * @param $validator
      */
-    protected function after($validator)
+    protected function afterValidation($validator)
     {
         //
     }
