@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('register', [\App\Http\Controllers\API\Auth\RegistrationController::class, 'register']);
+
+Route::group(['middleware' => ['auth:api']], function(){
+    Route::post('change-password', [\App\Http\Controllers\API\Auth\ChangePasswordController::class, 'changePassword']);
 });
