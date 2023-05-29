@@ -6,12 +6,14 @@
 
 <!-- Submit Field -->
 <div class="form-group col-md-12 fields_footer_action_buttons">
-    <button class="btn btn-lg btn-success rspSuccessBtns" type="submit" ><i class="fa-duotone fa-floppy-disk"></i> Save</button>
-    <a href="{{ route('admin.roles.index') }}" class="btn btn-lg btn-outline-danger"><i class="fa-duotone fa-arrow-left-to-line"></i> Back</a>
+    <button class="btn btn-lg btn-success rspSuccessBtns" type="submit"><i class="fa-duotone fa-floppy-disk"></i> Save
+    </button>
+    <a href="{{ route('admin.roles.index') }}" class="btn btn-lg btn-outline-danger"><i
+                class="fa-duotone fa-arrow-left-to-line"></i> Back</a>
 </div>
 @push('stackedScripts')
-    @include('admin.layouts.scripts.regAnotherScript')
-    @include('admin.layouts.scripts.swalAjax')
+    @include('admin.layouts.adminlte.scripts.regAnotherScript')
+    @include('admin.layouts.adminlte.scripts.swalAjax')
     <script>
         $('.submitsByAjax').submit(function (e) {
             e.preventDefault();
@@ -21,7 +23,7 @@
                 type === 'create' ? postCreate : undefined);
         });
 
-        function postCreate(){
+        function postCreate() {
             switch_between_register_to_registerAnother_btn($('.submitsByAjax'), false)
         }
     </script>

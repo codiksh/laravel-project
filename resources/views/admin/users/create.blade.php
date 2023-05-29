@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('admin.layouts.adminlte.master')
 
 @section('title')
     Create User - {{ config('app.name') }}

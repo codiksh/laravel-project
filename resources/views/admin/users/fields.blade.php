@@ -13,25 +13,25 @@
         <!-- Email Field -->
         <div class="form-group col-sm-6">
             {!! Form::label('email', 'Email:') !!}
-                {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email of the user']) !!}
+            {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email of the user']) !!}
         </div>
         <!-- Mobile Field -->
         <div class="form-group col-sm-6">
             {!! Form::label('mobile', 'Mobile:') !!}
-                {!! Form::text('mobile', null, ['class' => 'form-control', 'placeholder' => 'Mobile of the user']) !!}
+            {!! Form::text('mobile', null, ['class' => 'form-control', 'placeholder' => 'Mobile of the user']) !!}
         </div>
 
         @if($type ?? '' == 'create')
-        <!-- Password Field -->
-        <div class="form-group col-sm-12">
-            {!! Form::label('password', 'Password:') !!}
-            {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password of the user']) !!}
-        </div>
+            <!-- Password Field -->
+            <div class="form-group col-sm-12">
+                {!! Form::label('password', 'Password:') !!}
+                {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password of the user']) !!}
+            </div>
         @endif
     </div>
 </div>
 @php $hasAvatar = !empty($user) ? $user->hasMedia('avatar') : false @endphp
-@include('admin.layouts.scripts.dzSingleImageField', [
+@include('admin.layouts.adminlte.scripts.dzSingleImageField', [
     'record' => isset($user) ? $user : '',
     'hasMedia' => $hasAvatar,
     'previewUrl' => $hasAvatar ? $user->avatarUrl['250'] : route('images_default',['resolution' => '250x250']),
@@ -42,13 +42,15 @@
 ])
 <!-- Submit Field -->
 <div class="form-group col-md-12 fields_footer_action_buttons">
-    <button class="btn btn-lg btn-success rspSuccessBtns" type="submit" ><i class="fa-duotone fa-floppy-disk"></i> Save</button>
-    <a href="{{ route('admin.users.index') }}" class="btn btn-lg btn-outline-danger"><i class="fa-duotone fa-arrow-left-to-line"></i> Back</a>
+    <button class="btn btn-lg btn-success rspSuccessBtns" type="submit"><i class="fa-duotone fa-floppy-disk"></i> Save
+    </button>
+    <a href="{{ route('admin.users.index') }}" class="btn btn-lg btn-outline-danger"><i
+                class="fa-duotone fa-arrow-left-to-line"></i> Back</a>
 </div>
 
 @push('stackedScripts')
-    @include('admin.layouts.scripts.regAnotherScript')
-    @include('admin.layouts.scripts.swalAjax')
+    @include('admin.layouts.adminlte.scripts.regAnotherScript')
+    @include('admin.layouts.adminlte.scripts.swalAjax')
 
     <script>
         Dropzone.autoDiscover = false;
@@ -62,7 +64,7 @@
                 type === 'create' ? postCreate : undefined);
         });
 
-        function postCreate(){
+        function postCreate() {
             switch_between_register_to_registerAnother_btn($('.submitsByAjax'), false)
         }
     </script>
