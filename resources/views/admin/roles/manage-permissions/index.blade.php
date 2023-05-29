@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('admin.layouts.adminlte.master')
 
 @section('title')
     Manage Permissions for {{ request()->route('role')->name }}  - {{ config('app.name') }}
@@ -54,7 +54,7 @@
                                                 @foreach($groupedPermissions as $permission)
                                                     <li class="expanded" data-value="{{ $permission->id }}">
                                                         <div
-                                                            class="custom-checkbox custom-control custom-control-inline">
+                                                                class="custom-checkbox custom-control custom-control-inline">
                                                             <input id="chkBx_permission_{{ $permission->id }}"
                                                                    type="checkbox" class="custom-control-input"
                                                                    name="{{ $roleName }}[]"
@@ -83,8 +83,8 @@
     </div>
 @endsection
 @push('stackedScripts')
-    @include('admin.layouts.scripts.regAnotherScript')
-    @include('admin.layouts.scripts.swalAjax')
+    @include('admin.layouts.adminlte.scripts.regAnotherScript')
+    @include('admin.layouts.adminlte.scripts.swalAjax')
     <script>
         $('.submitsByAjax').submit(function (e) {
             e.preventDefault();

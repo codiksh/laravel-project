@@ -1,7 +1,7 @@
-@extends('admin.layouts.master')
+@extends('admin.layouts.adminlte.master')
 
 @section('title')
-    View $MODEL_NAME_HUMAN$ - {{ config('app.name') }}
+    Edit $MODEL_NAME_HUMAN$ - {{ config('app.name') }}
 @endsection
 
 @section('page_headers')
@@ -10,7 +10,7 @@
 
 @section('breadcrumbs')
     <li class="breadcrumb-item"><a href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index') }}">$MODEL_NAME_PLURAL_HUMAN$</a></li>
-    <li class="breadcrumb-item active">View</li>
+    <li class="breadcrumb-item active">Edit</li>
 @endsection
 
 @section('page_buttons')
@@ -24,7 +24,6 @@
                 <div class="col-12">
                     <div class="card">
 
-
                         <div class="card-header">
                             <div class="w-100 d-flex justify-content-between ">
                                 <div class="d-flex align-items-center">
@@ -37,13 +36,12 @@
                         </div>
 
                         <div class="card-body">
-                            <div id="show$MODEL_NAME_CAMEL$">
-                                {!! Form::model($$MODEL_NAME_CAMEL$, ['route' => ['$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.update', $$MODEL_NAME_CAMEL$->$PRIMARY_KEY_NAME$], 'method' => 'patch'$FILES$,  'files' => true]) !!}
-                                <div class="row">
-                                    @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.fields')
-                                </div>
-                                {!! Form::close() !!}
+                            @include('adminlte-templates::common.errors')
+                            {!! Form::model($$MODEL_NAME_CAMEL$, ['route' => ['$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.update', $$MODEL_NAME_CAMEL$->uuid], 'method' => 'patch'$FILES$,  'files' => true, 'class' => 'submitsByAjax']) !!}
+                            <div class="row">
+                                @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.fields', ['type' => 'edit'])
                             </div>
+                            {!! Form::close() !!}
                         </div>
 
                     </div>
@@ -52,10 +50,3 @@
         </div>
     </div>
 @endsection
-
-
-@push('stackedScripts')
-<script>
-    disableInputsForView($('#show$MODEL_NAME_CAMEL$'));
-</script>
-@endpush

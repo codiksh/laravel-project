@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('admin.layouts.head')
+    @include('admin.layouts.adminlte.head')
 </head>
-<body class="sidebar-mini hold-transition accent-primary sidebar-collapse fixed layout-fixed" >
+<body class="sidebar-mini hold-transition accent-primary sidebar-collapse fixed layout-fixed">
 <div class="wrapper">
     <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="{{ asset('icon.jpg') }}" alt="{{ config('app.name') }}'s Logo" height="60" width="60">
+        <img class="animation__shake" src="{{ asset('icon.jpg') }}" alt="{{ config('app.name') }}'s Logo" height="60"
+             width="60">
     </div>
-    @include('admin.layouts.header')
-    @include('admin.layouts.sidebar')
+    @include('admin.layouts.adminlte.header')
+    @include('admin.layouts.adminlte.sidebar')
 
     <div class="content-wrapper">
         <section class="content">
@@ -22,7 +23,8 @@
                             </div>
                             <small>
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fa-duotone fa-house-chimney-window"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
+                                                    class="fa-duotone fa-house-chimney-window"></i></a></li>
                                     @yield('breadcrumbs')
                                 </ol>
                             </small>
@@ -36,7 +38,7 @@
             @yield('content')
         </section>
     </div>
-    @include('admin.layouts.footer')
+    @include('admin.layouts.adminlte.footer')
 </div>
 @yield('modal')
 
@@ -68,9 +70,9 @@
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 
 <script defer>
-    $.ajaxSetup({headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }});
+    $.ajaxSetup({headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')}});
 </script>
-@include('admin.layouts.inits.master')
+@include('admin.layouts.adminlte.inits.master')
 @include('layouts.helpers')
 
 @yield('scripts')

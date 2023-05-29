@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('admin.layouts.adminlte.master')
 
 @section('title')
     Create $MODEL_NAME_HUMAN$ - {{ config('app.name') }}
