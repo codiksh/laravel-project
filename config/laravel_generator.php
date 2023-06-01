@@ -15,25 +15,25 @@ return [
 
         'model'             => app_path('Models/'),
 
-        'datatables'        => app_path('DataTables/'),
+        'datatables'        => app_path('DataTables/Admin/'),
 
-        'livewire_tables'   => app_path('Http/Livewire/'),
+        'livewire_tables'   => app_path('Http/Livewire/Admin/'),
 
-        'repository'        => app_path('Repositories/'),
+        'repository'        => app_path('Repositories/Admin/'),
 
         'routes'            => base_path('routes/web.php'),
 
         'api_routes'        => base_path('routes/api.php'),
 
-        'request'           => app_path('Http/Requests/'),
+        'request'           => app_path('Http/Requests/Admin/'),
 
-        'api_request'       => app_path('Http/Requests/API/'),
+        'api_request'       => app_path('Http/Requests/Admin/API/'),
 
-        'controller'        => app_path('Http/Controllers/'),
+        'controller'        => app_path('Http/Controllers/Admin/'),
 
-        'api_controller'    => app_path('Http/Controllers/API/'),
+        'api_controller'    => app_path('Http/Controllers/Admin/API/'),
 
-        'api_resource'      => app_path('Http/Resources/'),
+        'api_resource'      => app_path('Http/Resources/Admin/'),
 
         'schema_files'      => resource_path('model_schemas/'),
 
@@ -51,9 +51,9 @@ return [
 
         'api_test'          => base_path('tests/APIs/'),
 
-        'views'             => resource_path('views/'),
+        'views'             => resource_path('views/admin/'),
 
-        'menu_file'         => resource_path('views/layouts/menu.blade.php'),
+        'menu_file'         => resource_path('views/admin/layouts/menu.blade.php'),
     ],
 
     /*
@@ -67,21 +67,21 @@ return [
 
         'model'             => 'App\Models',
 
-        'datatables'        => 'App\DataTables',
+        'datatables'        => 'App\DataTables\Admin',
 
-        'livewire_tables'   => 'App\Http\Livewire',
+        'livewire_tables'   => 'App\Http\Livewire\Admin',
 
-        'repository'        => 'App\Repositories',
+        'repository'        => 'App\Repositories\Admin',
 
-        'controller'        => 'App\Http\Controllers',
+        'controller'        => 'App\Http\Controllers\Admin',
 
-        'api_controller'    => 'App\Http\Controllers\API',
+        'api_controller'    => 'App\Http\Controllers\Admin\API',
 
-        'api_resource'      => 'App\Http\Resources',
+        'api_resource'      => 'App\Http\Resources\Admin',
 
-        'request'           => 'App\Http\Requests',
+        'request'           => 'App\Http\Requests\Admin',
 
-        'api_request'       => 'App\Http\Requests\API',
+        'api_request'       => 'App\Http\Requests\Admin\API',
 
         'seeder'            => 'Database\Seeders',
 
@@ -130,7 +130,7 @@ return [
 
     'options' => [
 
-        'soft_delete' => false,
+        'soft_delete' => true,
 
         'save_schema_file' => true,
 
@@ -138,7 +138,7 @@ return [
 
         'repository_pattern' => true,
 
-        'resources' => false,
+        'resources' => true,
 
         'factory' => false,
 
@@ -146,7 +146,7 @@ return [
 
         'swagger' => false, // generate swagger for your APIs
 
-        'tests' => false, // generate test cases for your APIs
+        'tests' => true, // generate test cases for your APIs
 
         'excluded_fields' => ['id'], // Array of columns that doesn't required while creating module
     ],
@@ -164,7 +164,7 @@ return [
 
         'namespace' => '',  // e.g. Admin or Admin\Shipping or Admin\Shipping\Logistics
 
-        'view' => '',  // e.g. admin or admin/shipping or admin/shipping/logistics
+        'view' => 'admin',  // e.g. admin or admin/shipping or admin/shipping/logistics
     ],
 
     /*
@@ -176,7 +176,7 @@ return [
     |
     */
 
-    'tables' => 'blade',
+    'tables' => 'datatables',
 
     /*
     |--------------------------------------------------------------------------

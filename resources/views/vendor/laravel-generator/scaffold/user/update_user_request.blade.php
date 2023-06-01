@@ -4,21 +4,10 @@
 
 namespace {{ config('laravel_generator.namespace.request') }};
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 
-class UpdateUserRequest extends FormRequest
+class UpdateUserRequest extends BaseRequest
 {
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -32,7 +21,7 @@ class UpdateUserRequest extends FormRequest
           'email'    => 'required|email|unique:users,email,'.$id,
           'password' => 'confirmed'
         ];
-        
+
         return $rules;
     }
 }

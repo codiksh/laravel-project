@@ -9,7 +9,7 @@ use InfyOm\Generator\Utils\ResponseUtil;
 /**
  * @OA\Server(url="/{{ $apiPrefix }}")
  * @OA\Info(
- *   title="InfyOm Laravel Generator APIs",
+ *   title="CODIKSH APIs",
  *   version="1.0.0"
  * )
  * This class should be parent class for other API controllers

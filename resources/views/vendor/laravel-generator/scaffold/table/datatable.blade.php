@@ -10,6 +10,7 @@ use Yajra\DataTables\Html\Column;
 @endif
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
+use App\MyClasses\GeneralHelperFunctions;
 
 class {{ $config->modelNames->name }}DataTable extends DataTable
 {
@@ -23,18 +24,26 @@ class {{ $config->modelNames->name }}DataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', '{{ $config->modelNames->snakePlural }}.datatables_actions');
+        return $dataTable
+            ->editColumn('created_at', function ({{ $config->modelNames->name }} ${{ $config->modelNames->camel }}){
+                return GeneralHelperFunctions::prepareHtmlDate(${{ $config->modelNames->camel }}->created_at);
+            })
+            ->editColumn('updated_at', function ({{ $config->modelNames->name }} ${{ $config->modelNames->camel }}){
+                return GeneralHelperFunctions::prepareHtmlDate(${{ $config->modelNames->camel }}->updated_at);
+            })
+            ->rawColumns(['created_at', 'updated_at', 'action'])
+            ->addColumn('action', '{{ $config->modelNames->snakePlural }}.datatables_actions');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\{{ $config->modelNames->name }} $model
+     * @param \App\Models\{{ $config->modelNames->name }} ${{ $config->modelNames->snakePlural }}
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query({{ $config->modelNames->name }} $model)
+    public function query({{ $config->modelNames->name }} ${{ $config->modelNames->snakePlural }})
     {
-        return $model->newQuery();
+        return ${{ $config->modelNames->snakePlural }}->newQuery();
     }
 
     /**
@@ -49,17 +58,17 @@ class {{ $config->modelNames->name }}DataTable extends DataTable
             ->minifiedAjax()
             ->addAction(['width' => '120px', 'printable' => false])
             ->parameters([
-                'dom'       => 'Bfrtip',
+                'dom'       => 'B<\'row p-t-15\' <\'col-sm-6\'l><\'col-sm-6\'f>>rt<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>',
                 'stateSave' => true,
                 'order'     => [[0, 'desc']],
                 'buttons'   => [
-                    // Enable Buttons as per your need
-//                    ['extend' => 'create', 'className' => 'btn btn-default btn-sm no-corner',],
-//                    ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],
-//                    ['extend' => 'print', 'className' => 'btn btn-default btn-sm no-corner',],
-//                    ['extend' => 'reset', 'className' => 'btn btn-default btn-sm no-corner',],
-//                    ['extend' => 'reload', 'className' => 'btn btn-default btn-sm no-corner',],
-                ],
+                    // ['extend' => 'create', 'className' => 'btn btn-default btn-sm no-corner',],
+                    // ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],
+                    ['extend' => 'print', 'className' => 'btn btn-default btn-sm no-corner',],
+                    ['extend' => 'reset', 'className' => 'btn btn-default btn-sm no-corner',],
+                    ['extend' => 'reload', 'className' => 'btn btn-default btn-sm no-corner',],
+                    ['extend' => 'colvis', 'className' => 'btn btn-default btn-sm no-corner']
+            ],
 @if($config->options->localized)
                 'language' => [
                     'url' => url('//cdn.datatables.net/plug-ins/1.10.12/i18n/English.json'),
@@ -76,7 +85,9 @@ class {{ $config->modelNames->name }}DataTable extends DataTable
     protected function getColumns()
     {
         return [
-            {!! $columns !!}
+            {!! $columns !!},
+            'created_at' => ['title' => 'Added on'],
+            'updated_at' => ['title' => 'Updated on'],
         ];
     }
 
