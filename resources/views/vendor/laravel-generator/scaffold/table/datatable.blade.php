@@ -32,7 +32,7 @@ class {{ $config->modelNames->name }}DataTable extends DataTable
                 return GeneralHelperFunctions::prepareHtmlDate(${{ $config->modelNames->camel }}->updated_at);
             })
             ->rawColumns(['created_at', 'updated_at', 'action'])
-            ->addColumn('action', '{{ $config->modelNames->snakePlural }}.datatables_actions');
+            ->addColumn('action', '{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.datatables_actions');
     }
 
     /**

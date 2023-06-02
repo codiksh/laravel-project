@@ -5,8 +5,9 @@
 namespace {{ $config->namespaces->model }};
 
 use Illuminate\Database\Eloquent\Model;
-@if($config->options->softDelete) {{ 'use Illuminate\Database\Eloquent\SoftDeletes;' }}@endif
-@if($config->options->tests or $config->options->factory) {{ 'use Illuminate\Database\Eloquent\Factories\HasFactory;' }}@endif
+use Illuminate\Support\Str;
+@if($config->options->softDelete){{ 'use Illuminate\Database\Eloquent\SoftDeletes;' }}@endif
+@if($config->options->tests or $config->options->factory){{ 'use Illuminate\Database\Eloquent\Factories\HasFactory;' }}@endif
 
 @if(isset($swaggerDocs)){!! $swaggerDocs  !!}@endif
 class {{ $config->modelNames->name }} extends Model
@@ -34,4 +35,48 @@ class {{ $config->modelNames->name }} extends Model
     ];
 
     {!! $relations !!}
+
+    /**
+     * Changing route key name
+     * @return string
+     */
+    public function getRouteKeyName() {
+        return 'uuid';
+    }
+
+    /**
+     * Things require during the boot
+     */
+    protected static function boot() {
+        parent::boot();
+
+        //Auto-adding uuid to newly created instances
+        self::creating(function ({{ $config->modelNames->name }} ${{ $config->modelNames->camel }}) {
+            ${{ $config->modelNames->camel }}->uuid = Str::uuid()->toString();
+        });
+    }
+
+    /**
+     * Things require after the boot
+     */
+    protected static function booted() {
+        parent::booted();
+
+        static::creating(function({{ $config->modelNames->name }} ${{ $config->modelNames->camel }}){
+
+        });
+    }
+
+    /**
+     * Get Object by UUID
+     *
+     * @param $query
+     * @param $uuid
+     * @param array $with
+     * @return mixed
+     */
+    public function scopeFindWithUuid($query,$uuid,$with = []){
+        return $query->where('uuid',$uuid)->with($with)->firstOrFail();
+    }
+
 }

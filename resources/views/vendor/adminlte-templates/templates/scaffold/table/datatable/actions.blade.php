@@ -1,20 +1,16 @@
-@{!! Form::open(['route' => ['{{ $config->prefixes->getRoutePrefixWith('.') }}{{ $config->modelNames->camelPlural }}.destroy', ${{ $config->primaryName }}], 'method' => 'delete']) !!}
-<div class='btn-group'>
-    <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.show', ${!! $config->primaryName !!}) }}" class='btn btn-default btn-xs'>
-        <i class="fa fa-eye"></i>
-    </a>
-    <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.edit', ${!! $config->primaryName !!}) }}" class='btn btn-default btn-xs'>
-        <i class="fa fa-edit"></i>
-    </a>
-    @{!! Form::button('<i class="fa fa-trash"></i>', [
-        'type' => 'submit',
-        'class' => 'btn btn-danger btn-xs',
-@if($config->options->localized)
-        'onclick' => "return confirm('Are you sure?')"
-@else
-        'onclick' => 'return confirm("'.__('crud.are_you_sure').'")'
-@endif
-
-    ]) !!}
+<div class="d-flex justify-content-end datatables_action">
+    <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.show', ${!! $config->primaryName !!}) }}" title="View {{ $config->modelNames->human }}" class="btn btn-lg text-primary"><i class="fas fa-eye"></i></a>
+    <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.edit', ${!! $config->primaryName !!}) }}" title="Edit {{ $config->modelNames->human }}" class="btn btn-lg text-primary"><i class="fas fa-edit"></i></a>
+    <div class="dropleft " title="More options">
+        <button type="button" class="btn btn-lg pr-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-ellipsis-stroke-vertical"></i>
+        </button>
+        <div class="dropdown-menu">
+            <a class='dropdown-item py-2 bg-danger' href="javascript:void(0);" style="color: white; padding-bottom: 10px" onclick="ajaxCallDelete('@{{ route("{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.destroy", ${!! $config->primaryName !!}) }}',
+                'Are you sure?', '{{ $config->modelNames->camel }}-index')">
+                <i class="fas fa-trash-alt mr-1"></i>&nbsp;&nbsp;Delete
+            </a>
+        </div>
+    </div>
 </div>
-@{!! Form::close() !!}
+

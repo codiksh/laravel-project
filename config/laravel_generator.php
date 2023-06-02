@@ -51,7 +51,7 @@ return [
 
         'api_test'          => base_path('tests/APIs/'),
 
-        'views'             => resource_path('views/admin/'),
+        'views'             => resource_path('views/'),
 
         'menu_file'         => resource_path('views/admin/layouts/menu.blade.php'),
     ],
@@ -160,7 +160,7 @@ return [
 
     'prefixes' => [
 
-        'route' => '',  // e.g. admin or admin.shipping or admin.shipping.logistics
+        'route' => 'admin',  // e.g. admin or admin.shipping or admin.shipping.logistics
 
         'namespace' => '',  // e.g. Admin or Admin\Shipping or Admin\Shipping\Logistics
 

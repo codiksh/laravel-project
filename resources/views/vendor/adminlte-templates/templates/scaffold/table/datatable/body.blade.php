@@ -1,12 +1,10 @@
-@@push('third_party_stylesheets')
-    @@include('layouts.datatables_css')
-@@endpush
+@@section('css')
+    @@include('admin.layouts.datatables_css')
+@@endsection
 
-<div class="card-body px-4">
-    @{!! $dataTable->table(['width' => '100%', 'class' => 'table table-striped table-bordered']) !!}
-</div>
+@{!! $dataTable->table(['width' => '100%', 'class' => 'table', 'id' => '{{ $config->modelNames->camel }}-index']) !!}
 
-@@push('third_party_scripts')
-    @@include('layouts.datatables_js')
+@@push('stackedScripts')
+    @@include('admin.layouts.datatables_js')
     @{!! $dataTable->scripts() !!}
 @@endpush

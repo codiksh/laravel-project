@@ -5,5 +5,5 @@
      * @return \Illuminate\Contracts\Foundation\Application|Factory|View|Application|void
      */
     public function index(Request $request) {
-        return view('{{ $config->modelNames->snakePlural }}.index');
+        return view('{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.index');
     }

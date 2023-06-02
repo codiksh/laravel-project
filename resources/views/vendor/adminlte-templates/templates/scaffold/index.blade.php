@@ -1,39 +1,36 @@
-@@extends('layouts.app')
+@@extends('admin.layouts.master')
+
+@@section('title')
+    {{ $config->modelNames->humanPlural }} - {{ config('app.name') }}
+@@endsection
+
+@@section('page_headers')
+    <h3><i class="fa-duotone fa-users mr-2"></i>{{ $config->modelNames->humanPlural }}</h3>
+@@endsection
+
+@@section('breadcrumbs')
+    <li class="breadcrumb-item active">{{ $config->modelNames->humanPlural }}</li>
+@@endsection
+
+@@section('page_buttons')
+    <a class="btn btn-primary" href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.create') }}"><i class="fa-solid fa-plus"></i> Add {{ $config->modelNames->humanPlural }}</a>
+@@endsection
 
 @@section('content')
-    <section class="content-header">
+    <div class="content">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-@if($config->options->localized)
-                    <h1>@@lang('models/{{ $config->modelNames->camelPlural }}.plural')</h1>
-@else
-                    <h1>{{ $config->modelNames->humanPlural }}</h1>
-@endif
-                </div>
-                <div class="col-sm-6">
-                    <a class="btn btn-primary float-right"
-                       href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.create') }}">
-@if($config->options->localized)
-                         @@lang('crud.add_new')
-@else
-                        Add New
-@endif
-                    </a>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body">
+                            @@include('flash::message')
+                            {!! $table !!}
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <div class="content px-3">
-
-        @@include('flash::message')
-
-        <div class="clearfix"></div>
-
-        <div class="card">
-            {!! $table !!}
-        </div>
     </div>
-
 @@endsection

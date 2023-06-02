@@ -7,8 +7,8 @@ namespace {{ $config->namespaces->controller }};
 @if(config('laravel_generator.tables') === 'datatables')
 use {{ $config->namespaces->dataTables }}\{{ $config->modelNames->name }}DataTable;
 @endif
-use {{ $config->namespaces->request }}\CreateRequest;
-use {{ $config->namespaces->request }}\UpdateRequest;
+use {{ $config->namespaces->request }}\{{ $config->modelNames->name }}\CreateRequest;
+use {{ $config->namespaces->request }}\{{ $config->modelNames->name }}\UpdateRequest;
 use {{ $config->namespaces->app }}\Http\Controllers\AppBaseController;
 use {{ $config->namespaces->repository }}\{{ $config->modelNames->name }}Repository;
 use Illuminate\Contracts\View\Factory;
