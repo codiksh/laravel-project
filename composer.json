@@ -21,6 +21,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "infyomlabs/adminlte-templates": "^6.0.0",
         "infyomlabs/laravel-generator": "^6.0.1",
+        "darkaonline/l5-swagger": "8.*",
+        "infyomlabs/swagger-generator": "^3.0",
         "laravel/framework": "^10.0",
         "laravel/passport": "^11.8",
         "laravel/sanctum": "^3.2.5",

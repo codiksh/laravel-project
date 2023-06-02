@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use InfyOm\Generator\Common\GeneratorConfig;
+use InfyOm\Generator\Generators\Scaffold\RequestGenerator;
+use InfyOm\Generator\Generators\Scaffold\ViewGenerator;
 use Laravel\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
 
@@ -18,6 +21,17 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+
+    /**
+     * All of the container bindings that should be registered.
+     *
+     * @var array
+     */
+    public $singletons = [
+        RequestGenerator::class => \App\Overrides\CrudGenerator\Generators\Scaffold\RequestGenerator::class,
+        ViewGenerator::class => \App\Overrides\CrudGenerator\Generators\Scaffold\ViewGenerator::class,
+        GeneratorConfig::class => \App\Overrides\CrudGenerator\Common\GeneratorConfig::class,
+    ];
 
     /**
      * Bootstrap any application services.

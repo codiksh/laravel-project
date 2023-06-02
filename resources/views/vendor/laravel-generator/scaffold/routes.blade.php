@@ -1,0 +1,1 @@
+Route::resource('{{ $config->prefixes->getRoutePrefixWith('/') }}{{ $config->modelNames->dashedPlural }}', {{ $config->namespaces->controller }}\{{ $config->modelNames->name }}Controller::class @if($config->prefixes->route), ["as" => '{{ $config->prefixes->route }}']@endif );
