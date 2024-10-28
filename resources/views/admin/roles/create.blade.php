@@ -22,11 +22,16 @@
 
                         <div class="card-body">
                             @include('adminlte-templates::common.errors')
-                            {!! Form::open(['route' => 'admin.roles.store',  'files' => true, 'class' => 'submitsByAjax']) !!}
-                            <div class="row">
-                                @include('admin.roles.fields', ['type' => 'create'])
-                            </div>
-                            {!! Form::close() !!}
+                            {!! html()->form('POST', route('admin.roles.store'))
+                                ->attribute('enctype', 'multipart/form-data')
+                                ->class('submitsByAjax')
+                                ->open() !!}
+
+                                <div class="row">
+                                    @include('admin.roles.fields', ['type' => 'create'])
+                                </div>
+
+                                {!! html()->form()->close() !!}
                         </div>
 
                     </div>

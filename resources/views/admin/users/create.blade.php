@@ -21,11 +21,16 @@
                     <div class="card">
                         <div class="card-body">
                             @include('adminlte-templates::common.errors')
-                            {!! Form::open(['route' => 'admin.users.store',  'files' => true, 'class' => 'submitsByAjax']) !!}
-                            <div class="row">
-                                @include('admin.users.fields',['type' => 'create'])
-                            </div>
-                            {!! Form::close() !!}
+                            {!! html()->form('POST', route('admin.users.store'))
+                                ->attribute('enctype', 'multipart/form-data')
+                                ->class('submitsByAjax')
+                                ->open() !!}
+
+                                <div class="row">
+                                    @include('admin.users.fields', ['type' => 'create'])
+                                </div>
+
+                                {!! html()->form()->close() !!}
                         </div>
                     </div>
                 </div>

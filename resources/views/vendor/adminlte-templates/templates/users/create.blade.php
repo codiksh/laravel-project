@@ -17,20 +17,20 @@
 
         <div class="card">
 
-            {!! Form::open(['route' => 'users.store']) !!}
+            {!! html()->form('POST', route('users.store'))->open() !!}
 
-            <div class="card-body">
-                <div class="row">
-                    @include('users.fields')
+                <div class="card-body">
+                    <div class="row">
+                        @include('users.fields')
+                    </div>
                 </div>
-            </div>
 
-            <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('users.index') }}" class="btn btn-default">Cancel</a>
-            </div>
+                <div class="card-footer">
+                    {!! html()->submit('Save')->class('btn btn-primary') !!}
+                    <a href="{{ route('users.index') }}" class="btn btn-default">Cancel</a>
+                </div>
 
-            {!! Form::close() !!}
+            {!! html()->form()->close() !!}
 
         </div>
     </div>

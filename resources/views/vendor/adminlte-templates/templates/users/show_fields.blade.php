@@ -1,11 +1,11 @@
 <!-- Name Field -->
 <div class="col-sm-12">
-    {!! Form::label('name', 'Name:') !!}
+    {!! html()->label('Name:')->for('name') !!}
     <p>{!! $user->name !!}</p>
 </div>
 
 <!-- Email Field -->
 <div class="col-sm-12">
-    {!! Form::label('email', 'Email:') !!}
+    {!! html()->label('Email:')->for('email') !!}
     <p>{!! $user->email !!}</p>
 </div>

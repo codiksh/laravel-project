@@ -1,7 +1,9 @@
 <!-- Name Field -->
 <div class="form-group col-md-6">
-    {!! Form::label('name', 'Name:') !!}
-    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Name of the Role, you\'d like to create?']) !!}
+    {!! html()->label('Name:')->for('name') !!}
+    {!! html()->text('name')
+        ->class('form-control')
+        ->placeholder("Name of the Role, you'd like to create?") !!}
 </div>
 
 <!-- Submit Field -->

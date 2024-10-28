@@ -36,11 +36,17 @@
 
                         <div class="card-body">
                             @include('adminlte-templates::common.errors')
-                            {!! Form::model($user, ['route' => ['admin.users.update', $user->uuid], 'method' => 'patch',  'files' => true, 'class' => 'submitsByAjax']) !!}
-                            <div class="row">
-                                @include('admin.users.fields')
-                            </div>
-                            {!! Form::close() !!}
+                            {!! html()->modelForm($user, 'PATCH', route('admin.users.update', $user->uuid))
+                                ->attribute('enctype', 'multipart/form-data')
+                                ->class('submitsByAjax')
+                                ->open() !!}
+
+                                <div class="row">
+                                    @include('admin.users.fields')
+                                </div>
+
+                            {!! html()->closeModelForm() !!}
+
                         </div>
 
                     </div>

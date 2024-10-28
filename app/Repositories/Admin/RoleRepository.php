@@ -26,7 +26,7 @@ class RoleRepository extends BaseRepository
      *
      * @return array
      */
-    public function getFieldsSearchable()
+    public function getFieldsSearchable(): array
     {
         return $this->fieldSearchable;
     }
@@ -34,7 +34,7 @@ class RoleRepository extends BaseRepository
     /**
      * Configure the Model
      **/
-    public function model()
+    public function model(): string
     {
         return Role::class;
     }

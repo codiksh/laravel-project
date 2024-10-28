@@ -2,9 +2,9 @@
 
 namespace App\Overrides\CrudGenerator\Generators\Scaffold;
 
-use InfyOm\Generator\Generators\ModelGenerator;
+use Codiksh\Generator\Generators\ModelGenerator;
 
-class RequestGenerator extends \InfyOm\Generator\Generators\Scaffold\RequestGenerator
+class RequestGenerator extends \Codiksh\Generator\Generators\Scaffold\RequestGenerator
 {
     private string $masterFileName;
 

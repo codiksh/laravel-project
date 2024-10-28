@@ -17,7 +17,7 @@
                 <div class="preview-container"></div>
             </div>
             <div class="uploaded_image"></div>
-            {!! Form::hidden($primaryImageInputName ?? 'primaryImage',null,['class' => 'primaryImage']) !!}
+            {!! html()->hidden($primaryImageInputName ?? 'primaryImage')->class('primaryImage')->value(null) !!}
         </div>
     </div>
 </div>

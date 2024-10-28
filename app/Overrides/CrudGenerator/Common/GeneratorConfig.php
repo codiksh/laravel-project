@@ -4,13 +4,13 @@ namespace App\Overrides\CrudGenerator\Common;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use InfyOm\Generator\DTOs\GeneratorNamespaces;
-use InfyOm\Generator\DTOs\GeneratorOptions;
-use InfyOm\Generator\DTOs\GeneratorPaths;
-use InfyOm\Generator\DTOs\GeneratorPrefixes;
-use InfyOm\Generator\DTOs\ModelNames;
+use Codiksh\Generator\DTOs\GeneratorNamespaces;
+use Codiksh\Generator\DTOs\GeneratorOptions;
+use Codiksh\Generator\DTOs\GeneratorPaths;
+use Codiksh\Generator\DTOs\GeneratorPrefixes;
+use Codiksh\Generator\DTOs\ModelNames;
 
-class GeneratorConfig extends \InfyOm\Generator\Common\GeneratorConfig
+class GeneratorConfig extends \Codiksh\Generator\Common\GeneratorConfig
 {
     public function prepareTable()
     {

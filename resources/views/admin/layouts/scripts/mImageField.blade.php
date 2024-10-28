@@ -33,6 +33,6 @@
         <input type="file" name="{{ $inputName ?? 'images[]' }}"
                class="mImagesUploadFile img" style="width: 0px;height: 0px;overflow: hidden;" onchange="previewMImages($(this));" multiple max-size={{ $maxInputSize ?? 10485760 }}
         >
-        {!! Form::hidden($primaryImageInputName ?? 'primaryImage' ,null,['class' => 'primaryImage']) !!}
+        {!! html()->hidden($primaryImageInputName ?? 'primaryImage', null)->class('primaryImage') !!}
     </div>
 </div>

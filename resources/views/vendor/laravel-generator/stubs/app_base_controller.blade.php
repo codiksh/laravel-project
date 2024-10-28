@@ -4,7 +4,7 @@
 
 namespace {{ $namespaceApp }}Http\Controllers;
 
-use InfyOm\Generator\Utils\ResponseUtil;
+use Codiksh\Generator\Utils\ResponseUtil;
 
 /**
  * @OA\Server(url="/{{ $apiPrefix }}")

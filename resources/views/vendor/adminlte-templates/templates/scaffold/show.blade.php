@@ -38,11 +38,18 @@
 
                         <div class="card-body">
                             <div id="show{{ $config->modelNames->camel }}">
-                                @{!! Form::model(${{ $config->modelNames->camel }}, ['route' => ['{{ $config->prefixes->getRoutePrefixWith('.') }}{{ $config->modelNames->camelPlural }}.update', ${{ $config->modelNames->camel }}->{{ $config->primaryName }}], 'method' => 'patch',  'files' => true, 'class' => 'submitsByAjax']) !!}
-                                <div class="row">
-                                    @@include('{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.fields', ['type' => 'edit'])
-                                </div>
-                                @{!! Form::close() !!}
+                                @{!! html()->model(${{ $config->modelNames->camel }})
+                                        ->route('{{ $config->prefixes->getRoutePrefixWith('.') }}{{ $config->modelNames->camelPlural }}.update', ${{ $config->modelNames->camel }}->{{ $config->primaryName }})
+                                        ->method('PATCH')
+                                        ->acceptsFiles()
+                                        ->class('submitsByAjax')
+                                        ->open() !!}
+
+                                    <div class="row">
+                                        @@include('{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.fields', ['type' => 'edit'])
+                                    </div>
+
+                                @{!! html()->form()->close() !!}
                             </div>
                         </div>
 

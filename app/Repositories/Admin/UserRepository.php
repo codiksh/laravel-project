@@ -33,7 +33,7 @@ class UserRepository extends BaseRepository
      *
      * @return array
      */
-    public function getFieldsSearchable()
+    public function getFieldsSearchable(): array
     {
         return $this->fieldSearchable;
     }
@@ -41,7 +41,7 @@ class UserRepository extends BaseRepository
     /**
      * Configure the Model
      **/
-    public function model()
+    public function model(): string
     {
         return User::class;
     }

@@ -6,12 +6,23 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Intervention\Image\Facades\Image;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Imagick\Driver;
+use Illuminate\Support\Facades\Response;
+
+use Intervention\Image\Decoders\DataUriImageDecoder;
+use Intervention\Image\Decoders\Base64ImageDecoder;
+use Intervention\Image\Decoders\FilePathImageDecoder;
+use Intervention\Image\Interfaces\EncodedImageInterface;
+
 use Spatie\MediaLibrary\MediaCollections\Exceptions\InvalidConversion;
 
 class MediaController extends Controller
 {
 
-    protected $mediaModelsToBeRestrict = [];
+    protected $mediaModelsToBeRestrict = [
+
+    ];
 
     public function __construct()
     {
@@ -29,6 +40,8 @@ class MediaController extends Controller
      * @return mixed
      */
     public function getDefaultImage($resolution = "",$type = ""){
+        $manager = new ImageManager(new Driver());
+
         $resolution = $resolution != "" ? ("_" . $resolution) : "";
         $complete_path = resource_path('assets' . DIRECTORY_SEPARATOR . 'images/default/default-image' . $resolution . '.jpg');
         if (!empty($type)) {
@@ -40,32 +53,79 @@ class MediaController extends Controller
                     $complete_path = resource_path('assets' . DIRECTORY_SEPARATOR . 'images/404/default-image-404' . $resolution . '.jpg');
             }
         }
-        return Image::make($complete_path)->response();
+
+        $image = $manager->read($complete_path);
+
+        // $mime_type = mime_content_type($complete_path);
+        $mime_type = $this->getMimeType($complete_path);
+
+        switch ($mime_type) {
+            case 'image/jpeg':
+                $contents = $image->toJpeg()->toString();
+                break;
+            case 'image/png':
+                $contents = $image->toPng()->toString();
+                break;
+            case 'image/gif':
+                $contents = $image->toGif()->toString();
+                break;
+            default:
+                $contents = $image->toJpeg()->toString();
+                $mime_type = 'image/jpeg';
+        }
+
+        return Response::make($contents, 200, [
+            'Content-Type' => $mime_type,
+            'Content-Length' => strlen($contents),
+        ]);
     }
 
 
-    public function responseImage($model, $modelUuid, $collection, $mediaId, $conversion, $name){
-        $modelObject = $this->getModelInstance($model)->findWithUuid($modelUuid);
+    public function responseImage($model, $modelUuid, $collection, $mediaId, $conversion, $name)
+    {
+        $modelObject = $this->getModelInstance($model)
+            ->withoutGlobalScopes([ProfessionalScope::class, OnlyFromSelfProfessionalScope::class])
+            ->findWithUuid($modelUuid);
 
-        //Some basic level validations
-        $media = $modelObject->getMedia($collection)->where('id',$mediaId)->first();
-        if($media->name != $name){
+        if (is_null($modelObject)) {
             return abort(404);
         }
-        if(is_null($modelObject)){
+
+        $media = $modelObject->getMedia($collection)->where('id', $mediaId)->first();
+
+        if (!$media || $media->name != $name) {
             return abort(404);
         }
+
+        $manager = new ImageManager(new Driver());
 
         try {
             $conversion = $conversion == "NoC" ? "" : $conversion;  // NoC ~ NoConversion
             $complete_path = $media->getPath($conversion);
-            if(file_exists($complete_path)){
-                return Image::make($complete_path)->response();
-            }else{
-                return $this->getDefaultImage($this->getDefaultImageResolutionFromConversion($conversion),'404');
+            $complete_path = str_replace('\\', '/', $complete_path);
+
+            if (file_exists($complete_path)) {
+                $image = $manager->read($complete_path);
+
+                // Determine the MIME type based on the file extension
+                $mime_type = $this->getMimeType($complete_path);
+
+                // Encode the image
+                $encoded_image = $image->encode();
+
+                if ($encoded_image instanceof EncodedImageInterface) {
+                    return Response::make($encoded_image->__toString(), 200, [
+                        'Content-Type' => $mime_type,
+                        'Content-Disposition' => 'inline; filename="' . $name . '"'
+                    ]);
+                } else {
+                    throw new \Exception('Failed to encode image');
+                }
+            } else {
+                return $this->getDefaultImage($this->getDefaultImageResolutionFromConversion($conversion), '404');
             }
-        }catch (InvalidConversion $e){
-            Log::info("[MODEL OBJECT#$modelObject->id][COLLECTION $collection][CONVERSION $conversion]MEDIA #$media->id] Invalid Conversion");
+        } catch (\Exception $e) {
+            Log::error("[MODEL OBJECT#{$modelObject->id}][COLLECTION {$collection}][CONVERSION {$conversion}]MEDIA #{$media->id}] Error: " . $e->getMessage());
             return abort(404);
         }
     }
@@ -103,6 +163,24 @@ class MediaController extends Controller
         if($model === 'users'){
             return (new User());
         }
+        // if($model === 'si'){
+        //     return (new StaticInformation());
+        // }
+        // if($model === 'services'){
+        //     return (new Service());
+        // }
+        // if($model === 'clienteles'){
+        //     return (new Clientele());
+        // }
+        // if($model === 'reviews'){
+        //     return (new Review());
+        // }
+        // if($model === 'professionals'){
+        //     return (new Professional());
+        // }
+        // if($model === 'portfolios'){
+        //     return (new Portfolio());
+        // }
         return (new User());
     }
 
@@ -121,18 +199,74 @@ class MediaController extends Controller
     }
 
 
-    public function responseMedia($model,$collection,$mediaId,$fileName) {
-        $path =  env('CUSTOM_LOCAL_STORE_PATH') . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . $model
+    public function responseMedia($model, $collection, $mediaId, $fileName)
+    {
+        $path = env('CUSTOM_LOCAL_STORE_PATH') . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . $model
             . DIRECTORY_SEPARATOR . $collection . DIRECTORY_SEPARATOR . $mediaId . DIRECTORY_SEPARATOR . $fileName;
-//        return $path;
-        return Image::make($path)->response();
-    }
-    public function responseResponsiveMedia($model,$collection,$mediaId,$fileName) {
-        $path =  env('CUSTOM_LOCAL_STORE_PATH') . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . $model
-            . DIRECTORY_SEPARATOR . $collection . DIRECTORY_SEPARATOR . $mediaId . DIRECTORY_SEPARATOR
-            . 'responsive-images' . DIRECTORY_SEPARATOR . $fileName;
-//        return $path;
-        return Image::make($path)->response();
+
+        return $this->createImageResponse($path, $fileName);
     }
 
+    public function responseResponsiveMedia($model, $collection, $mediaId, $fileName)
+    {
+        $path = env('CUSTOM_LOCAL_STORE_PATH') . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . $model
+            . DIRECTORY_SEPARATOR . $collection . DIRECTORY_SEPARATOR . $mediaId . DIRECTORY_SEPARATOR
+            . 'responsive-images' . DIRECTORY_SEPARATOR . $fileName;
+
+        return $this->createImageResponse($path, $fileName);
+    }
+
+    private function createImageResponse($path, $fileName)
+    {
+        if (!file_exists($path)) {
+            return abort(404);
+        }
+
+        $manager = new ImageManager(new Driver());
+
+        try {
+            $image = $manager->read($path);
+            $mime_type = $this->getMimeType($path);
+
+            $encoded_image = $image->encode();
+
+            if ($encoded_image instanceof EncodedImageInterface) {
+                return Response::make($encoded_image->__toString(), 200, [
+                    'Content-Type' => $mime_type,
+                    'Content-Disposition' => 'inline; filename="' . $fileName . '"'
+                ]);
+            } else {
+                throw new \Exception('Failed to encode image');
+            }
+        } catch (\Exception $e) {
+            Log::error("Error processing image {$path}: " . $e->getMessage());
+            return abort(404);
+        }
+    }
+
+    private function getMimeType($path)
+    {
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        $mime_types = [
+            // Image types
+            'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+            'bmp' => 'image/bmp',
+            'webp' => 'image/webp',
+            // Video types
+            'mp4' => 'video/mp4',
+            'avi' => 'video/x-msvideo',
+            'wmv' => 'video/x-ms-wmv',
+            'flv' => 'video/x-flv',
+            'mov' => 'video/quicktime',
+            'mkv' => 'video/x-matroska',
+            'webm' => 'video/webm',
+            '3gp' => 'video/3gpp',
+            'mpeg' => 'video/mpeg',
+            'mpg' => 'video/mpeg',
+        ];
+        return $mime_types[strtolower($extension)] ?? 'application/octet-stream';
+    }
 }

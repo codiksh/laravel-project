@@ -5,7 +5,7 @@
 namespace {{ $config->namespaces->apiRequest }};
 
 use {{ $config->namespaces->model }}\{{ $config->modelNames->name }};
-use InfyOm\Generator\Request\APIRequest;
+use Codiksh\Generator\Request\APIRequest;
 
 class Create{{ $config->modelNames->name }}APIRequest extends APIRequest
 {

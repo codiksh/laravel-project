@@ -1,23 +1,23 @@
 <!-- Name Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('name', 'Name') !!}
-    {!! Form::text('name', null, ['class' => 'form-control']) !!}
+    {!! html()->label('Name')->for('name') !!}
+    {!! html()->text('name')->class('form-control') !!}
 </div>
 
 <!-- Email Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('email', 'Email') !!}
-    {!! Form::email('email', null, ['class' => 'form-control']) !!}
+    {!! html()->label('Email')->for('email') !!}
+    {!! html()->email('email')->class('form-control') !!}
 </div>
 
 <!-- Password Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('password', 'Password') !!}
-    {!! Form::password('password', ['class' => 'form-control']) !!}
+    {!! html()->label('Password')->for('password') !!}
+    {!! html()->password('password')->class('form-control') !!}
 </div>
 
 <!-- Confirmation Password Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('password', 'Password Confirmation') !!}
-    {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
+    {!! html()->label('Password Confirmation')->for('password_confirmation') !!}
+    {!! html()->password('password_confirmation')->class('form-control') !!}
 </div>

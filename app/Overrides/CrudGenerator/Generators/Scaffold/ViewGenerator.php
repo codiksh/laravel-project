@@ -4,11 +4,11 @@ namespace App\Overrides\CrudGenerator\Generators\Scaffold;
 
 use Exception;
 use Illuminate\Support\Str;
-use InfyOm\Generator\Generators\BaseGenerator;
-use InfyOm\Generator\Generators\ViewServiceProviderGenerator;
-use InfyOm\Generator\Utils\HTMLFieldGenerator;
+use Codiksh\Generator\Generators\BaseGenerator;
+use Codiksh\Generator\Generators\ViewServiceProviderGenerator;
+use Codiksh\Generator\Utils\HTMLFieldGenerator;
 
-class ViewGenerator extends \InfyOm\Generator\Generators\Scaffold\ViewGenerator
+class ViewGenerator extends \Codiksh\Generator\Generators\Scaffold\ViewGenerator
 {
     private string $templateType;
     private string $templateViewPath;

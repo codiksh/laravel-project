@@ -4,9 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use InfyOm\Generator\Common\GeneratorConfig;
-use InfyOm\Generator\Generators\Scaffold\RequestGenerator;
-use InfyOm\Generator\Generators\Scaffold\ViewGenerator;
+use Codiksh\Generator\Common\GeneratorConfig;
+use Codiksh\Generator\Generators\Scaffold\RequestGenerator;
+use Codiksh\Generator\Generators\Scaffold\ViewGenerator;
 use Laravel\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
 

@@ -14,20 +14,23 @@
         @@foreach(${{ $config->modelNames->camelPlural }} as ${{ $config->modelNames->camel }})
             <tr>
                 {!! $fieldBody !!}
-                <td  style="width: 120px">
-                    @{!! Form::open(['route' => ['{{ $config->prefixes->getRoutePrefixWith('.') }}{{ $config->modelNames->camelPlural }}.destroy', ${{ $config->modelNames->camel }}->{{ $config->primaryName }}], 'method' => 'delete']) !!}
+                <td style="width: 120px">
+                    @{!! html()->form('DELETE', route('{{ $config->prefixes->getRoutePrefixWith('.') }}{{ $config->modelNames->camelPlural }}.destroy', ${{ $config->modelNames->camel }}->{{ $config->primaryName }}))->open() !!}
                     <div class='btn-group'>
                         <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.show', [${!! $config->modelNames->camel !!}->{!! $config->primaryName !!}]) }}"
-                           class='btn btn-default btn-xs'>
+                        class='btn btn-default btn-xs'>
                             <i class="far fa-eye"></i>
                         </a>
                         <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.edit', [${!! $config->modelNames->camel !!}->{!! $config->primaryName !!}]) }}"
-                           class='btn btn-default btn-xs'>
+                        class='btn btn-default btn-xs'>
                             <i class="far fa-edit"></i>
                         </a>
-                        @{!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        @{!! html()->button('<i class="far fa-trash-alt"></i>')
+                        ->type('submit')
+                        ->class('btn btn-danger btn-xs')
+                        ->attribute('onclick', "return confirm('Are you sure?')") !!}
                     </div>
-                    @{!! Form::close() !!}
+                    @{!! html()->form()->close() !!}
                 </td>
             </tr>
         @@endforeach

@@ -2,30 +2,37 @@
     <div class="row">
         <!-- Name Field -->
         <div class="form-group col-sm-8">
-            {!! Form::label('name', 'Name:') !!}
-            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Name of the user']) !!}
+            {!! html()->label('Name:')->for('name') !!}
+            {!! html()->text('name')->class('form-control')->placeholder('Name of the user') !!}
         </div>
+
         <!-- Roles Field -->
         <div class="form-group col-sm-4">
-            {!! Form::label('role', 'Role:') !!}
-            {!! Form::select('role[]', $roleItems, null, ['class' => 'form-control select2-multiple', 'data-placeholder' => 'Define user roles', 'multiple' => 'multiple', 'id' => 'role']) !!}
+            {!! html()->label('Role:')->for('role') !!}
+            {!! html()->select('role[]', $roleItems)
+                ->class('form-control select2-multiple')
+                ->attribute('multiple', 'multiple')
+                ->id('role')
+                ->attribute('data-placeholder', 'Define user roles') !!}
         </div>
+
         <!-- Email Field -->
         <div class="form-group col-sm-6">
-            {!! Form::label('email', 'Email:') !!}
-                {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email of the user']) !!}
+            {!! html()->label('Email:')->for('email') !!}
+            {!! html()->email('email')->class('form-control')->placeholder('Email of the user') !!}
         </div>
+
         <!-- Mobile Field -->
         <div class="form-group col-sm-6">
-            {!! Form::label('mobile', 'Mobile:') !!}
-                {!! Form::text('mobile', null, ['class' => 'form-control', 'placeholder' => 'Mobile of the user']) !!}
+            {!! html()->label('Mobile:')->for('mobile') !!}
+            {!! html()->text('mobile')->class('form-control')->placeholder('Mobile of the user') !!}
         </div>
 
         @if($type ?? '' == 'create')
         <!-- Password Field -->
         <div class="form-group col-sm-12">
-            {!! Form::label('password', 'Password:') !!}
-            {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password of the user']) !!}
+            {!! html()->label('Password:')->for('password') !!}
+            {!! html()->password('password')->class('form-control')->placeholder('Password of the user') !!}
         </div>
         @endif
     </div>

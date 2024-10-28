@@ -33,22 +33,30 @@
 
                         <div class="card-body">
                             @include('adminlte-templates::common.errors')
-                            {!! Form::open(['route' => ['admin.users.changePassword.process', request()->route('user')], 'files' => true, 'class' => 'submitsByAjax']) !!}
-                            <div class="row">
-                                <!-- Password Field -->
-                                <div class="form-group col-md-12">
-                                    {!! Form::label('password', 'Password:') !!}
-                                    {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password of the user']) !!}
+                            {!! html()->form('POST', route('admin.users.changePassword.process', request()->route('user')))
+                                ->attribute('enctype', 'multipart/form-data')
+                                ->class('submitsByAjax')
+                                ->open() !!}
+
+                                <div class="row">
+                                    <!-- Password Field -->
+                                    <div class="form-group col-md-12">
+                                        {!! html()->label('Password:')->for('password') !!}
+                                        {!! html()->password('password')->class('form-control')->placeholder('Password of the user') !!}
+                                    </div>
+
+                                    <!-- Submit Field -->
+                                    <div class="form-group col-md-12 fields_footer_action_buttons">
+                                        <button class="btn btn-lg btn-success rspSuccessBtns" type="submit">
+                                            <i class="fa-duotone fa-floppy-disk"></i> Save
+                                        </button>
+                                        <a href="{{ route('admin.users.index') }}" class="btn btn-lg btn-outline-danger">
+                                            <i class="fa-duotone fa-arrow-left-to-line"></i> Back
+                                        </a>
+                                    </div>
                                 </div>
 
-                                <!-- Submit Field -->
-                                <div class="form-group col-md-12 fields_footer_action_buttons">
-                                    <button class="btn btn-lg btn-success rspSuccessBtns" type="submit" ><i class="fa-duotone fa-floppy-disk"></i> Save</button>
-                                    <a href="{{ route('admin.users.index') }}" class="btn btn-lg btn-outline-danger"><i class="fa-duotone fa-arrow-left-to-line"></i> Back</a>
-                                </div>
-
-                            </div>
-                            {!! Form::close() !!}
+                            {!! html()->closeModelForm() !!}
                         </div>
 
                     </div>

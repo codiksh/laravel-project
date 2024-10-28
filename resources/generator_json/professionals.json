@@ -1,0 +1,86 @@
+[
+    {
+        "name": "id",
+        "dbType": "bigIncrements",
+        "searchable": false,
+        "inIndex": false,
+        "inForm": false
+    },
+    {
+        "name": "name",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|string|max:190",
+        "searchable": true
+    },
+    {
+        "name": "domain_type",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|string|max:190|in:Custom Domain,Sub Domain",
+        "searchable": true
+    },
+    {
+        "name": "domain",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|string|max:190",
+        "searchable": true
+    },
+    {
+        "name": "theme_resource_path",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|string|max:190",
+        "searchable": true
+    },
+    {
+        "name": "mobile",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|numeric|max:190",
+        "searchable": true
+    },
+    {
+        "name": "email",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|email|max:190",
+        "searchable": true
+    },
+    {
+        "name": "state",
+        "dbType": "string:nullable",
+        "htmlType": "text",
+        "validations": "required|string|max:190",
+        "searchable": true
+    },
+    {
+        "name": "country",
+        "dbType": "string:nullable",
+        "htmlType": "text",
+        "validations": "required|string|max:190",
+        "searchable": true
+    },
+    {
+        "name": "gender",
+        "dbType": "string:nullable",
+        "htmlType": "text",
+        "validations": "required|string|max:190|in:Male,Female",
+        "searchable": true
+    },
+    {
+        "name": "created_at",
+        "dbType": "datetime",
+        "searchable": false,
+        "inIndex": false,
+        "inForm": false
+    },
+    {
+        "name": "updated_at",
+        "dbType": "datetime",
+        "searchable": false,
+        "inIndex": false,
+        "inForm": false
+    }
+]
