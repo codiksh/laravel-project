@@ -33,7 +33,12 @@
                         </div>
 
                         <div class="card-body">
-                            {!! Form::open(['route' => ['admin.roles.permissions.manage.update', $role->name],  'files' => true, 'id' => 'permission-form', 'class' => 'submitsByAjax']) !!}
+                            {!! html()->form()
+                                ->action(route('admin.roles.permissions.manage.update', $role->name))
+                                ->method('POST')
+                                ->attributes(['enctype' => 'multipart/form-data', 'id' => 'permission-form', 'class' => 'submitsByAjax'])
+                                ->open()
+                            !!}
                             @csrf
                             <div class="col-sm-12">
                                 @php $roleName = str_replace(' ', '-', $role->name) @endphp
@@ -73,7 +78,7 @@
                                 </ol>
                             </div>
                             <button class="btn btn-primary rspSuccessBtns mt-4">Update Permission</button>
-                            {!! Form::close() !!}
+                            {!! html()->form()->close() !!}
                         </div>
 
                     </div>

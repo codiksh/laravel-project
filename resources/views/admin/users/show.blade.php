@@ -37,11 +37,17 @@
 
                         <div class="card-body">
                             <div id="showuser">
-                                {!! Form::model($user, ['route' => ['admin.users.update', $user->id], 'method' => 'patch',  'files' => true]) !!}
+                                {!! html()->modelForm($user)
+                                    ->action(route('admin.users.update', $user->id))
+                                    ->method('POST')
+                                    ->attributes(['enctype' => 'multipart/form-data'])
+                                    ->open()
+                                 !!}
+                                @method('PATCH')
                                 <div class="row">
                                     @include('admin.users.fields')
                                 </div>
-                                {!! Form::close() !!}
+                                {!! html()->closeModelForm() !!}
                             </div>
                         </div>
 

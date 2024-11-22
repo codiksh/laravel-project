@@ -20,12 +20,18 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            @include('adminlte-templates::common.errors')
-                            {!! Form::open(['route' => 'admin.users.store',  'files' => true, 'class' => 'submitsByAjax']) !!}
+                            {!! html()->form()
+                                 ->action(route('admin.users.store'))
+                                 ->method('POST')
+                                 ->attributes(['enctype' => 'multipart/form-data', 'class' => 'submitsByAjax'])
+                                 ->open()
+                             !!}
+
                             <div class="row">
                                 @include('admin.users.fields',['type' => 'create'])
                             </div>
-                            {!! Form::close() !!}
+
+                            {!! html()->form()->close() !!}
                         </div>
                     </div>
                 </div>
